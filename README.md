@@ -1,10 +1,10 @@
 # GB300
 
-The GB300 is cheap handheld that emulates video game consoles. Being only a few dollars more expensive than the cheapest game consoles on AliExpress, the GB300 offers eight classic consoles (instead of just the Famicon), offers way more games (even on the Famicon) and you can add your own games.
+The GB300 is a cheap handheld that emulates video game consoles. Being only a few dollars more expensive than the cheapest game consoles on AliExpress, the GB300 offers eight classic consoles (instead of just the Famicon), offers way more games (even on the Famicon) and you can add your own games.
 
-Some see it as a clone of the (usually a bit more expensive) Data Frog SF2000, which however is a bit different. Because the [SF2000 has already been documented](https://vonmillhausen.github.io/sf2000/), this document focusses primarily on the differences.
+Some see it as a clone of the (usually a bit more expensive) Data Frog SF2000, which however is a bit different. Because the [SF2000 has already been documented](https://vonmillhausen.github.io/sf2000/), this page focusses primarily on the differences.
 
-This document is work in progress. Feel free to contribute by creating a fork and pull request, or by opening an issue on Github.
+This document is work in progress. Feel free to contribute by contacting `numma_cway` on Discord, creating a fork and pull request, or by opening an issue on Github (see link at the top of this page). If you have any questions, feel free to join the `#data_frog_sf2000` channel on the [Retro Handhelds Discord](https://discord.gg/retrohandhelds). There is also a [`Gb300 dev` thread](https://discord.com/channels/741895796315914271/1195581037003165796) on that Discord.
 
 
 ## Hardware
@@ -34,17 +34,24 @@ The GB300 emulates the following devices:
 
 Compared to the SF2000 stock firmware, the GB300 lacks the arcade section and adds the PCE.
 
-The SF2000 firmware does not run. There is no known way to retrieve an updates firmware because the manufacturer is unknown.
+The SF2000 firmware does not work on the GB300. There is no known way to retrieve an updated firmware because the manufacturer is unknown, so the only chance will be wait for an alternative firmware to be released.
+
+
+### Saving
+
+The device features four save _states_ per game which allow saving at any point (press Start+Select). However, they are usually incompatible between different emulators. If you want to try anyway, you first need to extract them from their `zlib`-based format (same as on the SF2000). There is [a tool for that](https://vonmillhausen.github.io/sf2000/tools/saveStateTool.htm). Tests with VBA-M's save states (after extracting the ZIP file that is VBA-M's save state format) didn't work (black screen on the GB300).
+
+Normally, you would be able to exchange _battery_ files between emulators. These are the files that store the savegames created by the games' save feature. However, there's an issue with them on the GB300: To my knowledge, battery files do not work at all for all platforms but the GBA. So the rest of this paragraph is about the GBA only. If you want to _load_ a battery file from another emulator, place it in the `Roms` folder (not the `save` subfolder) - even for stock ROMs! Saving is a bit more complicated. Sometimes it works, sometimes it doesn't. And even if you can load a battery before turning off the device, this does not guarantee that you will still be able to load after turning off the device. Saving and loading between switching off the GB300 in the meantime seems to work, so games that force you to save and restart (e.g. Pokémon games) should work, at least on the GBA. Should you need to get your battery file from the device, load your state and save. Repeat until you can load your battery after restarting the GB300. Then you should have a working battery.
 
 
 ## ROMs and Gameplay
 
-ROMs come in their own format. The first `0xEA00` bytes are a 144x208 pixel RGB565 images with no header whatsoever. After that comes a ZIP file, with four differences keeping you from opening it:
+ROMs come in their own format. The first `0xEA00` bytes are a 144x208 pixel RGB565 images with no header whatsoever. After that comes a ZIP file, with four differences to keep you from opening it:
 * The magic numbers are different. There are three in a standard ZIP file with one file.
   * The local block header magic number is `0x57515703` but should be `0x504B0304`.
   * The central directory header magic number is `0x57515702` but should be `0x504B0102`.
   * The end of central directory header magic number is `0x57515701` but should be `0x504B0506`.
-* All (two) filenames in these headers are `xor 0xE5`.
+* All (two) filenames in these headers had their bytes `xor 0xE5`'d.
 
 Changing these things above gives you a standard ZIP file. At least 7-Zip is already fine if you just fix the local block header magic number, even though the file will have a strange filename then.
 
@@ -76,7 +83,7 @@ Performance of PCE is really good. Even the "3D" racing games run very smoothly.
 
 With the arcade removed, the SNES is the only other system where games can have a bad performance. However, the SNES a lot less issues than the GBA.
 
-Final Knockout does work on the GB300. It was broken on the SF2000 because some unknown data was stuffed into the file at `0xA8000`. From `0xC0000`, both files are identical again.
+Final Knockout does work on the GB300. It was broken on the SF2000 because the bytes from `0xA8000` to `0xBFFFF` of the .zsf file were replaced with unknown data.
 
 Compared to the SF2000, the following file is missing:
 * `手柄测试.zsf`
@@ -193,20 +200,30 @@ Compared to the SF2000, the following games are missing:
 
 Unlike all other consoles, the ROM list for GBA is identical to the SF2000. Pokemon Glazed is the only non-MD file with an incorrect thumbnail, but not because of a incorrect format but because it's too big (346x500).
 
-As in the SF2000, the performance varies heavily between games. And even language versions: Probably the oddest example here are the two Advance Wars games, considered the best games for the GBA according to MobyGames. Graphically, they are very simple games. The American version of Advance Wars 2 (a hack of which with Chinese menus ships with the console) is playable. The American version of Advance Wars 1 works a tiny bit worse but is still playable. The European version of Advance Wars 1 (included with the console) performs too bad to be fun to play. The European Advance Wars 2 is basically unplayable because it's too slow. There is no PAL or NTSC version of the GBA or its games. They're always at 60 fps. Using TV output doesn't improve the performance either, no matter if PAL or NTSC. Performance on all Advance Wars games gets worse when there is dialogue on screen.
+As in the SF2000, the performance varies heavily between games. And even language versions: Probably the oddest example here are the two Advance Wars games, considered the best games for the GBA according to MobyGames. Graphically, they are very simple games. The American version of Advance Wars 2 (a hack of which with Chinese menus ships with the console) is playable. The American version of Advance Wars 1 works a tiny bit worse but is still playable. The European version of Advance Wars 1 (included with the console) performs too bad to be fun to play. The European Advance Wars 2 is basically unplayable because it's too slow. There is no PAL or NTSC version of the GBA or its games. They're always supposed to run at 60 fps. Using TV output doesn't improve the performance either, no matter if PAL or NTSC. Performance on all Advance Wars games gets worse when there is any dialogue on screen.
 
-3D games on the GBA don't work well either. Of the five Need for Speed games for example (none of which are included), only Porsche (both regions) and Underground 2 will get past the language selection.
+3D games on the GBA don't work well either. Of the five Need for Speed games for example (none of which are included), only Porsche (both regions) and Underground 2 will get past the language selection and the EA logo.
 
 
 ## Tools
 
 Most tools designed for the SF2000 don't work. First of all, do *not* use Tadpole. Just starting it already patches your ROM lists and will break all default ROMs except for the GBA (because that one's identical). If you did, look for the files in the Resources folder with the current date and restore the backups Tadpole put there.
 
-Tools are incompatible because not only is the BIOS different, but also the `Resources` have different names.
+Tools are often incompatible because not only is the BIOS different, but also the `Resources` have different names.
 
-The following tools are made for the GB300 or should work:
+The following tools are made for the GB300:
+* [Customized _Frogtool_ (Beta)](https://discord.com/channels/741895796315914271/1195581037003165796/1211025634680119327) by tzlion (original version) and Dteyn (GB300 patch), used for rebuilding the console-dependent ROM lists.
 * [GB300 Boot Logo Changer](https://dteyn.github.io/sf2000/tools/bootLogoChangerGB300.htm) by Dteyn
-* [Generic Image Tool](https://vonmillhausen.github.io/sf2000/tools/genericImageTool.htm) by vonmillhausen
+
+Tools for the SF2000 that should work for the GB300:
+* [Generic Image Tool](https://vonmillhausen.github.io/sf2000/tools/genericImageTool.htm) by Von Millhausen, to create to and from RGB565 and BGRA8888 images.
+* [Kerokero - SF2000 BGM Tool](https://github.com/Dteyn/SF2000_BGM_Tool) by Dteyn
+* [Save State Tool](https://vonmillhausen.github.io/sf2000/tools/saveStateTool.htm)
+* [Silent menu music](https://vonmillhausen.github.io/sf2000/sounds/silentMusic/pagefile.sys) by Von Millhausen
+* [Silent Sounds Pack](https://github.com/Dteyn/sf2000/raw/main/sounds/silentSounds/SF2000_Silent_Sounds_Pack.zip) by Dtyen
+
+Other links:
+* [SF2000 Community Compatibility list](https://docs.google.com/spreadsheets/d/19TCedWEKFXlnS2dlmLxk1BcnlHrX-MSVrKwEURuiU0E/edit#gid=1327539659)
 
 
 ## List of ROMs
@@ -575,7 +592,7 @@ Unlike the SF2000, the GB300 supposedly does not have any unused images. All of 
 | `kmbcj.acp`  | BGRA8888 | 288x448  | "Archive already exists, overwrite this archive?" in 7 different languages | [view](/images/kmbcj.acp.png) |
 | `lf9lb.cut`  | RGB565   | 640x280  | language selection, Portuguese selected (the sixth item) | [view](/images/lf9lb.cut.png) |
 | `lk7tc.bvs`  | BGRA8888 | 52x192   | key names (B, TB, C, TC, ST, ST, SL, SL, U, U, D, D, L, TL, R, TR, A, TA, Z, TZ, X, TX, Y, TY) | [view](/images/lk7tc.bvs.png) |
-| `mczwq.ikb`  | RGB565   | 640x336  | 6 device logos, I believe for the top of the pause menu | [view](/images/mczwq.ikb.png) |
+| `mczwq.ikb`  | RGB565   | 640x336  | 6 device logos (the GB/GBC share one), I believe for the top of the pause menu | [view](/images/mczwq.ikb.png) |
 | `mhg4s.ihg`  | RGB565   | 400x192  | Background for confirmation messages, with 3 different buttons selected (English only) | [view](/images/mhg4s.ihg.png) |
 | `mksh.rcv`   | RGB565   | 640x288  | keyboard for search | [view](/images/mksh.rcv.png) |
 | `ntrcq.oba`  | BGRA8888 | 240x168  | "SEARCH" in 7 different language | [view](/images/ntrcq.oba.png) |
