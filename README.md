@@ -11,13 +11,13 @@ This document is work in progress. Feel free to contribute by contacting `numma_
 
 The hardware seems somewhat similar to the SF2000. The most important difference is the vertical form factor which makes the device look a bit like the (much heavier) Game Boy Color. The GB300 lacks the SF2000's "digital analog stick" and the buttons feel somewhat cheap.
 
-The screen is a cheap LCD screen compared to the SF2000’s IPS screen. The horizontal angle (sideways) is extremely small, but vertical is alright. Especially when playing dark games in a dark room, the very bright black is an issue.
+The screen is a cheap LCD screen compared to the SF2000’s IPS screen. The horizontal angle (sideways) is extremely small, but vertical is alright. Especially when playing dark games in a dark room, the very bright black is an issue, as neither device has a brightness control. People who love the GB300 for its form factor and straight-forward interface have bought SF2000 just to [swap its screen into the GB300](https://discord.com/channels/741895796315914271/1197607372277940314), so the rest of the device can't be that bad, hmm?
 
 Unlike the SF2000, the GB300 has a working volume control.
 
 Because it lacks arcade support accounting for 2.75 GB on the SF2000, the device ships with only a 8 GB TF/microSDHC card (42 MB of which not allocated to a partition), formatted FAT32. It includes the firmware and the default set of 6267 ROMs. This leaves around 1.75 GB for your own ROMs to add. Actually, there's more space if you follow the manual: All the ROMs are just for demonstration and you are supposed to delete them right when you receive the console, even though the menus are hardcoded to exactly these files.
 
-The device comes with a cable from a 2.5mm male audio jack to two male RCA (cinch) jacks. The yellow RCA jack is for composite video and the red one for sound. You can plug them into older TVs. If you plug the cable in the GB300, its own screen will be turned off. The TV output has a better resolution (640x480) than the internal 320x240. Unlike the SF2000, the TV signal will be fine while charging the GB300.
+The device comes with a 70&thinsp;cm (28") cable from a 2.5mm male audio jack to two male RCA (cinch) jacks. The yellow RCA jack is for composite video and the red one for sound. You can plug them into older TVs either directly or via a SCART adapter. If you plug the cable in the GB300, its own screen will be turned off. The TV output has a better resolution (640x480) than the internal screen's 320x240. Unlike the SF2000, the TV signal will be fine while charging the GB300.
 
 There is currently no information if you can use an external gamepad. For comparison, the SF2000 accepts both, wireless and wired gamepads that ship with some similar consoles. Neither have any use with normal hardware like computers and cannot normally be bought individually. Some sellers began bundling the SF2000 with the wireless gamepad from the SF900, a TV game stick. If you see an SF2000 offer on AliExpress that looks way too cheap, that's because of an option to just buy a wireless gamepad, but compatibility with the GB300 is unknown.
 
@@ -202,7 +202,7 @@ Compared to the SF2000, the following games are missing:
 
 ### Game Boy Advance
 
-Unlike all other consoles, the ROM list for GBA is identical to the SF2000. Pokemon Glazed is the only non-MD file with an incorrect thumbnail, but not because of a incorrect format but because it's too big (346x500). It will still run.
+Unlike all other consoles in the GB300, the ROM list for GBA is identical to the SF2000. Pokemon Glazed is the only non-MD file with an incorrect thumbnail, but not because of a incorrect format but because it's too big (346x500). It will still run.
 
 The GB300 ships with the official (pirated) `gba_bios.bin` in the `bios` folder. This is, however, not the folder where the emulator will look for it. To use the official BIOS, copy it to `\GBA\mnt\sda1\bios\gba_bios.bin` and `\Roms\mnt\sda1\bios\gba_bios.bin` (create all of these folders if they do not exist). Thanks to `bnister` for finding this out. One game that requires this procedure is _The Legend of Zelda - The Minish Cap_ (for the main menu), which however does not ship with the device. There are still games that don't work even with that BIOS. The BIOS does not seem to affect the performance.
 
@@ -227,6 +227,9 @@ Tools for the SF2000 that should work for the GB300:
 * [Silent Sounds Pack](https://github.com/Dteyn/sf2000/raw/main/sounds/silentSounds/SF2000_Silent_Sounds_Pack.zip) by Dteyn
 
 Other links:
+* [Retro Handhelds Discord](https://discord.gg/retrohandhelds), select Data Frog SF2000 during onboarding and join the `#data_frog_sf2000` channel
+  * [`Gb300 dev` thread](https://discord.com/channels/741895796315914271/1195581037003165796) 
+  * [`GB300 screen wwap` thread](https://discord.com/channels/741895796315914271/1197607372277940314) on Retro Handhelds Discord
 * [SF2000 Community Compatibility list](https://docs.google.com/spreadsheets/d/19TCedWEKFXlnS2dlmLxk1BcnlHrX-MSVrKwEURuiU0E/edit#gid=1327539659)
 
 
