@@ -1,6 +1,6 @@
 # GB300
 
-The GB300 is a cheap handheld that emulates video game consoles. Being only a few dollars more expensive than the cheapest game consoles on AliExpress, the GB300 offers eight classic consoles (instead of just the Famicon), comes with way more games (even on the Famicon) and you can add your own games.
+The GB300 is a cheap handheld that emulates video game consoles. The cheapest way to get it is via [AliExpress "Pick 3 and Save"](https://www.aliexpress.com/gcp/300000512/nnmixupdatev3?productIds=1005006436983834) for $9.99 (_not_ a referral link!) if you can find two more items from that page (or simply buy three GB300!). At the start of each month and some "shopping festivals", there is a 10% discount, so you can get it for $8.99. That's a few dollars more than the cheapest game consoles on AliExpress often dubbed the Famiclones, but the GB300 offers eight classic consoles (instead of just the Famicon), comes with _way_ more games (even on the Famicon), you can add your own games, and you can save (states and sometimes standard GBA battery saves).
 
 Some see it as a clone of the (usually a bit more expensive) Data Frog SF2000, which however is a bit different. Because the [SF2000 has already been documented](https://vonmillhausen.github.io/sf2000/), this page focusses primarily on the differences.
 
@@ -11,7 +11,7 @@ This document is work in progress. Feel free to contribute by contacting `numma_
 
 The hardware seems somewhat similar to the SF2000. The most important difference is the vertical form factor which makes the device look a bit like the (much heavier) Game Boy Color. The GB300 lacks the SF2000's "digital analog stick" and the buttons feel somewhat cheap.
 
-The screen is a cheap LCD screen compared to the SF2000’s IPS screen. The horizontal angle (sideways) is extremely small, but vertical is alright. Especially when playing dark games in a dark room, the very bright black is an issue, as neither device has a brightness control. People who love the GB300 for its form factor and straight-forward interface have bought SF2000 just to [swap its screen into the GB300](https://discord.com/channels/741895796315914271/1197607372277940314), so the rest of the device can't be that bad, hmm?
+The screen is a cheap LCD screen compared to the SF2000’s IPS screen. The horizontal angle (sideways) is extremely small, but vertical is alright. Especially when playing dark games in a dark room, the very bright black is an issue, as neither device has a brightness control. People who love the GB300 for its form factor and straight-forward interface have bought an SF2000 just to [swap its screen into the GB300](https://discord.com/channels/741895796315914271/1197607372277940314), so the rest of the device can't be that bad, hmm?
 
 Unlike the SF2000, the GB300 has a working volume control.
 
@@ -566,22 +566,22 @@ Only one file, `yahei_Arial.ttf`, identical to the SF2000's font file of the sam
 
 ### Images
 
-Unlike the SF2000, the GB300 supposedly does not have any unused images. All of these have been renamed on the GB300 compared to the SF2000.
+Unlike the SF2000, the GB300 supposedly does not have any unused images (not sure about the 'empty battery' screen though). All of these have been renamed on the GB300 compared to the SF2000.
 
 | File         | Comp's   | Dim's    | Description | View |
 | ------------ | -------- | -------- | ----------- | ---- |
 | `appvc.ikb`  | BGRA8888 | 150x214  | "missing image" image | [view](/images/appvc.ikb.png) |
 | `bfrjd.odb`  | RGB565   | 640x280  | language selection, Korean selected (the seventh item) | [view](/images/bfrjd.odb.png) |
 | `bisrv.nec`  | RGB565   | 640x480  | pause menu, third entry selected | [view](/images/bisrv.nec.png) |
-| `bttlve.kbp` | BGRA8888 | 120x72   | 6 battery states | [view](/images/bttlve.kbp.png) |
-| `bxvtb.sby`  | BGRA8888 | 192x224  | "TV SYSTEM" in 7 different language | [view](/images/bxvtb.sby.png) |
+| `bttlve.kbp` | BGRA8888 | 60x144   | 6 battery states | [view](/images/bttlve.kbp.png) |
+| `bxvtb.sby`  | BGRA8888 | 192x224  | "TV SYSTEM" in 7 different languages | [view](/images/bxvtb.sby.png) |
 | `c1eac.pal`  | BGRA8888 | 26x22    | checked checkbox | [view](/images/c1eac.pal.png) |
 | `d2d1.hgp`   | RGB565   | 640x480  | pause menu, second entry selected | [view](/images/d2d1.hgp.png) |
 | `dism.cef`   | RGB565   | 640x480  | pause menu, first entry selected | [view](/images/dism.cef.png) |
 | `dpskc.ctp`  | RGB565   | 384x320  | 4 different selected save states | [view](/images/dpskc.ctp.png) |
 | `drivr.ers`  | BGRA8888 | 150x160  | the five words of the pause menu in Arabic | [view](/images/drivr.ers.png) |
 | `dsuei.cpl`  | BGRA8888 | 150x160  | the five words of the pause menu in English | [view](/images/dsuei.cpl.png) |
-| `dufdr.cwr`  | BGRA8888 | 240x168  | "SETTING" in 7 different language | [view](/images/dufdr.cwr.png) |
+| `dufdr.cwr`  | BGRA8888 | 240x168  | "SETTING" in 7 different languages | [view](/images/dufdr.cwr.png) |
 | `dxva2.nec`  | RGB565   | 640x288  | keyboard for search, embossed keys | [view](/images/dxva2.nec.png) |
 | `ectte.bke`  | BGRA8888 | 1200x120 | 12 bottom tab items, default state | [view](/images/ectte.bke.png) |
 | `eknjo.ofd`  | RGB565   | 640x280  | language selection, Spanish selected (the fifth item) | [view](/images/eknjo.ofd.png) |
@@ -594,21 +594,21 @@ Unlike the SF2000, the GB300 supposedly does not have any unused images. All of 
 | `icuin.cpl`  | BGRA8888 | 150x160  | the five words of the pause menu in Russian | [view](/images/icuin.cpl.png) |
 | `igc64.dll`  | BGRA8888 | 217x37   | Yes/No, No highlighted | [view](/images/igc64.dll.png) |
 | `irftp.ctp`  | BGRA8888 | 150x160  | the five words of the pause menu in Korean | [view](/images/irftp.ctp.png) |
-| `jccatm.kbp` | RGB565   | 640x480  | empty battery | [view](/images/jccatm.kbp.png) |
-| `jsnno.uby`  | BGRA8888 | 240x168  | "HISTORY" in 7 different language | [view](/images/jsnno.uby.png) |
+| `jccatm.kbp` | RGB565   | 640x480  | empty battery screen | [view](/images/jccatm.kbp.png) |
+| `jsnno.uby`  | BGRA8888 | 240x168  | "HISTORY" in 7 different languages | [view](/images/jsnno.uby.png) |
 | `kmbcj.acp`  | BGRA8888 | 288x448  | "Archive already exists, overwrite this archive?" in 7 different languages | [view](/images/kmbcj.acp.png) |
 | `lf9lb.cut`  | RGB565   | 640x280  | language selection, Portuguese selected (the sixth item) | [view](/images/lf9lb.cut.png) |
 | `lk7tc.bvs`  | BGRA8888 | 52x192   | key names (B, TB, C, TC, ST, ST, SL, SL, U, U, D, D, L, TL, R, TR, A, TA, Z, TZ, X, TX, Y, TY) | [view](/images/lk7tc.bvs.png) |
 | `mczwq.ikb`  | RGB565   | 640x336  | 6 device logos (the GB/GBC share one) for the top of the pause menu; whenever you press the DOWN key in the pause menu, it the image is shown or hidden depending on whether you are at the bottom (Joystick) of not | [view](/images/mczwq.ikb.png) |
 | `mhg4s.ihg`  | RGB565   | 400x192  | Background for confirmation messages, with 3 different buttons selected (English only) | [view](/images/mhg4s.ihg.png) |
 | `mksh.rcv`   | RGB565   | 640x288  | keyboard for search | [view](/images/mksh.rcv.png) |
-| `ntrcq.oba`  | BGRA8888 | 240x168  | "SEARCH" in 7 different language | [view](/images/ntrcq.oba.png) |
+| `ntrcq.oba`  | BGRA8888 | 240x168  | "SEARCH" in 7 different languages | [view](/images/ntrcq.oba.png) |
 | `nvinf.hsp`  | BGRA8888 | 1200x120 | 12 bottom tab items, selected state | [view](/images/nvinf.hsp.png) |
 | `okcg2.old`  | BGRA8888 | 24x24    | star (for favorited games) | [view](/images/okcg2.old.png) |
-| `ouenj.dut`  | BGRA8888 | 240x168  | "FAVORITES" in 7 different language | [view](/images/ouenj.dut.png) |
+| `ouenj.dut`  | BGRA8888 | 240x168  | "FAVORITES" in 7 different languages | [view](/images/ouenj.dut.png) |
 | `pwsso.occ`  | RGB565   | 640x480  | pause menu, fourth entry selected | [view](/images/pwsso.occ.png) |
 | `qasfc.bel`  | BGRA8888 | 328x224  | "Favorites are full !" in 7 different languages | [view](/images/qasfc.bel.png) |
-| `qdbec.ofd`  | BGRA8888 | 240x168  | "DOWNLOAD ROMS" in 7 different language | [view](/images/qdbec.ofd.png) |
+| `qdbec.ofd`  | BGRA8888 | 240x168  | "DOWNLOAD ROMS" in 7 different languages | [view](/images/qdbec.ofd.png) |
 | `qwave.bke`  | BGRA8888 | 150x160  | the five words of the pause menu in Spanish | [view](/images/qwave.bke.png) |
 | `sdclt.occ`  | BGRA8888 | 424x58   | selection background | [view](/images/sdclt.occ.png) |
 | `sfcdr.cpl`  | RGB565   | 640x480  | main background | [view](/images/sfcdr.cpl.png) |
@@ -620,7 +620,7 @@ Unlike the SF2000, the GB300 supposedly does not have any unused images. All of 
 | `urlkp.bvs`  | BGRA8888 | 328x224  | "Remove from favorites?" in 7 different languages | [view](/images/urlkp.bvs.png) |
 | `vdaz5.bjk`  | RGB565   | 640x280  | language selection, Russian selected (the fourth item) | [view](/images/vdaz5.bjk.png) |
 | `wshrm.nec`  | BGRA8888 | 217x37   | Yes/No, Yes highlighted | [view](/images/wshrm.nec.png) |
-| `wtrxj.lbd`  | BGRA8888 | 192x224  | "LANGUAGE" in 7 different language | [view](/images/wtrxj.lbd.png) |
+| `wtrxj.lbd`  | BGRA8888 | 192x224  | "LANGUAGE" in 7 different languages | [view](/images/wtrxj.lbd.png) |
 | `xajkg.hsp`  | BGRA8888 | 150x160  | the five words of the pause menu in Portuguese | [view](/images/xajkg.hsp.png) |
 | `xjebd.clq`  | BGRA8888 | 448x224  | "No games match the keyword!" in 7 different languages | [view](/images/xjebd.clq.png) |
 | `zaqrc.olc`  | BGRA8888 | 8x224    | message box background | [view](/images/zaqrc.olc.png) |
