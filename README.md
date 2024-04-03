@@ -1,6 +1,6 @@
 # GB300
 
-The GB300 is a cheap handheld that emulates video game consoles. Being only a few dollars more expensive than the cheapest game consoles on AliExpress, the GB300 offers eight classic consoles (instead of just the Famicon), offers way more games (even on the Famicon) and you can add your own games.
+The GB300 is a cheap handheld that emulates video game consoles. Being only a few dollars more expensive than the cheapest game consoles on AliExpress, the GB300 offers eight classic consoles (instead of just the Famicon), comes with way more games (even on the Famicon) and you can add your own games.
 
 Some see it as a clone of the (usually a bit more expensive) Data Frog SF2000, which however is a bit different. Because the [SF2000 has already been documented](https://vonmillhausen.github.io/sf2000/), this page focusses primarily on the differences.
 
@@ -9,15 +9,17 @@ This document is work in progress. Feel free to contribute by contacting `numma_
 
 ## Hardware
 
-The hardware seems somewhat similar to the SF2000. The most important difference is the vertical form factor which makes the device look a bit like the (much heavier) Game Boy Color.
+The hardware seems somewhat similar to the SF2000. The most important difference is the vertical form factor which makes the device look a bit like the (much heavier) Game Boy Color. The GB300 lacks the SF2000's "digital analog stick" and the buttons feel somewhat cheap.
 
-The screen is a cheap LCD screen compared to the SF2000’s IPS screen. The horizontal angle sideways is extremely small, but vertical is alright. Especially when playing dark games in a dark room, the very bright black is an issue.
+The screen is a cheap LCD screen compared to the SF2000’s IPS screen. The horizontal angle (sideways) is extremely small, but vertical is alright. Especially when playing dark games in a dark room, the very bright black is an issue.
 
 Unlike the SF2000, the GB300 has a working volume control.
 
 Because it lacks arcade support accounting for 2.75 GB on the SF2000, the device ships with only a 8 GB TF/microSDHC card (42 MB of which not allocated to a partition), formatted FAT32. It includes the firmware and the default set of 6267 ROMs. This leaves around 1.75 GB for your own ROMs to add. Actually, there's more space if you follow the manual: All the ROMs are just for demonstration and you are supposed to delete them right when you receive the console, even though the menus are hardcoded to exactly these files.
 
-The device comes with a cable from a 2.5mm male audio jack to two male RCA (cinch) jacks. The yellow RCA jack is for composite video and the red one for sound. You can plug them into older TVs. If you plug the cable in the GB300, its own screen will be turned off, because the TV output has a better resolution (640x480) than the internal 320x240. Unlike the SF2000, the TV signal will be fine while charging the GB300.
+The device comes with a cable from a 2.5mm male audio jack to two male RCA (cinch) jacks. The yellow RCA jack is for composite video and the red one for sound. You can plug them into older TVs. If you plug the cable in the GB300, its own screen will be turned off. The TV output has a better resolution (640x480) than the internal 320x240. Unlike the SF2000, the TV signal will be fine while charging the GB300.
+
+There is currently no information if you can use an external gamepad. For comparison, the SF2000 accepts both, wireless and wired gamepads that ship with some similar consoles. Neither have any use with normal hardware like computers and cannot normally be bought individually. Some sellers began bundling the SF2000 with the wireless gamepad from the SF900, a TV game stick. If you see an SF2000 offer on AliExpress that looks way too cheap, that's because of an option to just buy a wireless gamepad, but compatibility with the GB300 is unknown.
 
 
 ## General Firmware features
@@ -46,14 +48,16 @@ Normally, you would be able to exchange _battery_ files between emulators. These
 
 ## ROMs and Gameplay
 
-ROMs come in their own format. The first `0xEA00` bytes are a 144x208 pixel RGB565 images with no header whatsoever. After that comes a ZIP file, with four differences to keep you from opening it:
+To play your own games, create the folder `Roms` (case-insensitive) on the TF card and put your ROMs there. You can also use ZIP files to save memory.
+
+Stock ROMs however come in their own format. The first `0xEA00` bytes are a 144x208 pixel RGB565 images with no header whatsoever. After that comes a ZIP file, with four differences to keep you from opening it:
 * The magic numbers are different. There are three in a standard ZIP file with one file.
   * The local block header magic number is `0x57515703` but should be `0x504B0304`.
   * The central directory header magic number is `0x57515702` but should be `0x504B0102`.
   * The end of central directory header magic number is `0x57515701` but should be `0x504B0506`.
 * All (two) filenames in these headers had their bytes `xor 0xE5`'d.
 
-Changing these things above gives you a standard ZIP file. At least 7-Zip is already fine if you just fix the local block header magic number, even though the file will have a strange filename then.
+Changing the things above gives you a standard ZIP file. At least 7-Zip is already fine if you just fix the local block header magic number, even though the file will have a strange filename then.
 
 
 ### Nintendo Entertainment System
@@ -198,7 +202,9 @@ Compared to the SF2000, the following games are missing:
 
 ### Game Boy Advance
 
-Unlike all other consoles, the ROM list for GBA is identical to the SF2000. Pokemon Glazed is the only non-MD file with an incorrect thumbnail, but not because of a incorrect format but because it's too big (346x500).
+Unlike all other consoles, the ROM list for GBA is identical to the SF2000. Pokemon Glazed is the only non-MD file with an incorrect thumbnail, but not because of a incorrect format but because it's too big (346x500). It will still run.
+
+The GB300 ships with the official (pirated) `gba_bios.bin` in the `bios` folder. This is, however, not the folder where the emulator will look for it. To use the official BIOS, copy it to `\GBA\mnt\sda1\bios\gba_bios.bin` and `\Roms\mnt\sda1\bios\gba_bios.bin` (create all of these folders if they do not exist). Thanks to `bnister` for finding this out. One game that requires this procedure is _The Legend of Zelda - The Minish Cap_ (for the main menu), which however does not ship with the device. There are still games that don't work even with that BIOS. The BIOS does not seem to affect the performance.
 
 As in the SF2000, the performance varies heavily between games. And even language versions: Probably the oddest example here are the two Advance Wars games, considered the best games for the GBA according to MobyGames. Graphically, they are very simple games. The American version of Advance Wars 2 (a hack of which with Chinese menus ships with the console) is playable. The American version of Advance Wars 1 works a tiny bit worse but is still playable. The European version of Advance Wars 1 (included with the console) performs too bad to be fun to play. The European Advance Wars 2 is basically unplayable because it's too slow. There is no PAL or NTSC version of the GBA or its games. They're always supposed to run at 60 fps. Using TV output doesn't improve the performance either, no matter if PAL or NTSC. Performance on all Advance Wars games gets worse when there is any dialogue on screen.
 
@@ -207,20 +213,18 @@ As in the SF2000, the performance varies heavily between games. And even languag
 
 ## Tools
 
-Most tools designed for the SF2000 don't work. First of all, do *not* use Tadpole. Just starting it already patches your ROM lists and will break all default ROMs except for the GBA (because that one's identical). If you did, look for the files in the Resources folder with the current date and restore the backups Tadpole put there.
-
-Tools are often incompatible because not only is the BIOS different, but also the `Resources` have different names.
+Most tools designed for the SF2000 don't work. Tools are often incompatible because not only is the BIOS different, but also the `Resources` have different names. This is especially true for Tadpole. Just starting it already patches your ROM lists and will break all default ROMs except for the GBA (because the files used for the GBA on the GB300 are used for the arcade on the SF2000, but there is no `ARCADE` folder for Tadpole to scan). If you did, look for the files in the Resources folder with the current date and restore the backups Tadpole put there.
 
 The following tools are made for the GB300:
 * [Customized _Frogtool_ (Beta)](https://discord.com/channels/741895796315914271/1195581037003165796/1211025634680119327) by tzlion (original version) and Dteyn (GB300 patch), used for rebuilding the console-dependent ROM lists.
 * [GB300 Boot Logo Changer](https://dteyn.github.io/sf2000/tools/bootLogoChangerGB300.htm) by Dteyn
 
 Tools for the SF2000 that should work for the GB300:
-* [Generic Image Tool](https://vonmillhausen.github.io/sf2000/tools/genericImageTool.htm) by Von Millhausen, to create to and from RGB565 and BGRA8888 images.
+* [Generic Image Tool](https://vonmillhausen.github.io/sf2000/tools/genericImageTool.htm) by Von Millhausen, to convert to and from RGB565 and BGRA8888 images
 * [Kerokero - SF2000 BGM Tool](https://github.com/Dteyn/SF2000_BGM_Tool) by Dteyn
 * [Save State Tool](https://vonmillhausen.github.io/sf2000/tools/saveStateTool.htm)
 * [Silent menu music](https://vonmillhausen.github.io/sf2000/sounds/silentMusic/pagefile.sys) by Von Millhausen
-* [Silent Sounds Pack](https://github.com/Dteyn/sf2000/raw/main/sounds/silentSounds/SF2000_Silent_Sounds_Pack.zip) by Dtyen
+* [Silent Sounds Pack](https://github.com/Dteyn/sf2000/raw/main/sounds/silentSounds/SF2000_Silent_Sounds_Pack.zip) by Dteyn
 
 Other links:
 * [SF2000 Community Compatibility list](https://docs.google.com/spreadsheets/d/19TCedWEKFXlnS2dlmLxk1BcnlHrX-MSVrKwEURuiU0E/edit#gid=1327539659)
@@ -592,7 +596,7 @@ Unlike the SF2000, the GB300 supposedly does not have any unused images. All of 
 | `kmbcj.acp`  | BGRA8888 | 288x448  | "Archive already exists, overwrite this archive?" in 7 different languages | [view](/images/kmbcj.acp.png) |
 | `lf9lb.cut`  | RGB565   | 640x280  | language selection, Portuguese selected (the sixth item) | [view](/images/lf9lb.cut.png) |
 | `lk7tc.bvs`  | BGRA8888 | 52x192   | key names (B, TB, C, TC, ST, ST, SL, SL, U, U, D, D, L, TL, R, TR, A, TA, Z, TZ, X, TX, Y, TY) | [view](/images/lk7tc.bvs.png) |
-| `mczwq.ikb`  | RGB565   | 640x336  | 6 device logos (the GB/GBC share one), I believe for the top of the pause menu | [view](/images/mczwq.ikb.png) |
+| `mczwq.ikb`  | RGB565   | 640x336  | 6 device logos (the GB/GBC share one) for the top of the pause menu; whenever you press the DOWN key in the pause menu, it the image is shown or hidden depending on whether you are at the bottom (Joystick) of not | [view](/images/mczwq.ikb.png) |
 | `mhg4s.ihg`  | RGB565   | 400x192  | Background for confirmation messages, with 3 different buttons selected (English only) | [view](/images/mhg4s.ihg.png) |
 | `mksh.rcv`   | RGB565   | 640x288  | keyboard for search | [view](/images/mksh.rcv.png) |
 | `ntrcq.oba`  | BGRA8888 | 240x168  | "SEARCH" in 7 different language | [view](/images/ntrcq.oba.png) |
@@ -617,7 +621,7 @@ Unlike the SF2000, the GB300 supposedly does not have any unused images. All of 
 | `xajkg.hsp`  | BGRA8888 | 150x160  | the five words of the pause menu in Portuguese | [view](/images/xajkg.hsp.png) |
 | `xjebd.clq`  | BGRA8888 | 448x224  | "No games match the keyword!" in 7 different languages | [view](/images/xjebd.clq.png) |
 | `zaqrc.olc`  | BGRA8888 | 8x224    | message box background | [view](/images/zaqrc.olc.png) |
-| `ztrba.nec`  | RGB565   | 64x320   | key names (single and prefixed with "T"; also without and with a whitish background) | [view](/images/ztrba.nec.png) |
+| `ztrba.nec`  | RGB565   | 64x320   | key names (single and prefixed with "T" for autofire; also without and with a whitish background) | [view](/images/ztrba.nec.png) |
 
 
 ### ROM Lists
@@ -649,6 +653,33 @@ Your custom roms are indexed into `tsmfk.tax`. Other than that, the following fi
 All files are completely identical and have the same use as on the SF2000 v1.71. See the [SF2000 documentation](https://vonmillhausen.github.io/sf2000/#sounds) for more details.
 
 
+### Key Mapping
+
+The GB300 uses a larger `KeyMapInfo.kmp` file because it stores 7 key mappings instead of just 6. This makes its file incompatible with the SF2000 key map editor. Another difference to the SF2000 is that this file does not exist by default and is only created once you assign non-standard keys.
+
+After each emulated console's key map (24 bytes), it is repeated instantly (probably for the second player, but 2-player capabilities of the GB300 are unknown). Then comes the next console.
+
+Consoles are encoded in the following order:
+
+| Console/Order | Physical Button Save Order   | Available Values per Physical Button                                         |
+| ------------- | ---------------------------- | ---------------------------------------------------------------------------- |
+| 1. **FC**     | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B                                                     |
+| 2. **PCE**    | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B, `0x0A00`: X, `0x0B00`: Y, `0x0100`: C, `0x0900`: Z |
+| 3. **SFC**    | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B, `0x0A00`: X, `0x0B00`: Y, `0x0100`: L, `0x0900`: R |
+| 4. **MD/SMS** | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B, `0x0A00`: X, `0x0B00`: Y, `0x0100`: C, `0x0900`: Z |
+| 5. **GB/GBC** | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B                                                     |
+| 6. **GBA**    | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B, `0x0A00`: X, `0x0B00`: Y, `0x0100`: L, `0x0900`: R |
+| 7. unknown    |                              | defaults identical to SFC's defaults                                         |
+
+After each button's 16-bit value from the table above comes a 16-bit flag for autofire: `0x0100` if autofire is active (indicated by a `T` in the console's key map editor), `0x0000` if not.
+
+Note that not all of the selectable button values actually exist on the console. For example, the GBA does not have X and Y buttons and will treat both like A.
+
+R and L buttons are swapped when you use the console's key map editor. If the button on the left (next to the five menu items where you selected "Joystick") is highlighted, you'll set the button physically labeled R. The table above uses the _physical_ labels (on the device's case), not what is highlighted by the console's key map editor.
+
+Per-game key mappings do not seem to work.
+
+
 ### Other Files
 
 * `Archive.sys`
@@ -656,7 +687,7 @@ All files are completely identical and have the same use as on the SF2000 v1.71.
 * `Foldername.ini`
 * `History.bin`
 
-Once again, their format and use is identical to the SF2000. The `Foldername.ini` however is adjusted to the GB300's lack of arcade and additional PCE feature:
+Once again, their format and use is identical to the SF2000. `Foldername.ini` however is adjusted to the GB300's lack of arcade and additional PCE feature. Its default content is:
 
 ```
 GB300
