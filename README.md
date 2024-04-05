@@ -38,7 +38,7 @@ Compared to the SF2000 stock firmware, the GB300 lacks the arcade section and ad
 
 The SF2000 firmware does not work on the GB300. There is no known way to retrieve an updated firmware because the manufacturer is unknown, so the only chance will be to wait for an alternative firmware to be released. The BIOS dates to the 15th of December, 2023.
 
-There's actually two things called Firmware on the GB300. There is a small firmware that loads the firmware from the SD. You should [patch it](https://vonmillhausen.github.io/sf2000/#bootloader-bug). Really. This thing works for the GB300 as well.
+There's actually two things called Firmware on the GB300. There is a small bootloader that loads the firmware from the SD card. You should [patch the bootloader](https://vonmillhausen.github.io/sf2000/#bootloader-bug). Really. This thing works for the GB300 as well.
 
 
 ### Saving
@@ -61,14 +61,14 @@ Stock ROMs however come in their own format. The first `0xEA00` bytes are a 144x
 
 Changing the things above gives you a standard ZIP file. At least 7-Zip is already fine if you just fix the local block header magic number, even though the file will have a strange filename then.
 
-| Emulator                        | Git Commit | File Extensions in `libretro`  |
-| ------------------------------- | ---------- | ---------------- |
-| **FCEUmm**                      | `7cdfc7e`  | `.fds`, `.nes`, `.unf`, ~~`.unif`~~ |
-| **Mednafen PCE Fast** v0.9.38.7 | _unknown_  | `.pce`, ~~`.cue`~~, ~~`.ccd`~~, ~~`.chd`~~ |
-| **Snes9x 2005** v1.36           | _unknown_  | `.smc`, `.fig`, `.sfc`, `.gd3`, `.gd7`, `.dx2`, `.bsx`, `.swc` |
-| **PicoDrive** 1.91              | `cbc93b6`  | `.bin`, `.gen`, `.smd`, `.md`, ~~`.32x`~~, ~~`.cue`~~, ~~`.iso`~~, `.sms`  |
-| **TGB Dual** v0.8.3             | `9be31d3`  | `.gb`, `.gbc`, `.sgb` |
-| **gpSP** v0.91                  | `261b2db`  | `.gba`, ~~`.bin`~~, `.agb`, `.gbz` |
+| Emulator              | Version   | Git Commit | File Extensions in `libretro`  |
+| --------------------- | --------- | ---------- | ---------------- |
+| **FCEUmm**            | _none_    | `7cdfc7e`  | `.fds`, `.nes`, `.unf`, ~~`.unif`~~ |
+| **Mednafen PCE Fast** | v0.9.38.7 | _unknown_  | `.pce`, ~~`.cue`~~, ~~`.ccd`~~, ~~`.chd`~~ |
+| **Snes9x 2005**       | v1.36     | _unknown_  | `.smc`, `.fig`, `.sfc`, `.gd3`, `.gd7`, `.dx2`, `.bsx`, `.swc` |
+| **PicoDrive**         | 1.91      | `cbc93b6`  | `.bin`, `.gen`, `.smd`, `.md`, ~~`.32x`~~, ~~`.cue`~~, ~~`.iso`~~, `.sms`  |
+| **TGB Dual**          | v0.8.3    | `9be31d3`  | `.gb`, `.gbc`, `.sgb` |
+| **gpSP**              | v0.91     | `261b2db`  | `.gba`, ~~`.bin`~~, `.agb`, `.gbz` |
 
 Extensions the GB300 does not even display are stroke-out. `.bin` files are associated with PicoDrive, not gpSP.
 * `.bkp`
@@ -80,7 +80,7 @@ Extensions the GB300 does not even display are stroke-out. `.bin` files are asso
 * `.zfb` ("link" with thumbnail, intended for arcade games)
 * `.nfc` (Famicon, often used for stock ROMs)
 
-There are no signs of other supported emulators, but it looks like MPEG-2 support in included but inaccessible. If you force the GB300 to display `.chd` files, opening one will cause it to load indefinitely. Same goes for `.cue` files no matter if MD or PCE.
+There are no signs of other supported emulators, but it looks like MPEG-2 support is included but inaccessible. If you force the GB300 to display `.chd` files, opening one will cause it to load indefinitely. Same goes for `.cue` files no matter if MD-CD or PCE-CD.
 
 ### Nintendo Entertainment System
 
@@ -121,10 +121,11 @@ Compared to the SF2000, the following file is missing:
 
 Only MD is advertised and there are no SMS games included. The device will still play them if you add them yourself. The button assignments are strange, though.
 
-Despite the undocumented support for SMS, you aren't that lucky with the other options here:
-* Sega CD games (`.bin` or `.cue` with changed extension or forcing the GB300 to show them) will load indefinitely, even the tiniest ones and ones with only one image.
+Despite the undocumented support for SMS, you aren't that lucky with the other Sega consoles here:
+* Sega CD games (`.bin` or `.cue` with changed extension or by forcing the GB300 to show them) will load indefinitely/freeze the console, even the tiniest and/or single-image ones. You must change the extension to a supported one to try `.cue` files.
 * Most Sega 32X games will not display anything at all, even if you put the correct BIOS in the root or Roms directory. A few games like Knuckles' Chaotix display an error message. You must change the extension to a supported one to try this.
-* Many (but not all) Game Gear games will load, often without any working controls. Colors and sometimes graphics in general are severely glitched, but Audio is fine. You can actually play Sonic the Hedgehog (1), but it will soon crash and restart. You must change the extension to a supported one to try this.
+* Many Game Gear games will load. (The games that don't load will have a black screen.) Colors and sometimes graphics outside the Game Gears center 160x144 area are severely glitched, but Audio is fine. If you don't mind the weird colors, you could play, if it wasn't that most buttons aren't mapped. There seem to be only two working buttons that the GB300 calls B and C. By default, they are mapped to its physical B and R buttons respectively. None of these (nor the direction, start and select buttons) correspond to the start button, so you can't start a game. You must change the extension to a supported one to try this.
+* Most SG-1000 games will load. (The games that don't load will freeze the device, e.g. Champion Baseball.) There is no video (black screen), but audio is fine. Buttons are also fine. You must change the extension to a supported one to try this. (Note that apps like Home Basic likely doesn't have sound, so you can't tell if it's loading or not.)
 
 Compared to the SF2000, the following game is missing:
 * `007 Shitou - The Duel.zmd`
@@ -231,20 +232,20 @@ Compared to the SF2000, the following games are missing:
 
 ### Game Boy Advance
 
-Unlike all other consoles in the GB300, the ROM list for GBA is identical to the SF2000. Pokemon Glazed is the only non-MD file with an incorrect thumbnail, but not because of a incorrect format but because it's too big (346x500). It will still run.
+Unlike all other consoles in the GB300, the ROM list for GBA is identical to the SF2000. Pokemon Glazed is the only non-MD file with an incorrect thumbnail, but not because of an incorrect format but because it's too big (346x500). It will still run.
 
-The GB300 ships with the official (pirated) `gba_bios.bin` in the `bios` folder. This is, however, not the folder where the emulator will look for it. To use the official BIOS, copy it to `\GBA\mnt\sda1\bios\gba_bios.bin` and `\Roms\mnt\sda1\bios\gba_bios.bin` (create all of these folders if they do not exist). Thanks to `bnister` for finding this out. One game that requires this procedure is _The Legend of Zelda - The Minish Cap_ (for the main menu), which however does not ship with the device. There are still games that don't work even with that BIOS. The BIOS does not seem to affect the performance. States with and without the BIOS are incompatible. Loading a non-BIOS state when BIOS is active displays the GBA's boot animation.
+The GB300 ships with the official (pirated) `gba_bios.bin` in the `bios` folder. This is, however, not the folder where the emulator will look for it. To use the official BIOS, copy it to `\GBA\mnt\sda1\bios\gba_bios.bin` and `\Roms\mnt\sda1\bios\gba_bios.bin` (create all of these folders if they do not exist). Thanks to `bnister` (osaka) for finding this out. One game that requires this procedure is _The Legend of Zelda - The Minish Cap_ (for the main menu), which however does not ship with the device. There are still games that don't work even with that BIOS. The BIOS does not seem to affect the performance. States with and without the BIOS are incompatible. Loading a non-BIOS state when BIOS is active displays the GBA's boot animation and then starts the game. The battery from the state will not be present either.
 
-As in the SF2000, performance varies heavily between games. And even language versions: Probably the oddest example here are the two Advance Wars games, considered the best games for the GBA according to MobyGames. Graphically, they are very simple games. The American version of Advance Wars 2 (a hack of which with Chinese menus ships with the console) is playable. The American version of Advance Wars 1 works a tiny bit worse but is still playable. The European version of Advance Wars 1 (included with the console) performs too bad to be fun to play. The European Advance Wars 2 is basically unplayable because it's too slow. There is no PAL or NTSC version of the GBA or its games. They're always supposed to run at 60 fps. Using TV output doesn't improve the performance either, no matter if PAL or NTSC. Performance on all Advance Wars games gets worse when there is any dialogue on screen.
+As in the SF2000, performance varies heavily between games. And even language versions: Probably the oddest example here are the two Advance Wars games, considered the best games for the GBA according to MobyGames. Graphically, they are very simple games. The American version of Advance Wars 2 (a hack of which with Chinese menus ships with the console) is somewhat playable. The American version of Advance Wars 1 works a tiny bit worse but is still playable. The European version of Advance Wars 1 (included with the console) performs too bad to be fun to play. The European Advance Wars 2 is basically unplayable because it's too slow. There is no PAL or NTSC version of the GBA or its games. They're always supposed to run at 60 fps. Using TV output doesn't improve the performance either, no matter if PAL or NTSC. Performance on all Advance Wars games gets even worse when there is any dialogue on screen.
 
 3D games on the GBA don't work well either. Of the five Need for Speed games for example (none of which are included), only Porsche (both regions) and Underground 2 will get past the language selection and the EA logo.
 
 
 ## Tools
 
-Most tools designed for the SF2000 don't work. Tools are often incompatible because not only is the BIOS different, but also the `Resources` have different names. This is especially true for Tadpole. Just starting it already patches your ROM lists and will break all default ROMs except for the GBA (because the files used for the GBA on the GB300 are used for the arcade on the SF2000, but there is no `ARCADE` folder for Tadpole to scan). If you did, look for the files in the Resources folder with the current date and restore the backups Tadpole put there.
+Most tools designed for the SF2000 don't work. Tools are often incompatible because not only is the BIOS different, but also the `Resources` have different names. This is especially true for Tadpole. Just starting it already patches your ROM lists and will break all default ROMs. It will only leave the GBA (because the files used for the GBA on the GB300 are used for the arcade on the SF2000, but there is no `ARCADE` folder for Tadpole to scan). If you did use Tadpole, look for the files in the Resources folder with the current date and restore the backups Tadpole put there.
 
-The following tools are made for the GB300:
+The following tools were made specifically for the GB300:
 * [Customized _Frogtool_ (Beta)](https://discord.com/channels/741895796315914271/1195581037003165796/1211025634680119327) by tzlion (original version) and Dteyn (GB300 patch), used for rebuilding the console-dependent ROM lists.
 * [GB300 Boot Logo Changer](https://dteyn.github.io/sf2000/tools/bootLogoChangerGB300.htm) by Dteyn
 
@@ -259,7 +260,7 @@ Tools for the SF2000 that should work for the GB300:
 Other links:
 * [Retro Handhelds Discord](https://discord.gg/retrohandhelds), select Data Frog SF2000 during onboarding and join the `#data_frog_sf2000` channel
   * [`Gb300 dev` thread](https://discord.com/channels/741895796315914271/1195581037003165796) 
-  * [`GB300 screen wwap` thread](https://discord.com/channels/741895796315914271/1197607372277940314) on Retro Handhelds Discord
+  * [`GB300 screen swap` thread](https://discord.com/channels/741895796315914271/1197607372277940314) on Retro Handhelds Discord
 * [SF2000 Community Compatibility list](https://docs.google.com/spreadsheets/d/19TCedWEKFXlnS2dlmLxk1BcnlHrX-MSVrKwEURuiU0E/edit#gid=1327539659)
 
 
@@ -605,7 +606,7 @@ Unlike the SF2000, the GB300 supposedly does not have any unused images (not sur
 | `bisrv.nec`  | RGB565   | 640x480  | pause menu, third entry selected | [view](/images/bisrv.nec.png) |
 | `bttlve.kbp` | BGRA8888 | 60x144   | 6 battery states | [view](/images/bttlve.kbp.png) |
 | `bxvtb.sby`  | BGRA8888 | 192x224  | "TV SYSTEM" in 7 different languages | [view](/images/bxvtb.sby.png) |
-| `c1eac.pal`  | BGRA8888 | 26x22    | checked checkbox | [view](/images/c1eac.pal.png) |
+| `c1eac.pal`  | BGRA8888 | 26x22    | checked checkbox, indicating the selected TV standard and language | [view](/images/c1eac.pal.png) |
 | `d2d1.hgp`   | RGB565   | 640x480  | pause menu, second entry selected | [view](/images/d2d1.hgp.png) |
 | `dism.cef`   | RGB565   | 640x480  | pause menu, first entry selected | [view](/images/dism.cef.png) |
 | `dpskc.ctp`  | RGB565   | 384x320  | 4 different selected save states | [view](/images/dpskc.ctp.png) |
@@ -659,7 +660,7 @@ Unlike the SF2000, the GB300 supposedly does not have any unused images (not sur
 
 ### ROM Lists
 
-Your custom roms are indexed into `tsmfk.tax`. Other than that, the following files exist for the stock ROMs:
+Your custom ROMs are indexed into `tsmfk.tax` when the device boots. The following files contain the names of the stock ROMs:
 
 | Console | File name file | Chinese name file | Pinyin name file |
 | ------- | -------------- | ----------------- | ---------------- |
@@ -708,7 +709,7 @@ After each button's 16-bit value from the table above comes a 16-bit flag for au
 
 Note that not all of the selectable button values actually exist on the console. For example, the GBA does not have X and Y buttons and will treat both like A.
 
-R and L buttons are swapped when you use the console's key map editor. If the button on the left (next to the five menu items where you selected "Joystick") is highlighted, you'll set the button physically labeled R. The table above uses the _physical_ labels (on the device's case), not what is highlighted by the console's key map editor.
+R and L buttons are swapped when you use the console's key map editor. If the button on the left (next to the five menu items where you selected "Joystick") is highlighted, you'll set the button physically labeled R. The table above uses the _physical_ labels (found on the device's case), not what is highlighted by the console's key map editor.
 
 Per-game key mappings do not seem to work.
 
