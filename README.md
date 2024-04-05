@@ -11,13 +11,13 @@ This document is work in progress. Feel free to contribute by contacting `numma_
 
 The hardware seems somewhat similar to the SF2000. The most important difference is the vertical form factor which makes the device look a bit like the (much heavier) Game Boy Color. The GB300 lacks the SF2000's "digital analog stick" and the buttons feel somewhat cheap.
 
-The screen is a cheap LCD screen compared to the SF2000’s IPS screen. The horizontal angle (sideways) is extremely small, but vertical is alright. Especially when playing dark games in a dark room, the very bright black is an issue, as neither device has a brightness control. People who love the GB300 for its form factor and straight-forward interface have bought an SF2000 just to [swap its screen into the GB300](https://discord.com/channels/741895796315914271/1197607372277940314), so the rest of the device can't be that bad, hmm?
+The screen is a cheap LCD screen compared to the SF2000’s IPS screen. The horizontal angle (sideways) is extremely small, but vertical is alright. Especially when playing dark games in a dark room, the very bright black is an issue, as neither device has a brightness control. People who love the GB300 for its form factor and straight-forward interface have bought an SF2000 just to [swap its screen into the GB300](https://discord.com/channels/741895796315914271/1197607372277940314), so the rest of the device can't be that bad, hmm? The GB300's default screen has diagonal(!) screen tearing.
 
 Unlike the SF2000, the GB300 has a working volume control.
 
-Because it lacks arcade support accounting for 2.75 GB on the SF2000, the device ships with only a 8 GB TF/microSDHC card (42 MB of which not allocated to a partition), formatted FAT32. It includes the firmware and the default set of 6267 ROMs. This leaves around 1.75 GB for your own ROMs to add. Actually, there's more space if you follow the manual: All the ROMs are just for demonstration and you are supposed to delete them right when you receive the console, even though the menus are hardcoded to exactly these files.
+Because it lacks arcade support accounting for 2.75 GB on the SF2000, the device ships with only a 8 GB TF/microSDHC card (42 MB of which not allocated to a partition), formatted FAT32. It includes the firmware and the default set of 6267 ROMs. This leaves around 1.75 GB for your own ROMs. Actually, there's more space if you follow the manual: All the ROMs are just for demonstration and you are supposed to delete them right when you receive the console, even though the menus are hardcoded to exactly these files.
 
-The device comes with a 70&thinsp;cm (28") cable from a 2.5mm male audio jack to two male RCA (cinch) jacks. The yellow RCA jack is for composite video and the red one for sound. You can plug them into older TVs either directly or via a SCART adapter. If you plug the cable in the GB300, its own screen will be turned off. The TV output has a better resolution (640x480) than the internal screen's 320x240. Unlike the SF2000, the TV signal will be fine while charging the GB300.
+The device comes with a 70&thinsp;cm (28") cable from a 2.5mm male audio jack to two male RCA (cinch) jacks. The yellow RCA jack is for composite video and the red one for sound. You can plug them into older TVs either directly or via a SCART adapter. If you plug the cable in the GB300, its own screen will be turned off. The TV output has a better resolution (640x480) than the internal screen's 320x240. If your TV doesn't care, use NTSC 480i to prevent unnecessary vertical scaling to 576i. NTSC outputs a vertically pixel-perfect result of the interface. Unlike the SF2000, the TV signal will be fine while charging the GB300.
 
 There is currently no information if you can use an external gamepad. For comparison, the SF2000 accepts both, wireless and wired gamepads that ship with some similar consoles. Neither have any use with normal hardware like computers and cannot normally be bought individually. Some sellers began bundling the SF2000 with the wireless gamepad from the SF900, a TV game stick. If you see an SF2000 offer on AliExpress that looks way too cheap, that's because of an option to just buy a wireless gamepad, but compatibility with the GB300 is unknown.
 
@@ -36,7 +36,9 @@ The GB300 emulates the following devices:
 
 Compared to the SF2000 stock firmware, the GB300 lacks the arcade section and adds the PCE.
 
-The SF2000 firmware does not work on the GB300. There is no known way to retrieve an updated firmware because the manufacturer is unknown, so the only chance will be wait for an alternative firmware to be released.
+The SF2000 firmware does not work on the GB300. There is no known way to retrieve an updated firmware because the manufacturer is unknown, so the only chance will be to wait for an alternative firmware to be released. The BIOS dates to the 15th of December, 2023.
+
+There's actually two things called Firmware on the GB300. There is a small firmware that loads the firmware from the SD. You should [patch it](https://vonmillhausen.github.io/sf2000/#bootloader-bug). Really. This thing works for the GB300 as well.
 
 
 ### Saving
@@ -48,7 +50,7 @@ Normally, you would be able to exchange _battery_ files between emulators. These
 
 ## ROMs and Gameplay
 
-To play your own games, create the folder `Roms` (case-insensitive) on the TF card and put your ROMs there. You can also use ZIP files to save memory.
+To play your own games, create the folder `Roms` (case-insensitive) on the TF card and put your ROMs there. You can also use single-file ZIP files to save memory.
 
 Stock ROMs however come in their own format. The first `0xEA00` bytes are a 144x208 pixel RGB565 images with no header whatsoever. After that comes a ZIP file, with four differences to keep you from opening it:
 * The magic numbers are different. There are three in a standard ZIP file with one file.
@@ -59,6 +61,26 @@ Stock ROMs however come in their own format. The first `0xEA00` bytes are a 144x
 
 Changing the things above gives you a standard ZIP file. At least 7-Zip is already fine if you just fix the local block header magic number, even though the file will have a strange filename then.
 
+| Emulator                        | Git Commit | File Extensions in `libretro`  |
+| ------------------------------- | ---------- | ---------------- |
+| **FCEUmm**                      | `7cdfc7e`  | `.fds`, `.nes`, `.unf`, ~~`.unif`~~ |
+| **Mednafen PCE Fast** v0.9.38.7 | _unknown_  | `.pce`, ~~`.cue`~~, ~~`.ccd`~~, ~~`.chd`~~ |
+| **Snes9x 2005** v1.36           | _unknown_  | `.smc`, `.fig`, `.sfc`, `.gd3`, `.gd7`, `.dx2`, `.bsx`, `.swc` |
+| **PicoDrive** 1.91              | `cbc93b6`  | `.bin`, `.gen`, `.smd`, `.md`, ~~`.32x`~~, ~~`.cue`~~, ~~`.iso`~~, `.sms`  |
+| **TGB Dual** v0.8.3             | `9be31d3`  | `.gb`, `.gbc`, `.sgb` |
+| **gpSP** v0.91                  | `261b2db`  | `.gba`, ~~`.bin`~~, `.agb`, `.gbz` |
+
+Extensions the GB300 does not even display are stroke-out. `.bin` files are associated with PicoDrive, not gpSP.
+* `.bkp`
+* `.zip`
+* `.zfc`
+* `.zpc`
+* `.zmd`
+* `.zgb`
+* `.zfb` ("link" with thumbnail, intended for arcade games)
+* `.nfc` (Famicon, often used for stock ROMs)
+
+There are no signs of other supported emulators, but it looks like MPEG-2 support in included but inaccessible. If you force the GB300 to display `.chd` files, opening one will cause it to load indefinitely. Same goes for `.cue` files no matter if MD or PCE.
 
 ### Nintendo Entertainment System
 
@@ -82,6 +104,8 @@ Games with an asterisk are duplicates of games that are still on the device.
 
 Performance of PCE is really good. Even the "3D" racing games run very smoothly.
 
+There seems to be no way to get it to run TurboGrafx-CD games.
+
 
 ### Super Nintendo Entertainment System
 
@@ -96,6 +120,11 @@ Compared to the SF2000, the following file is missing:
 ### SEGA Mega Drive and SEGA Master System
 
 Only MD is advertised and there are no SMS games included. The device will still play them if you add them yourself. The button assignments are strange, though.
+
+Despite the undocumented support for SMS, you aren't that lucky with the other options here:
+* Sega CD games (`.bin` or `.cue` with changed extension or forcing the GB300 to show them) will load indefinitely, even the tiniest ones and ones with only one image.
+* Most Sega 32X games will not display anything at all, even if you put the correct BIOS in the root or Roms directory. A few games like Knuckles' Chaotix display an error message. You must change the extension to a supported one to try this.
+* Many (but not all) Game Gear games will load, often without any working controls. Colors and sometimes graphics in general are severely glitched, but Audio is fine. You can actually play Sonic the Hedgehog (1), but it will soon crash and restart. You must change the extension to a supported one to try this.
 
 Compared to the SF2000, the following game is missing:
 * `007 Shitou - The Duel.zmd`
@@ -204,9 +233,9 @@ Compared to the SF2000, the following games are missing:
 
 Unlike all other consoles in the GB300, the ROM list for GBA is identical to the SF2000. Pokemon Glazed is the only non-MD file with an incorrect thumbnail, but not because of a incorrect format but because it's too big (346x500). It will still run.
 
-The GB300 ships with the official (pirated) `gba_bios.bin` in the `bios` folder. This is, however, not the folder where the emulator will look for it. To use the official BIOS, copy it to `\GBA\mnt\sda1\bios\gba_bios.bin` and `\Roms\mnt\sda1\bios\gba_bios.bin` (create all of these folders if they do not exist). Thanks to `bnister` for finding this out. One game that requires this procedure is _The Legend of Zelda - The Minish Cap_ (for the main menu), which however does not ship with the device. There are still games that don't work even with that BIOS. The BIOS does not seem to affect the performance.
+The GB300 ships with the official (pirated) `gba_bios.bin` in the `bios` folder. This is, however, not the folder where the emulator will look for it. To use the official BIOS, copy it to `\GBA\mnt\sda1\bios\gba_bios.bin` and `\Roms\mnt\sda1\bios\gba_bios.bin` (create all of these folders if they do not exist). Thanks to `bnister` for finding this out. One game that requires this procedure is _The Legend of Zelda - The Minish Cap_ (for the main menu), which however does not ship with the device. There are still games that don't work even with that BIOS. The BIOS does not seem to affect the performance. States with and without the BIOS are incompatible. Loading a non-BIOS state when BIOS is active displays the GBA's boot animation.
 
-As in the SF2000, the performance varies heavily between games. And even language versions: Probably the oddest example here are the two Advance Wars games, considered the best games for the GBA according to MobyGames. Graphically, they are very simple games. The American version of Advance Wars 2 (a hack of which with Chinese menus ships with the console) is playable. The American version of Advance Wars 1 works a tiny bit worse but is still playable. The European version of Advance Wars 1 (included with the console) performs too bad to be fun to play. The European Advance Wars 2 is basically unplayable because it's too slow. There is no PAL or NTSC version of the GBA or its games. They're always supposed to run at 60 fps. Using TV output doesn't improve the performance either, no matter if PAL or NTSC. Performance on all Advance Wars games gets worse when there is any dialogue on screen.
+As in the SF2000, performance varies heavily between games. And even language versions: Probably the oddest example here are the two Advance Wars games, considered the best games for the GBA according to MobyGames. Graphically, they are very simple games. The American version of Advance Wars 2 (a hack of which with Chinese menus ships with the console) is playable. The American version of Advance Wars 1 works a tiny bit worse but is still playable. The European version of Advance Wars 1 (included with the console) performs too bad to be fun to play. The European Advance Wars 2 is basically unplayable because it's too slow. There is no PAL or NTSC version of the GBA or its games. They're always supposed to run at 60 fps. Using TV output doesn't improve the performance either, no matter if PAL or NTSC. Performance on all Advance Wars games gets worse when there is any dialogue on screen.
 
 3D games on the GBA don't work well either. Of the five Need for Speed games for example (none of which are included), only Porsche (both regions) and Underground 2 will get past the language selection and the EA logo.
 
@@ -220,9 +249,10 @@ The following tools are made for the GB300:
 * [GB300 Boot Logo Changer](https://dteyn.github.io/sf2000/tools/bootLogoChangerGB300.htm) by Dteyn
 
 Tools for the SF2000 that should work for the GB300:
+* [BIOS CRC-32 Patcher](https://vonmillhausen.github.io/sf2000/tools/biosCRC32Patcher.htm) by Von Millhausen
 * [Generic Image Tool](https://vonmillhausen.github.io/sf2000/tools/genericImageTool.htm) by Von Millhausen, to convert to and from RGB565 and BGRA8888 images
 * [Kerokero - SF2000 BGM Tool](https://github.com/Dteyn/SF2000_BGM_Tool) by Dteyn
-* [Save State Tool](https://vonmillhausen.github.io/sf2000/tools/saveStateTool.htm)
+* [Save State Tool](https://vonmillhausen.github.io/sf2000/tools/saveStateTool.htm) by Von Millhausen
 * [Silent menu music](https://vonmillhausen.github.io/sf2000/sounds/silentMusic/pagefile.sys) by Von Millhausen
 * [Silent Sounds Pack](https://github.com/Dteyn/sf2000/raw/main/sounds/silentSounds/SF2000_Silent_Sounds_Pack.zip) by Dteyn
 
