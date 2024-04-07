@@ -22,7 +22,7 @@ The device comes with a 70&thinsp;cm (28") cable from a 2.5mm male audio jack to
 There is currently no information if you can use an external gamepad. For comparison, the SF2000 accepts both, wireless and wired gamepads that ship with some similar consoles. Neither have any use with normal hardware like computers and cannot normally be bought individually. Some sellers began bundling the SF2000 with the wireless gamepad from the SF900, a TV game stick. If you see an SF2000 offer on AliExpress that looks way too cheap, that's because of an option to just buy a wireless gamepad, but compatibility with the GB300 is unknown.
 
 
-## General Firmware features
+## General Firmware Features
 
 The GB300 emulates the following devices:
 * Nintendo Entertainment System (Famicon)
@@ -34,23 +34,23 @@ The GB300 emulates the following devices:
 * Game Boy Color
 * Game Boy Advance
 
-Compared to the SF2000 stock firmware, the GB300 lacks the arcade section and adds the PCE.
+Compared to the SF2000 stock firmware, the GB300 lacks the arcade section and adds the PCE. If you don't mind weird colors, you can also play the Game Gear games that do not make use of the Start button. Change the `.gg` extension to `.md` to make them show up.
 
 The SF2000 firmware does not work on the GB300. There is no known way to retrieve an updated firmware because the manufacturer is unknown, so the only chance will be to wait for an alternative firmware to be released. The BIOS dates to the 15th of December, 2023.
 
-There's actually two things called Firmware on the GB300. There is a small bootloader that loads the firmware from the SD card. You should [patch the bootloader](https://vonmillhausen.github.io/sf2000/#bootloader-bug). Really. This thing works for the GB300 as well.
+There's actually two things called Firmware on the GB300. There is a small bootloader that loads the firmware from the TF card. You should [patch the bootloader](https://vonmillhausen.github.io/sf2000/#bootloader-bug) to prevent issues after tampering with files in the BIOS folder. Really. This thing works for the GB300 as well.
 
 
 ### Saving
 
-The device features four save _states_ per game which allow saving at any point (press Start+Select). However, they are usually incompatible between different emulators. If you want to try anyway, you first need to extract them from their `zlib`-based format (same as on the SF2000). There is [a tool for that](https://vonmillhausen.github.io/sf2000/tools/saveStateTool.htm). Tests with VBA-M's save states (after extracting the ZIP file that is VBA-M's save state format) didn't work (black screen on the GB300).
+The device features four save _states_ per game which allow saving at any point (press Start+Select). However, they are usually incompatible between different emulators. If you want to try anyway, you first need to extract them from their `zlib`-based format (same as on the SF2000). There is [a tool for that](https://vonmillhausen.github.io/sf2000/tools/saveStateTool.htm). Tests with VBA-M's save states (after extracting the gzip file that is VBA-M's save state format) didn't work (black screen on the GB300).
 
 Normally, you would be able to exchange _battery_ files between emulators. These are the files that store the savegames created by the games' save feature. However, there's an issue with them on the GB300: To my knowledge, battery files do not work at all for all platforms but the GBA. So the rest of this paragraph is about the GBA only. If you want to _load_ a battery file from another emulator, place it in the `Roms` folder (not the `save` subfolder) - even for stock ROMs! Saving is a bit more complicated. Sometimes it works, sometimes it doesn't. And even if you can load a battery before turning off the device, this does not guarantee that you will still be able to load after turning off the device. Saving and loading between switching off the GB300 in the meantime seems to work, so games that force you to save and restart (e.g. Pokémon games) should work, at least on the GBA. Should you need to get your battery file from the device, load your state and save. Repeat until you can load your battery after restarting the GB300. Then you should have a working battery.
 
 
 ## ROMs and Gameplay
 
-To play your own games, create the folder `Roms` (case-insensitive) on the TF card and put your ROMs there. You can also use single-file ZIP files to save memory.
+To play your own games, create the folder `Roms` (case-insensitive) on the TF card and put your ROMs there. You can also use single-file ZIP files to save memory. Also create a `save` subfolder (`Roms\save`), because the GB300 will not create one for you and fail saving.
 
 Stock ROMs however come in their own format. The first `0xEA00` bytes are a 144x208 pixel RGB565 images with no header whatsoever. After that comes a ZIP file, with four differences to keep you from opening it:
 * The magic numbers are different. There are three in a standard ZIP file with one file.
@@ -80,7 +80,7 @@ Extensions the GB300 does not even display are stroke-out. `.bin` files are asso
 * `.zfb` ("link" with thumbnail, intended for arcade games)
 * `.nfc` (Famicon, often used for stock ROMs)
 
-There are no signs of other supported emulators, but it looks like MPEG-2 support is included but inaccessible. If you force the GB300 to display `.chd` files, opening one will cause it to load indefinitely. Same goes for `.cue` files no matter if MD-CD or PCE-CD.
+There are no signs of other supported emulators, but it looks like MPEG-2 support is included but inaccessible. If you force the GB300 to display `.chd` files, opening one will cause it to load indefinitely, even for the tiniest PCE-CD game out there, Hawaiian Island Girls (under 3 megabytes). Same goes for `.cue` files no matter if MD-CD or PCE-CD.
 
 ### Nintendo Entertainment System
 
@@ -121,16 +121,16 @@ Compared to the SF2000, the following file is missing:
 
 Only MD is advertised and there are no SMS games included. The device will still play them if you add them yourself. The button assignments are strange, though.
 
-Despite the undocumented support for SMS, you aren't that lucky with the other Sega consoles here:
-* Sega CD games (`.bin` or `.cue` with changed extension or by forcing the GB300 to show them) will load indefinitely/freeze the console, even the tiniest and/or single-image ones. You must change the extension to a supported one to try `.cue` files.
-* Most Sega 32X games will not display anything at all, even if you put the correct BIOS in the root or Roms directory. A few games like Knuckles' Chaotix display an error message. You must change the extension to a supported one to try this.
-* Many Game Gear games will load. (The games that don't load will have a black screen.) Colors and sometimes graphics outside the Game Gears center 160x144 area are severely glitched, but Audio is fine. If you don't mind the weird colors, you could play, if it wasn't that most buttons aren't mapped. There seem to be only two working buttons that the GB300 calls B and C. By default, they are mapped to its physical B and R buttons respectively. None of these (nor the direction, start and select buttons) correspond to the start button, so you can't start a game. You must change the extension to a supported one to try this.
-* Most SG-1000 games will load. (The games that don't load will freeze the device, e.g. Champion Baseball.) There is no video (black screen), but audio is fine. Buttons are also fine. You must change the extension to a supported one to try this. (Note that apps like Home Basic likely doesn't have sound, so you can't tell if it's loading or not.)
+Despite the undocumented support for SMS, you aren't that lucky with the other Sega consoles. If you change the BIOS to display them or change the extension (it doesn't matter which of these you do, with the exception of a very few SG-1000 games), the following things will happen:
+* Sega CD games (`.bin` or `.cue`) will load indefinitely/freeze the console, even the tiniest and/or single-image ones (Ishii Hisaichi no Daiseikai, around 10 megabytes – the largest GBA games are 32 megabytes).
+* Most Sega 32X games will not display anything at all, even if you put the correct BIOS in the root or Roms directory. A few games like Knuckles' Chaotix display an error message.
+* Most Game Gear games will load. (The games that don't load will have a black screen.) The Game Gear's resolution is 160x144, but the emulator displays this in the center of a 256x192 pixel viewport. Graphics outside the center 160x144 area sometimes make sense (so you basically have an extended vision) but in some cases they're glitched. Colors are severely glitched all the time, but Audio is fine. If you don't mind the weird colors, you could play, if it wasn't about one other thing: The Game Gear has a D-Pad (which corresponds to the GB300's D-Pad), an A button (which the GB300 calls B and is mapped to the B button by default) and a B button (which the GB300 calls C and is mapped to R by default). And then, well, there's the Start button, which isn't mapped at all and none of the key IDs I tried (-1 through 19) corresponded to it. Roughly half of the Game Gear games require you to press it to get past the title screen, among them are the Sonic games.
+* Most SG-1000 games will load. (The games that don't load will freeze the device, e.g. Champion Baseball 40kB.) There is no video (black screen), but audio is fine. Buttons are also fine. (Note that applications like Home Basic likely don't have sound, so you can't tell if they're loading or not.)
 
 Compared to the SF2000, the following game is missing:
 * `007 Shitou - The Duel.zmd`
 
-But one thing got better: Instead of the 225 broken thumbnails on the SF2000, there are only 45 on the GB300. These thumbnails were saved in RGBA8888 instead of RGB565. However, the dimension is correct. Despite the thumbnail taking up twice the space, the device is still able to find the archive and run the game. The following MD games have no working thumbnail on the GB300:
+But one thing got better: Instead of the 225 broken thumbnails on the SF2000, there are only 45 on the GB300. These thumbnails were saved in BGRA8888 instead of RGB565. However, the dimension is correct. Despite the thumbnail taking up twice the space, the device is still able to find the archive and run the game. The following MD games have no working thumbnail on the GB300:
 * `AWS Pro Moves Soccer.zmd`
 * `Coach K College Basketball.zmd`
 * `Davis Cup II.zmd`
@@ -610,21 +610,21 @@ Unlike the SF2000, the GB300 supposedly does not have any unused images (not sur
 | `d2d1.hgp`   | RGB565   | 640x480  | pause menu, second entry selected | [view](/images/d2d1.hgp.png) |
 | `dism.cef`   | RGB565   | 640x480  | pause menu, first entry selected | [view](/images/dism.cef.png) |
 | `dpskc.ctp`  | RGB565   | 384x320  | 4 different selected save states | [view](/images/dpskc.ctp.png) |
-| `drivr.ers`  | BGRA8888 | 150x160  | the five words of the pause menu in Arabic | [view](/images/drivr.ers.png) |
-| `dsuei.cpl`  | BGRA8888 | 150x160  | the five words of the pause menu in English | [view](/images/dsuei.cpl.png) |
+| `drivr.ers`  | BGRA8888 | 152x160  | the five words of the pause menu in Arabic | [view](/images/drivr.ers.png) |
+| `dsuei.cpl`  | BGRA8888 | 152x160  | the five words of the pause menu in English | [view](/images/dsuei.cpl.png) |
 | `dufdr.cwr`  | BGRA8888 | 240x168  | "SETTING" in 7 different languages | [view](/images/dufdr.cwr.png) |
 | `dxva2.nec`  | RGB565   | 640x288  | keyboard for search, embossed keys | [view](/images/dxva2.nec.png) |
 | `ectte.bke`  | BGRA8888 | 1200x120 | 12 bottom tab items, default state | [view](/images/ectte.bke.png) |
 | `eknjo.ofd`  | RGB565   | 640x280  | language selection, Spanish selected (the fifth item) | [view](/images/eknjo.ofd.png) |
 | `exaxz.hsp`  | BGRA8888 | 448x768  | logos in the top left | [view](/images/exaxz.hsp.png) |
 | `fhshl.skb`  | RGB565   | 640x280  | language selection, English selected (the first item) | [view](/images/fhshl.skb.png) |
-| `fixas.ctp`  | BGRA8888 | 150x160  | the five words of the pause menu in Chinese | [view](/images/fixas.ctp.png) |
+| `fixas.ctp`  | BGRA8888 | 152x160  | the five words of the pause menu in Chinese | [view](/images/fixas.ctp.png) |
 | `gpapi.bvs`  | RGB565   | 640x480  | pause menu, fifth entry selected | [view](/images/gpapi.bvs.png) |
 | `hctml.ers`  | RGB565   | 320x2256 | 6 images of the device with one of the shoulder and ABXY buttons highlighted | [view](/images/hctml.ers.png) |
 | `hlink.bvs`  | RGB565   | 640x288  | keyboard for search, keys with a bright frame | [view](/images/hlink.bvs.png) |
-| `icuin.cpl`  | BGRA8888 | 150x160  | the five words of the pause menu in Russian | [view](/images/icuin.cpl.png) |
+| `icuin.cpl`  | BGRA8888 | 152x160  | the five words of the pause menu in Russian | [view](/images/icuin.cpl.png) |
 | `igc64.dll`  | BGRA8888 | 217x37   | Yes/No, No highlighted | [view](/images/igc64.dll.png) |
-| `irftp.ctp`  | BGRA8888 | 150x160  | the five words of the pause menu in Korean | [view](/images/irftp.ctp.png) |
+| `irftp.ctp`  | BGRA8888 | 152x160  | the five words of the pause menu in Korean | [view](/images/irftp.ctp.png) |
 | `jccatm.kbp` | RGB565   | 640x480  | empty battery screen | [view](/images/jccatm.kbp.png) |
 | `jsnno.uby`  | BGRA8888 | 240x168  | "HISTORY" in 7 different languages | [view](/images/jsnno.uby.png) |
 | `kmbcj.acp`  | BGRA8888 | 288x448  | "Archive already exists, overwrite this archive?" in 7 different languages | [view](/images/kmbcj.acp.png) |
@@ -640,7 +640,7 @@ Unlike the SF2000, the GB300 supposedly does not have any unused images (not sur
 | `pwsso.occ`  | RGB565   | 640x480  | pause menu, fourth entry selected | [view](/images/pwsso.occ.png) |
 | `qasfc.bel`  | BGRA8888 | 328x224  | "Favorites are full !" in 7 different languages | [view](/images/qasfc.bel.png) |
 | `qdbec.ofd`  | BGRA8888 | 240x168  | "DOWNLOAD ROMS" in 7 different languages | [view](/images/qdbec.ofd.png) |
-| `qwave.bke`  | BGRA8888 | 150x160  | the five words of the pause menu in Spanish | [view](/images/qwave.bke.png) |
+| `qwave.bke`  | BGRA8888 | 152x160  | the five words of the pause menu in Spanish | [view](/images/qwave.bke.png) |
 | `sdclt.occ`  | BGRA8888 | 424x58   | selection background | [view](/images/sdclt.occ.png) |
 | `sfcdr.cpl`  | RGB565   | 640x480  | main background | [view](/images/sfcdr.cpl.png) |
 | `sgotd.cwt`  | RGB565   | 640x280  | TV system selection, NTSC selected (first item) | [view](/images/sgotd.cwt.png) |
@@ -652,7 +652,7 @@ Unlike the SF2000, the GB300 supposedly does not have any unused images (not sur
 | `vdaz5.bjk`  | RGB565   | 640x280  | language selection, Russian selected (the fourth item) | [view](/images/vdaz5.bjk.png) |
 | `wshrm.nec`  | BGRA8888 | 217x37   | Yes/No, Yes highlighted | [view](/images/wshrm.nec.png) |
 | `wtrxj.lbd`  | BGRA8888 | 192x224  | "LANGUAGE" in 7 different languages | [view](/images/wtrxj.lbd.png) |
-| `xajkg.hsp`  | BGRA8888 | 150x160  | the five words of the pause menu in Portuguese | [view](/images/xajkg.hsp.png) |
+| `xajkg.hsp`  | BGRA8888 | 152x160  | the five words of the pause menu in Portuguese | [view](/images/xajkg.hsp.png) |
 | `xjebd.clq`  | BGRA8888 | 448x224  | "No games match the keyword!" in 7 different languages | [view](/images/xjebd.clq.png) |
 | `zaqrc.olc`  | BGRA8888 | 8x224    | message box background | [view](/images/zaqrc.olc.png) |
 | `ztrba.nec`  | RGB565   | 64x320   | key names (single and prefixed with "T" for autofire; also without and with a whitish background) | [view](/images/ztrba.nec.png) |
@@ -707,9 +707,9 @@ Consoles are encoded in the following order:
 
 After each button's 16-bit value from the table above comes a 16-bit flag for autofire: `0x0100` if autofire is active (indicated by a `T` in the console's key map editor), `0x0000` if not.
 
-Note that not all of the selectable button values actually exist on the console. For example, the GBA does not have X and Y buttons and will treat both like A.
+Note that not all of the selectable button values actually exist on the console. For example, the GBA does not have X and Y buttons and will treat both like A. Assigning other values than those above does not usually give any result, but the Game Boy treats most (but not all) keys as B only when assigned to the R button.
 
-R and L buttons are swapped when you use the console's key map editor. If the button on the left (next to the five menu items where you selected "Joystick") is highlighted, you'll set the button physically labeled R. The table above uses the _physical_ labels (found on the device's case), not what is highlighted by the console's key map editor.
+R and L buttons are swapped when you use the console's key map editor. If the button on the left (next to the five menu items where you selected "Joystick") is highlighted, you'll set the button physically labeled R. The table above uses the _physical_ labels, not what is highlighted by the console's key map editor.
 
 Per-game key mappings do not seem to work.
 
