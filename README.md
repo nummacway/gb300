@@ -59,7 +59,7 @@ Stock ROMs however come in their own format. The first `0xEA00` bytes are a 144x
   * The end of central directory header magic number is `0x57515701` but should be `0x504B0506`.
 * All (two) filenames in these headers had their bytes `xor 0xE5`'d.
 
-Changing the things above gives you a standard ZIP file. At least 7-Zip is already fine if you just fix the local block header magic number, even though the file will have a strange filename then.
+Changing the things above gives you a standard ZIP file. At least 7-Zip is already fine if you just fix the local block header magic number, even though the file inside will have a strange filename then.
 
 | Emulator              | Version   | Git Commit | File Extensions in `libretro`  |
 | --------------------- | --------- | ---------- | ---------------- |
@@ -70,7 +70,7 @@ Changing the things above gives you a standard ZIP file. At least 7-Zip is alrea
 | **TGB Dual**          | v0.8.3    | `9be31d3`  | `.gb`, `.gbc`, `.sgb` |
 | **gpSP**              | v0.91     | `261b2db`  | `.gba`, ~~`.bin`~~, `.agb`, `.gbz` |
 
-Extensions the GB300 does not even display are stroke-out. `.bin` files are associated with PicoDrive, not gpSP.
+Extensions the GB300 does not even display are stroke-out. `.bin` files are associated with PicoDrive, not gpSP, so they are stroke-out for the latter.
 * `.bkp`
 * `.zip`
 * `.zfc`
@@ -124,7 +124,7 @@ Only MD is advertised and there are no SMS games included. The device will still
 Despite the undocumented support for SMS, you aren't that lucky with the other Sega consoles. If you change the BIOS to display them or change the extension (it doesn't matter which of these you do, with the exception of a very few SG-1000 games), the following things will happen:
 * Sega CD games (`.bin` or `.cue`) will load indefinitely/freeze the console, even the tiniest and/or single-image ones (Ishii Hisaichi no Daiseikai, around 10 megabytes – the largest GBA games are 32 megabytes).
 * Most Sega 32X games will not display anything at all, even if you put the correct BIOS in the root or Roms directory. A few games like Knuckles' Chaotix display an error message.
-* Most Game Gear games will load. (The games that don't load will have a black screen.) The Game Gear's resolution is 160x144, but the emulator displays this in the center of a 256x192 pixel viewport. Graphics outside the center 160x144 area sometimes make sense (so you basically have an extended vision) but in some cases they're glitched. Colors are severely glitched all the time, but Audio is fine. If you don't mind the weird colors, you could play, if it wasn't about one other thing: The Game Gear has a D-Pad (which corresponds to the GB300's D-Pad), an A button (which the GB300 calls B and is mapped to the B button by default) and a B button (which the GB300 calls C and is mapped to R by default). And then, well, there's the Start button, which isn't mapped at all and none of the key IDs I tried (-1 through 19) corresponded to it. Roughly half of the Game Gear games require you to press it to get past the title screen, among them are the Sonic games.
+* Most Game Gear games will load. (The games that don't load will have a black screen.) The Game Gear's resolution is 160x144, but the emulator displays this in the center of a 256x192 pixel viewport. Graphics outside the center 160x144 area sometimes make sense (so you basically have an extended vision) but in some cases they're glitched. Colors are severely glitched all the time, but Audio is fine. If you don't mind the weird colors, you could play, if it wasn't about one other thing: The Game Gear has a D-Pad (which corresponds to the GB300's D-Pad), an A button (which the GB300 calls B and is mapped to the B button by default) and a B button (which the GB300 calls C and is mapped to R by default). And then, well, there's the Start button, which isn't mapped at all and none of the key IDs I tried (-1 through 19) corresponded to it. Roughly half of the Game Gear games require you to press it to get past the title screen, most notably all Sega games (as far as I know). Of the 25 best-rated Game Gear games on MobyGames, there are only seven that aren't blunt ports from other GB300 consoles and only one of the latter does not require the use of the start button: _Magical Puzzle: Popils_.
 * Most SG-1000 games will load. (The games that don't load will freeze the device, e.g. Champion Baseball 40kB.) There is no video (black screen), but audio is fine. Buttons are also fine. (Note that applications like Home Basic likely don't have sound, so you can't tell if they're loading or not.)
 
 Compared to the SF2000, the following game is missing:
@@ -638,7 +638,7 @@ Unlike the SF2000, the GB300 supposedly does not have any unused images (not sur
 | `okcg2.old`  | BGRA8888 | 24x24    | star (for favorited games) | [view](/images/okcg2.old.png) |
 | `ouenj.dut`  | BGRA8888 | 240x168  | "FAVORITES" in 7 different languages | [view](/images/ouenj.dut.png) |
 | `pwsso.occ`  | RGB565   | 640x480  | pause menu, fourth entry selected | [view](/images/pwsso.occ.png) |
-| `qasfc.bel`  | BGRA8888 | 328x224  | "Favorites are full !" in 7 different languages | [view](/images/qasfc.bel.png) |
+| `qasfc.bel`  | BGRA8888 | 328x224  | "Favorites are full !" (when already having 1000) in 7 different languages | [view](/images/qasfc.bel.png) |
 | `qdbec.ofd`  | BGRA8888 | 240x168  | "DOWNLOAD ROMS" in 7 different languages | [view](/images/qdbec.ofd.png) |
 | `qwave.bke`  | BGRA8888 | 152x160  | the five words of the pause menu in Spanish | [view](/images/qwave.bke.png) |
 | `sdclt.occ`  | BGRA8888 | 424x58   | selection background | [view](/images/sdclt.occ.png) |
@@ -654,7 +654,7 @@ Unlike the SF2000, the GB300 supposedly does not have any unused images (not sur
 | `wtrxj.lbd`  | BGRA8888 | 192x224  | "LANGUAGE" in 7 different languages | [view](/images/wtrxj.lbd.png) |
 | `xajkg.hsp`  | BGRA8888 | 152x160  | the five words of the pause menu in Portuguese | [view](/images/xajkg.hsp.png) |
 | `xjebd.clq`  | BGRA8888 | 448x224  | "No games match the keyword!" in 7 different languages | [view](/images/xjebd.clq.png) |
-| `zaqrc.olc`  | BGRA8888 | 8x224    | message box background | [view](/images/zaqrc.olc.png) |
+| `zaqrc.olc`  | BGRA8888 | 8x224    | message box left/right border | [view](/images/zaqrc.olc.png) |
 | `ztrba.nec`  | RGB565   | 64x320   | key names (single and prefixed with "T" for autofire; also without and with a whitish background) | [view](/images/ztrba.nec.png) |
 
 
@@ -662,7 +662,7 @@ Unlike the SF2000, the GB300 supposedly does not have any unused images (not sur
 
 Your custom ROMs are indexed into `tsmfk.tax` when the device boots. The following files contain the names of the stock ROMs:
 
-| Console | File name file | Chinese name file | Pinyin name file |
+| Folder  | File name file | Chinese name file | Pinyin name file |
 | ------- | -------------- | ----------------- | ---------------- |
 | **FC**  | `rdbui.tax`    | `fhcfg.nec`       | `nethn.bvs`      |
 | **PCE** | `urefs.tax`    | `adsnt.nec`       | `xvb6c.bvs`      |
@@ -671,6 +671,63 @@ Your custom ROMs are indexed into `tsmfk.tax` when the device boots. The followi
 | **GB**  | `pnpui.tax`    | `wjere.nec`       | `mgdel.bvs`      |
 | **GBC** | `vfnet.tax`    | `htuiw.nec`       | `sppnp.bvs`      |
 | **GBA** | `mswb7.tax`    | `msdtc.nec`       | `mfpmp.bvs`      |
+
+The Pinyin name file contains a Latin transcription of the Chinese names, but without vowels. It is used for searching when language is set to Chinese. The folders these file names are relative to can be changed using `Foldername.ini`. The first row in this table refers to the third one in `Foldername.ini` and so on.
+
+
+### Foldername.ini
+
+`Foldername.ini` is neither an INI file, nor does it contain only folder names. It is a general menu configuration. Its default content is:
+
+```
+GB300
+7
+FFFFFF
+FF8000 FC
+FF8000 PCE
+FF8000 SFC
+FF8000 MD
+FF8000 GB
+FF8000 GBC
+FF8000 GBA
+FF8000 ROMS
+FF8000 ROMS
+FF8000 ROMS
+12 0 3
+7 8 9 10 11
+20 112 144 208
+424 58
+
+```
+
+The file's content is matched to a Format string to extract the values. Funnily, this file is Windows (CR+LF) by default, even though the format string is specifically Unix (LF).
+
+Let's have a closer look at it:
+
+| Default&nbsp;Content | Description |
+| -------------------- | ----------- |
+| `GB300`              | Name of the device. The BIOS is hardcoded to expect this header. Do not change. |
+| `7`                  | Number of languages. It affects how the language strings are loaded from the images with multiple languages inside, and is also the index of the first TV system setup item, counted starting from 0. So you can hide languages from the language menu of you move the TV System backgrounds to their image files. You better leave this. |
+| `FFFFFF`             | Default UI text color (HTML Code: `#FFFFFF`) unless selected (see below). All colors in this file are case-insensitive. |
+| `FF8000 FC`          | First folder and its selected color (HTML Code: `#FFF000`) |
+| `FF8000 PCE`         | Second folder and its selected color |
+| `FF8000 SFC`         | Third folder and its selected color |
+| `FF8000 MD`          | Fourth folder and its selected color |
+| `FF8000 GB`          | Fifth folder and its selected color |
+| `FF8000 GBC`         | Sixth folder and its selected color |
+| `FF8000 GBA`         | Seventh folder and its selected color |
+| `FF8000 ROMS`        | Eighth folder (see below) and its selected color |
+| `FF8000 ROMS`        | Ninth folder (see below) and its selected color |
+| `FF8000 ROMS`        | Tenth folder (see below) and its selected color |
+| `12 0 3`             | Number of bottom tabs (you better leave this), left tab (starting with 0) and default tab starting from the left tab (starting from 0) – so the selected tab is the sum of the latter two numbers (starting from 0)
+| `7 8 9 10 11`        | Index of the "ROMS", "FAVORITES", "HISTORY", "SEARCH" and "SETTINGS" tabs on the bottom tab bar (counting from 0). See below. |
+| `20 112 144 208`     | Position of the thumbnail (X, Y) and its width and height. Note that this does not cause the image to be stretched, so the latter two also affect the dimensions the device expects and loads from thumbnailed files. This means that decreasing the _height_ may make sense (clips off the bottom part of the image) whereas any other change to the last two numbers will glitch the thumbnails unless you recreate _all_ thumbnailed files. The width and height of `appvc.ikb` must be 6 more each. |
+| `424 58`             | Dimensions of `sdclt.occ`. As with the thumbnail file above, this changes the dimensions the device expects. |
+|                      | Trailing line feed |
+
+Note that the ROM List files (see the sections above) are bound to the folders in this file. So `rdbui.tax`, which is used for the FC by default, will always refer to the first folder listed here. So if you swap the order of the folders, you need to swap these files.
+
+Changing anything in the `7 8 9 10 11` row has a lot of strange side effects: The numbers `7`, `8` and `9` each correspond to a file, `tsmfk.tax`, `Favorites.bin` and `History.bin` respectively. The file that corresponds to the first number in this row is populated with the folder given in its corresponding the line above. Example: Say this line starts with `9`, meaning tenth folder and `History.bin`. If you turn on the device, `History.bin` gets populated with file names from the tenth (last) folder defined in `Foldername.ini` because the index `9` refers to `History.bin`. Now it gets inconsistent, because the eighth tab (count from 1) that you just changed (because it's the first number in this line) will look like the History tab now as it has a thumbnail image, but it will still use the `tsmfk.tax` ROM list and still use the eighth image from `ectte.bke`. Accessing the tab that originally was the History however will freeze the device because it too will load its original file, `History.bin`, which has just been populated with data in an unsupported format. Swapping `8` and `9` causes _existing_ Favorites and History lists to be _initially_ swapped, but from then being updated with the correct entries. So it seems that this modification works, so does swapping `10` and `11`. Changing `Foldername.ini` does not affect the order on the bottom tab bar. tl;dr: You better leave this line. Or better: The entire file.
 
 
 ### Sounds
@@ -687,7 +744,7 @@ Your custom ROMs are indexed into `tsmfk.tax` when the device boots. The followi
 All files are completely identical and have the same use as on the SF2000 v1.71. See the [SF2000 documentation](https://vonmillhausen.github.io/sf2000/#sounds) for more details.
 
 
-### Key Mapping
+### KeyMapInfo.kmp
 
 The GB300 uses a larger `KeyMapInfo.kmp` file because it stores 7 key mappings instead of just 6. This makes its file incompatible with the SF2000 key map editor. Another difference to the SF2000 is that this file does not exist by default and is only created once you assign non-standard keys.
 
@@ -718,28 +775,8 @@ Per-game key mappings do not seem to work.
 
 * `Archive.sys`
 * `Favorites.bin`
-* `Foldername.ini`
 * `History.bin`
 
-Once again, their format and use is identical to the SF2000. `Foldername.ini` however is adjusted to the GB300's lack of arcade and additional PCE feature. Its default content is:
+Once again, their format and use is identical to the SF2000.
 
-```
-GB300
-7
-FFFFFF
-FF8000 FC
-FF8000 PCE
-FF8000 SFC
-FF8000 MD
-FF8000 GB
-FF8000 GBC
-FF8000 GBA
-FF8000 ROMS
-FF8000 ROMS
-FF8000 ROMS
-12 0 3
-7 8 9 10 11
-20 112 144 208
-424 58
 
-```
