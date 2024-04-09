@@ -1,6 +1,6 @@
 # GB300
 
-The GB300 is a cheap handheld that emulates video game consoles. The cheapest way to get it is via [AliExpress "Pick 3 and Save"](https://www.aliexpress.com/gcp/300000512/nnmixupdatev3?productIds=1005006436983834) for $9.99 (_not_ a referral link!) if you can find two more items from that page (or simply buy three GB300!). At the start of each month and some "shopping festivals", there is a 10% discount, so you can get it for $8.99. That's a few dollars more than the cheapest game consoles on AliExpress often dubbed the Famiclones, but the GB300 offers eight classic consoles (instead of just the Famicon), comes with _way_ more games (even on the Famicon), you can add your own games, and you can save (states and sometimes standard GBA battery saves).
+The Sup+ GB300 is a cheap handheld that emulates video game consoles. The cheapest way to get it is via [AliExpress "Pick 3 and Save"](https://www.aliexpress.com/gcp/300000512/nnmixupdatev3?productIds=1005006436983834) for $9.99 (_not_ a referral link!) if you can find two more items from that page (or simply buy three GB300!). At the start of each month and some "shopping festivals", there is a 10% discount, so you can get it for $8.99. That's a few dollars more than the cheapest game consoles on AliExpress often dubbed the Famiclones, but the GB300 offers eight classic consoles (instead of just the Famicon), comes with _way_ more games (even on the Famicon), you can add your own games, and you can save (states and sometimes standard GBA battery saves).
 
 Some see it as a clone of the (usually a bit more expensive) Data Frog SF2000, which however is a bit different. Because the [SF2000 has already been documented](https://vonmillhausen.github.io/sf2000/), this page focusses primarily on the differences.
 
@@ -17,9 +17,11 @@ Unlike the SF2000, the GB300 has a working volume control.
 
 Because it lacks arcade support accounting for 2.75 GB on the SF2000, the device ships with only a 8 GB TF/microSDHC card (42 MB of which not allocated to a partition), formatted FAT32. It includes the firmware and the default set of 6267 ROMs. This leaves around 1.75 GB for your own ROMs. Actually, there's more space if you follow the manual: All the ROMs are just for demonstration and you are supposed to delete them right when you receive the console, even though the menus are hardcoded to exactly these files.
 
-The device comes with a 70&thinsp;cm (28") cable from a 2.5mm male audio jack to two male RCA (cinch) jacks. The yellow RCA jack is for composite video and the red one for sound. You can plug them into older TVs either directly or via a SCART adapter. If you plug the cable in the GB300, its own screen will be turned off. The TV output has a better resolution (640x480) than the internal screen's 320x240. If your TV doesn't care, use NTSC 480i to prevent unnecessary vertical scaling to 576i. NTSC outputs a vertically pixel-perfect result of the interface. Unlike the SF2000, the TV signal will be fine while charging the GB300.
+The device comes with a 70&thinsp;cm (28") cable from a 2.5mm male audio jack to two male RCA (cinch) jacks. The yellow RCA jack is for composite video and the red one for sound. You can plug them into older TVs either directly or via a SCART adapter. If you plug the cable in the GB300, its own screen will be turned off. The TV output has a better resolution (640x480) than the internal screen's 320x240. If your TV doesn't care, use NTSC 480i to prevent unnecessary vertical scaling to 576i. NTSC outputs a vertically pixel-perfect result of the interface. Unlike the SF2000, the TV signal will be fine while charging the GB300. Do not plug in the cable until the device has completely booted.
 
-There is currently no information if you can use an external gamepad. For comparison, the SF2000 accepts both, wireless and wired gamepads that ship with some similar consoles. Neither have any use with normal hardware like computers and cannot normally be bought individually. Some sellers began bundling the SF2000 with the wireless gamepad from the SF900, a TV game stick. If you see an SF2000 offer on AliExpress that looks way too cheap, that's because of an option to just buy a wireless gamepad, but compatibility with the GB300 is unknown.
+The GB300 works with the _wired_ gamepads that sometimes ship with some other cheap(er) consoles. You cannot normally buy them individually and the GB300 isn't sold bundled with them either. These devices work for solely the second player in games that support that. _Wireless_ gamepads don't work on the GB300, e.g. the gamepad bundled with the SF900 TV stick. Note that neither of these complies with industry standards like USB or BT, so they don't have any use with computers, laptops or mainstream consoles.
+
+The GB300 is powered by a 18650 battery that you can easily change. The default battery appears to have overcharge protection (the charging current will drop when the battery is full), yet the green charging light will not turn off. If the battery is very low, it will take around 4&thinsp;VAh until it stops charging. This suggests that the capacity is lower than the SF2000's 1750 mAh. This is supported by people reporting that the (light pink and completely unlabeled) battery of the GB300 is lighter than the SF2000's. Neither device has undercharge protection, so leaving the device on with a lower battery can kill the battery. One person reported that their GB300 came with the power switch in the 'ON' position and therefore a dead battery. While the SF2000 takes flat batteries, the GB300 seems to require some manipulation to its contact springs. It charges with around 2.5&thinsp;W, which slowly drops to around 2&thinsp;W as it charges. If you buy a new battery, consider one with both, over- and undercharge protection.
 
 
 ## General Firmware Features
@@ -109,9 +111,9 @@ There seems to be no way to get it to run TurboGrafx-CD games.
 
 ### Super Nintendo Entertainment System
 
-With the arcade removed, the SNES is the only other system where games can have a bad performance. However, the SNES a lot less issues than the GBA.
+With the arcade removed, the SNES and GBA are the only two systems where games can have a bad performance. However, the SNES has a lot less issues than the GBA.
 
-Final Knockout does work on the GB300. It was broken on the SF2000 because the bytes from `0xA8000` to `0xBFFFF` of the .zsf file were replaced with unknown data.
+Final Knockout does work on the GB300. It was broken on the SF2000 because the bytes from `0xA8000` to `0xBFFFF` of the .zsf file were replaced with unidentified data.
 
 Compared to the SF2000, the following file is missing:
 * `手柄测试.zsf`
@@ -124,8 +126,35 @@ Only MD is advertised and there are no SMS games included. The device will still
 Despite the undocumented support for SMS, you aren't that lucky with the other Sega consoles. If you change the BIOS to display them or change the extension (it doesn't matter which of these you do, with the exception of a very few SG-1000 games), the following things will happen:
 * Sega CD games (`.bin` or `.cue`) will load indefinitely/freeze the console, even the tiniest and/or single-image ones (Ishii Hisaichi no Daiseikai, around 10 megabytes – the largest GBA games are 32 megabytes).
 * Most Sega 32X games will not display anything at all, even if you put the correct BIOS in the root or Roms directory. A few games like Knuckles' Chaotix display an error message.
-* Most Game Gear games will load. (The games that don't load will have a black screen.) The Game Gear's resolution is 160x144, but the emulator displays this in the center of a 256x192 pixel viewport. Graphics outside the center 160x144 area sometimes make sense (so you basically have an extended vision) but in some cases they're glitched. Colors are severely glitched all the time, but Audio is fine. If you don't mind the weird colors, you could play, if it wasn't about one other thing: The Game Gear has a D-Pad (which corresponds to the GB300's D-Pad), an A button (which the GB300 calls B and is mapped to the B button by default) and a B button (which the GB300 calls C and is mapped to R by default). And then, well, there's the Start button, which isn't mapped at all and none of the key IDs I tried (-1 through 19) corresponded to it. Roughly half of the Game Gear games require you to press it to get past the title screen, most notably all Sega games (as far as I know). Of the 25 best-rated Game Gear games on MobyGames, there are only seven that aren't blunt ports from other GB300 consoles and only one of the latter does not require the use of the start button: _Magical Puzzle: Popils_.
 * Most SG-1000 games will load. (The games that don't load will freeze the device, e.g. Champion Baseball 40kB.) There is no video (black screen), but audio is fine. Buttons are also fine. (Note that applications like Home Basic likely don't have sound, so you can't tell if they're loading or not.)
+* Most Game Gear games will load. (The games that don't load will have a black screen.) The Game Gear's resolution is 160x144, but the emulator displays this in the center of the SMS's 256x192 pixel viewport. Graphics outside the center 160x144 area sometimes make sense (so you basically have an extended vision) but in some cases they're glitched. Colors are severely glitched all the time, but Audio is fine. If you don't mind the weird colors, you could play, if it wasn't about one other thing: The Game Gear has a D-Pad (which corresponds to the GB300's D-Pad), an A button (which the GB300 calls B and is mapped to the B button by default) and a B button (which the GB300 calls C and is mapped to R by default). And then, well, there's the Start button, which isn't mapped at all and none of the key IDs I tried (-1 through 19) corresponded to it. The majority of the Game Gear games require you to press it to get past the title screen, most notably all Sega games (the only exception that I know of is the beta version of the _Sega Game Pack 4 in 1_). Of the 25 best-rated Game Gear games on MobyGames, there are only seven that aren't blunt ports from other GB300 consoles and only one of the latter does not require the use of the Start button: _Magical Puzzle: Popils_. smspower.org has [patches for many games](https://www.smspower.org/Hacks/GameGearToMasterSystem), especially the unique ones, that will change them to SMS. The Start button seems to be an issue for them as well, so they bind it to a key combinations, an unused key or a key on the second controller.
+
+<details><summary>Just for your reference, click here to expand a list of Game Gear games that are technically normal SMS games and will therefore not have glitched colors. Some ROM sites list the files in the Game Gear section but with an `.sms` extension. Still, some games will not work.</summary>
+ 
+| Game | Remarks |
+| ---- | ------- |
+| **Castle of Illusion Starring Mickey Mouse** | Start button is working |
+| **Cave Dude** (Beta) | Start button does not work but not mandatory |
+| **Chase H.Q.** | Start button neither working nor mandatory |
+| **Excellent Dizzy Collection, The** | Game does not load |
+| **Fantastic Dizzy** | No useful video, glitched audio |
+| **Jang Pung II** (Unl) | No useful video, no audio |
+| **Mickey Mouse no Castle Illusion** | Start button is working |
+| **Olympic Gold** | Start button is working |
+| **OutRun Europa** | Start button neither working nor mandatory |
+| **Predator 2** | Start button is working |
+| **Prince of Persia** | Start button is working |
+| **R.C. Grand Prix** | Start button neither working nor mandatory |
+| **Rastan Saga** | Start button is working |
+| **Street Battle** | No useful video, no audio |
+| **Street Hero** (Beta 1) | No video, glitched audio |
+| **Street Hero** (Beta 2) | Start button neither working nor mandatory |
+| **Super Kick Off** | Start button is working |
+| **Taito Chase H.Q.** | Start button is working |
+| **WWF Wrestlemania: Steel Cage Challenge** | Start button neither working nor mandatory |
+
+With the exception of Street Hero, the information applies to all versions of the games above.
+</details>
 
 Compared to the SF2000, the following game is missing:
 * `007 Shitou - The Duel.zmd`
@@ -264,13 +293,217 @@ Other links:
 * [SF2000 Community Compatibility list](https://docs.google.com/spreadsheets/d/19TCedWEKFXlnS2dlmLxk1BcnlHrX-MSVrKwEURuiU0E/edit#gid=1327539659)
 
 
+## Resources
+
+Note: There are no language strings on the GB300, just a few images.
+
+
+### Fonts
+
+Only one file, `yahei_Arial.ttf`, identical to the SF2000's font file of the same file name. _Microsoft YaHei_ is a Chinese typeface that you can probably find on your computer. Despite also showing up as _Microsoft YaHei_ when you open, `yahai_Arial.ttf` uses Arial for non-Chinese script, but with some differences. For example, it does not feature so-called tabular figures (which make any lists look really odd because names are not aligned) and the baseline changes significantly between Latin letters, making the font look "wavy".
+
+
+### Images
+
+Unlike the SF2000, the GB300 supposedly does not have any unused images (not sure about the 'empty battery' screen though). All of these have been renamed on the GB300 compared to the SF2000.
+
+| File         | Comp's   | Dim's    | Description | View |
+| ------------ | -------- | -------- | ----------- | ---- |
+| `appvc.ikb`  | BGRA8888 | 150x214  | "missing image" image | [view](/images/appvc.ikb.png) |
+| `bfrjd.odb`  | RGB565   | 640x280  | language selection, Korean selected (the seventh item) | [view](/images/bfrjd.odb.png) |
+| `bisrv.nec`  | RGB565   | 640x480  | pause menu, third entry selected | [view](/images/bisrv.nec.png) |
+| `bttlve.kbp` | BGRA8888 | 60x144   | 6 battery states | [view](/images/bttlve.kbp.png) |
+| `bxvtb.sby`  | BGRA8888 | 192x224  | "TV SYSTEM" in 7 different languages | [view](/images/bxvtb.sby.png) |
+| `c1eac.pal`  | BGRA8888 | 26x22    | checked checkbox, indicating the selected TV standard and language | [view](/images/c1eac.pal.png) |
+| `d2d1.hgp`   | RGB565   | 640x480  | pause menu, second entry selected | [view](/images/d2d1.hgp.png) |
+| `dism.cef`   | RGB565   | 640x480  | pause menu, first entry selected | [view](/images/dism.cef.png) |
+| `dpskc.ctp`  | RGB565   | 384x320  | 4 different selected save states | [view](/images/dpskc.ctp.png) |
+| `drivr.ers`  | BGRA8888 | 152x160  | the five words of the pause menu in Arabic | [view](/images/drivr.ers.png) |
+| `dsuei.cpl`  | BGRA8888 | 152x160  | the five words of the pause menu in English | [view](/images/dsuei.cpl.png) |
+| `dufdr.cwr`  | BGRA8888 | 240x168  | "SETTING" in 7 different languages | [view](/images/dufdr.cwr.png) |
+| `dxva2.nec`  | RGB565   | 640x288  | keyboard for search, embossed keys | [view](/images/dxva2.nec.png) |
+| `ectte.bke`  | BGRA8888 | 1200x120 | 12 bottom tab items, default state | [view](/images/ectte.bke.png) |
+| `eknjo.ofd`  | RGB565   | 640x280  | language selection, Spanish selected (the fifth item) | [view](/images/eknjo.ofd.png) |
+| `exaxz.hsp`  | BGRA8888 | 448x768  | logos in the top left | [view](/images/exaxz.hsp.png) |
+| `fhshl.skb`  | RGB565   | 640x280  | language selection, English selected (the first item) | [view](/images/fhshl.skb.png) |
+| `fixas.ctp`  | BGRA8888 | 152x160  | the five words of the pause menu in Chinese | [view](/images/fixas.ctp.png) |
+| `gpapi.bvs`  | RGB565   | 640x480  | pause menu, fifth entry selected | [view](/images/gpapi.bvs.png) |
+| `hctml.ers`  | RGB565   | 320x2256 | 6 images of the device with one of the shoulder and ABXY buttons highlighted | [view](/images/hctml.ers.png) |
+| `hlink.bvs`  | RGB565   | 640x288  | keyboard for search, keys with a bright frame | [view](/images/hlink.bvs.png) |
+| `icuin.cpl`  | BGRA8888 | 152x160  | the five words of the pause menu in Russian | [view](/images/icuin.cpl.png) |
+| `igc64.dll`  | BGRA8888 | 217x37   | Yes/No, No highlighted | [view](/images/igc64.dll.png) |
+| `irftp.ctp`  | BGRA8888 | 152x160  | the five words of the pause menu in Korean | [view](/images/irftp.ctp.png) |
+| `jccatm.kbp` | RGB565   | 640x480  | empty battery screen | [view](/images/jccatm.kbp.png) |
+| `jsnno.uby`  | BGRA8888 | 240x168  | "HISTORY" in 7 different languages | [view](/images/jsnno.uby.png) |
+| `kmbcj.acp`  | BGRA8888 | 288x448  | "Archive already exists, overwrite this archive?" in 7 different languages | [view](/images/kmbcj.acp.png) |
+| `lf9lb.cut`  | RGB565   | 640x280  | language selection, Portuguese selected (the sixth item) | [view](/images/lf9lb.cut.png) |
+| `lk7tc.bvs`  | BGRA8888 | 52x192   | key names (B, TB, C, TC, ST, ST, SL, SL, U, U, D, D, L, TL, R, TR, A, TA, Z, TZ, X, TX, Y, TY) | [view](/images/lk7tc.bvs.png) |
+| `mczwq.ikb`  | RGB565   | 640x336  | 6 device logos (the GB/GBC share one) for the top of the pause menu; whenever you press the DOWN key in the pause menu, it the image is shown or hidden depending on whether you are at the bottom (Joystick) of not | [view](/images/mczwq.ikb.png) |
+| `mhg4s.ihg`  | RGB565   | 400x192  | Background for confirmation messages, with 3 different buttons selected (English only) | [view](/images/mhg4s.ihg.png) |
+| `mksh.rcv`   | RGB565   | 640x288  | keyboard for search | [view](/images/mksh.rcv.png) |
+| `ntrcq.oba`  | BGRA8888 | 240x168  | "SEARCH" in 7 different languages | [view](/images/ntrcq.oba.png) |
+| `nvinf.hsp`  | BGRA8888 | 1200x120 | 12 bottom tab items, selected state | [view](/images/nvinf.hsp.png) |
+| `okcg2.old`  | BGRA8888 | 24x24    | star (for favorited games) | [view](/images/okcg2.old.png) |
+| `ouenj.dut`  | BGRA8888 | 240x168  | "FAVORITES" in 7 different languages | [view](/images/ouenj.dut.png) |
+| `pwsso.occ`  | RGB565   | 640x480  | pause menu, fourth entry selected | [view](/images/pwsso.occ.png) |
+| `qasfc.bel`  | BGRA8888 | 328x224  | "Favorites are full !" (when already having 1000) in 7 different languages | [view](/images/qasfc.bel.png) |
+| `qdbec.ofd`  | BGRA8888 | 240x168  | "DOWNLOAD ROMS" in 7 different languages | [view](/images/qdbec.ofd.png) |
+| `qwave.bke`  | BGRA8888 | 152x160  | the five words of the pause menu in Spanish | [view](/images/qwave.bke.png) |
+| `sdclt.occ`  | BGRA8888 | 424x58   | selection background | [view](/images/sdclt.occ.png) |
+| `sfcdr.cpl`  | RGB565   | 640x480  | main background | [view](/images/sfcdr.cpl.png) |
+| `sgotd.cwt`  | RGB565   | 640x280  | TV system selection, NTSC selected (first item) | [view](/images/sgotd.cwt.png) |
+| `snbqj.uby`  | RGB565   | 640x280  | TV system selection, PAL selected (second item) | [view](/images/snbqj.uby.png) |
+| `t2act.sgf`  | RGB565   | 640x280  | language selection, Chinese selected (the second item) | [view](/images/t2act.sgf.png) |
+| `tvctu.uby`  | RGB565   | 640x280  | language selection, Arabic selected (the third item) | [view](/images/tvctu.uby.png) |
+| `ucby4.aax`  | BGRA8888 | 448x224  | "Folder is empty!" in 7 different languages | [view](/images/ucby4.aax.png) |
+| `urlkp.bvs`  | BGRA8888 | 328x224  | "Remove from favorites?" in 7 different languages | [view](/images/urlkp.bvs.png) |
+| `vdaz5.bjk`  | RGB565   | 640x280  | language selection, Russian selected (the fourth item) | [view](/images/vdaz5.bjk.png) |
+| `wshrm.nec`  | BGRA8888 | 217x37   | Yes/No, Yes highlighted | [view](/images/wshrm.nec.png) |
+| `wtrxj.lbd`  | BGRA8888 | 192x224  | "LANGUAGE" in 7 different languages | [view](/images/wtrxj.lbd.png) |
+| `xajkg.hsp`  | BGRA8888 | 152x160  | the five words of the pause menu in Portuguese | [view](/images/xajkg.hsp.png) |
+| `xjebd.clq`  | BGRA8888 | 448x224  | "No games match the keyword!" in 7 different languages | [view](/images/xjebd.clq.png) |
+| `zaqrc.olc`  | BGRA8888 | 8x224    | message box left/right border | [view](/images/zaqrc.olc.png) |
+| `ztrba.nec`  | RGB565   | 64x320   | key names (single and prefixed with "T" for autofire; also without and with a whitish background) | [view](/images/ztrba.nec.png) |
+
+
+### ROM Lists
+
+Your custom ROMs are alphabetically indexed into `tsmfk.tax` when the device boots. The following files contain the names of the stock ROMs:
+
+| Folder  | File name file | Chinese name file | Pinyin name file |
+| ------- | -------------- | ----------------- | ---------------- |
+| **FC**  | `rdbui.tax`    | `fhcfg.nec`       | `nethn.bvs`      |
+| **PCE** | `urefs.tax`    | `adsnt.nec`       | `xvb6c.bvs`      |
+| **SFC** | `scksp.tax`    | `setxa.nec`       | `wmiui.bvs`      |
+| **MD**  | `vdsdc.tax`    | `umboa.nec`       | `qdvd6.bvs`      |
+| **GB**  | `pnpui.tax`    | `wjere.nec`       | `mgdel.bvs`      |
+| **GBC** | `vfnet.tax`    | `htuiw.nec`       | `sppnp.bvs`      |
+| **GBA** | `mswb7.tax`    | `msdtc.nec`       | `mfpmp.bvs`      |
+
+The Pinyin name file contains a Latin transcription of the Chinese names, but without vowels. It is used for searching when language is set to Chinese. The folders these file names are relative to can be changed by editing `Foldername.ini`. The first row in this table refers to the third one in `Foldername.ini` and so on.
+
+In internally, the above table continues with the file name files `tsmfk.tax`, `Favorites.bin` and `History.bin`. The latter two however are in a different format. There are not corresponding Chinese name files or Pinyin name files.
+
+`tsmfk.tax` and the files in the table have the following format:
+* 1 Int32 for the number of items.
+* Now comes an array, consisting of Int32's for the position of the name inside this file.
+* After that comes the strings, encoded in UTF-8 (without BOM of course). They're C-style, meaning each is terminated with a NUL (`\0`), including the last one, meaning these files always end with a NUL.
+
+
+### Foldername.ini
+
+`Foldername.ini` is neither an INI file, nor does it contain only folder names. It is a general menu configuration. Its default content is:
+
+```
+GB300
+7
+FFFFFF
+FF8000 FC
+FF8000 PCE
+FF8000 SFC
+FF8000 MD
+FF8000 GB
+FF8000 GBC
+FF8000 GBA
+FF8000 ROMS
+FF8000 ROMS
+FF8000 ROMS
+12 0 3
+7 8 9 10 11
+20 112 144 208
+424 58
+
+```
+
+The file's content is matched to a Format string to extract the values. Funnily, this file is Windows (CR+LF) by default, even though the format string is specifically Unix (LF).
+
+Let's have a closer look at it:
+
+| Default&nbsp;Content | Description |
+| -------------------- | ----------- |
+| `GB300`              | Name of the device. The BIOS is hardcoded to expect this header. Do not change. |
+| `7`                  | Number of languages. It affects how the language strings are loaded from the images with multiple languages inside, and is also the index of the first TV system setup item, counted starting from 0. So you can hide languages from the language menu of you move the TV System backgrounds to their image files. You better leave this. |
+| `FFFFFF`             | Default UI text color (HTML Code: `#FFFFFF`) unless selected (see below). All colors in this file are case-insensitive. |
+| `FF8000 FC`          | First folder and its selected color (HTML Code: `#FFF000`) |
+| `FF8000 PCE`         | Second folder and its selected color |
+| `FF8000 SFC`         | Third folder and its selected color |
+| `FF8000 MD`          | Fourth folder and its selected color |
+| `FF8000 GB`          | Fifth folder and its selected color |
+| `FF8000 GBC`         | Sixth folder and its selected color |
+| `FF8000 GBA`         | Seventh folder and its selected color |
+| `FF8000 ROMS`        | Eighth folder (see below) and its selected color |
+| `FF8000 ROMS`        | Ninth folder (see below) and its selected color |
+| `FF8000 ROMS`        | Tenth folder (see below) and its selected color |
+| `12 0 3`             | Number of bottom tabs (you better leave this), left tab (starting with 0) and default tab starting from the left tab (starting from 0) – so the selected tab is the sum of the latter two numbers (starting from 0)
+| `7 8 9 10 11`        | Index of the "ROMS", "FAVORITES", "HISTORY", "SEARCH" and "SETTINGS" tabs on the bottom tab bar (counting from 0). See below. |
+| `20 112 144 208`     | Position of the thumbnail (X, Y) and its width and height. Note that this does not cause the image to be stretched, so the latter two also affect the dimensions the device expects and loads from thumbnailed files. This means that decreasing the _height_ may make sense (clips off the bottom part of the image) whereas any other change to the last two numbers will glitch the thumbnails unless you recreate _all_ thumbnailed files. The width and height of `appvc.ikb` must be 6 more each. |
+| `424 58`             | Dimensions of `sdclt.occ`. As with the thumbnail file above, this changes the dimensions the device expects. |
+|                      | Trailing line feed |
+
+Note that the ROM List files (see the sections above) are bound to the folders in this file. So `rdbui.tax`, which is used for the FC by default, will always refer to the first folder listed here. So if you swap the order of the folders, you need to swap these files.
+
+Changing anything in the `7 8 9 10 11` row has a lot of strange side effects: The numbers `7`, `8` and `9` each correspond to a file, `tsmfk.tax`, `Favorites.bin` and `History.bin` respectively. The file that corresponds to the first number in this row is populated with the folder given in its corresponding the line above. Example: Say this line starts with `9`, meaning tenth folder and `History.bin`. If you turn on the device, `History.bin` gets populated with file names from the tenth (last) folder defined in `Foldername.ini` because the index `9` refers to `History.bin`. Now it gets inconsistent, because the eighth tab (count from 1) that you just changed (because it's the first number in this line) will look like the History tab now as it has a thumbnail image, but it will still use the `tsmfk.tax` ROM list and still use the eighth image from `ectte.bke`. Accessing the tab that originally was the History however will freeze the device because it too will load its original file, `History.bin`, which has just been populated with data in an unsupported format. Swapping `8` and `9` causes _existing_ Favorites and History lists to be _initially_ swapped, but from then being updated with the correct entries. So it seems that this modification works, so does swapping `10` and `11`. Changing `Foldername.ini` does not affect the order on the bottom tab bar. tl;dr: You better leave this line. Or better: The entire file.
+
+
+### KeyMapInfo.kmp
+
+The GB300 uses a larger `KeyMapInfo.kmp` file because it stores 7 key mappings instead of just 6. This makes its file incompatible with the SF2000 key map editor. Another difference to the SF2000 is that this file does not exist by default and is only created once you assign non-standard keys.
+
+After each emulated console's key map (24 bytes), it is repeated instantly (probably for the second player, but 2-player capabilities of the GB300 are unknown). Then comes the next console.
+
+Consoles are encoded in the following order:
+
+| Console/Order | Physical Button Save Order   | Available Values per Physical Button                                         |
+| ------------- | ---------------------------- | ---------------------------------------------------------------------------- |
+| 1. **FC**     | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B                                                     |
+| 2. **PCE**    | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B, `0x0A00`: X, `0x0B00`: Y, `0x0100`: C, `0x0900`: Z |
+| 3. **SFC**    | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B, `0x0A00`: X, `0x0B00`: Y, `0x0100`: L, `0x0900`: R |
+| 4. **MD/SMS** | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B, `0x0A00`: X, `0x0B00`: Y, `0x0100`: C, `0x0900`: Z |
+| 5. **GB/GBC** | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B                                                     |
+| 6. **GBA**    | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B, `0x0A00`: X, `0x0B00`: Y, `0x0100`: L, `0x0900`: R |
+| 7. unknown    |                              | defaults identical to SFC's defaults                                         |
+
+After each button's 16-bit value from the table above comes a 16-bit flag for autofire: `0x0100` if autofire is active (indicated by a `T` in the console's key map editor), `0x0000` if not.
+
+Note that not all of the selectable button values actually exist on the console. For example, the GBA does not have X and Y buttons and will treat both like A. Assigning other values than those above does not usually give any result, but the Game Boy treats most (but not all) keys as B only when assigned to the R button.
+
+R and L buttons are swapped when you use the console's key map editor. If the button on the left (next to the five menu items where you selected "Joystick") is highlighted, you'll set the button physically labeled R. The table above uses the _physical_ labels, not what is highlighted by the console's key map editor.
+
+Per-game key mappings do not seem to work.
+
+
+### Sounds
+
+* `c2fkec.pgt`
+* `dpnet.dll`
+* `help.lis`
+* `mfsvr.nkf`
+* `nyquest.gdb`
+* `oldversion.kbe`
+* `pagefile.sys`
+* `swapfile.sys`
+
+All files are completely identical and have the same use as on the SF2000 v1.71. See the [SF2000 documentation](https://vonmillhausen.github.io/sf2000/#sounds) for more details.
+
+
+### Other Files
+
+* `Archive.sys`
+* `Favorites.bin`
+* `History.bin`
+
+Once again, their format and use is identical to the SF2000.
+
+
 ## List of ROMs
 
 For the FC, MD, GB, GBC, GBA and SFC see [vonmillhausen's list](https://vonmillhausen.github.io/sf2000/defaultRoms/defaultRomsNoIntroCheck.htm). Games that are missing in the GB300 are listed above in this document. There are no new games for consoles that the SF2000 has, but [Final Knockout](https://datomatic.no-intro.org/index.php?page=show_record&s=49&n=0816) does work on the GB300.
 
 Note that all FC hashes are different for the GB300 because of the reasons explained above.
 
-To play your own games, create the folder `Roms` on the TF card. You can also use ZIP files to save memory.
+To play your own games, create the folder `Roms` on the TF card. You can also use ZIP files to save space. Make sure to create a `save` subfolder to be able to save.
+
+In theorey, you can also make ROMs inside the `ROMS` folder a `Favorites.bin` or `History.bin` entry (first word = `0x0700`). But because the order changes whenever you add a game with a name lexically lower than any of your favorites, this will change the reference, so the GB300 does not add your own games there (I would guess the GB300 doesn't do that either).
 
 
 ### List of PCE Games
@@ -583,200 +816,3 @@ The following is a list of all PCE games that ship with the GB300. The names lis
 | **Zero4 Champ (Japan) (Alt)** (Zero4 Champ V1.5) | `b77f2e2f` | [0418](https://datomatic.no-intro.org/index.php?page=show_record&s=12&n=0418) | not verified |
 | **Zero4 Champ (Japan)** | `ee156721` | [0417](https://datomatic.no-intro.org/index.php?page=show_record&s=12&n=0417) | verified |
 | **Zipang (Japan)** | `67aab7a1` | [0419](https://datomatic.no-intro.org/index.php?page=show_record&s=12&n=0419) | good |
-
-
-## Resources
-
-Note: There are no language strings on the GB300, just a few images.
-
-
-### Fonts
-
-Only one file, `yahei_Arial.ttf`, identical to the SF2000's font file of the same file name.
-
-
-### Images
-
-Unlike the SF2000, the GB300 supposedly does not have any unused images (not sure about the 'empty battery' screen though). All of these have been renamed on the GB300 compared to the SF2000.
-
-| File         | Comp's   | Dim's    | Description | View |
-| ------------ | -------- | -------- | ----------- | ---- |
-| `appvc.ikb`  | BGRA8888 | 150x214  | "missing image" image | [view](/images/appvc.ikb.png) |
-| `bfrjd.odb`  | RGB565   | 640x280  | language selection, Korean selected (the seventh item) | [view](/images/bfrjd.odb.png) |
-| `bisrv.nec`  | RGB565   | 640x480  | pause menu, third entry selected | [view](/images/bisrv.nec.png) |
-| `bttlve.kbp` | BGRA8888 | 60x144   | 6 battery states | [view](/images/bttlve.kbp.png) |
-| `bxvtb.sby`  | BGRA8888 | 192x224  | "TV SYSTEM" in 7 different languages | [view](/images/bxvtb.sby.png) |
-| `c1eac.pal`  | BGRA8888 | 26x22    | checked checkbox, indicating the selected TV standard and language | [view](/images/c1eac.pal.png) |
-| `d2d1.hgp`   | RGB565   | 640x480  | pause menu, second entry selected | [view](/images/d2d1.hgp.png) |
-| `dism.cef`   | RGB565   | 640x480  | pause menu, first entry selected | [view](/images/dism.cef.png) |
-| `dpskc.ctp`  | RGB565   | 384x320  | 4 different selected save states | [view](/images/dpskc.ctp.png) |
-| `drivr.ers`  | BGRA8888 | 152x160  | the five words of the pause menu in Arabic | [view](/images/drivr.ers.png) |
-| `dsuei.cpl`  | BGRA8888 | 152x160  | the five words of the pause menu in English | [view](/images/dsuei.cpl.png) |
-| `dufdr.cwr`  | BGRA8888 | 240x168  | "SETTING" in 7 different languages | [view](/images/dufdr.cwr.png) |
-| `dxva2.nec`  | RGB565   | 640x288  | keyboard for search, embossed keys | [view](/images/dxva2.nec.png) |
-| `ectte.bke`  | BGRA8888 | 1200x120 | 12 bottom tab items, default state | [view](/images/ectte.bke.png) |
-| `eknjo.ofd`  | RGB565   | 640x280  | language selection, Spanish selected (the fifth item) | [view](/images/eknjo.ofd.png) |
-| `exaxz.hsp`  | BGRA8888 | 448x768  | logos in the top left | [view](/images/exaxz.hsp.png) |
-| `fhshl.skb`  | RGB565   | 640x280  | language selection, English selected (the first item) | [view](/images/fhshl.skb.png) |
-| `fixas.ctp`  | BGRA8888 | 152x160  | the five words of the pause menu in Chinese | [view](/images/fixas.ctp.png) |
-| `gpapi.bvs`  | RGB565   | 640x480  | pause menu, fifth entry selected | [view](/images/gpapi.bvs.png) |
-| `hctml.ers`  | RGB565   | 320x2256 | 6 images of the device with one of the shoulder and ABXY buttons highlighted | [view](/images/hctml.ers.png) |
-| `hlink.bvs`  | RGB565   | 640x288  | keyboard for search, keys with a bright frame | [view](/images/hlink.bvs.png) |
-| `icuin.cpl`  | BGRA8888 | 152x160  | the five words of the pause menu in Russian | [view](/images/icuin.cpl.png) |
-| `igc64.dll`  | BGRA8888 | 217x37   | Yes/No, No highlighted | [view](/images/igc64.dll.png) |
-| `irftp.ctp`  | BGRA8888 | 152x160  | the five words of the pause menu in Korean | [view](/images/irftp.ctp.png) |
-| `jccatm.kbp` | RGB565   | 640x480  | empty battery screen | [view](/images/jccatm.kbp.png) |
-| `jsnno.uby`  | BGRA8888 | 240x168  | "HISTORY" in 7 different languages | [view](/images/jsnno.uby.png) |
-| `kmbcj.acp`  | BGRA8888 | 288x448  | "Archive already exists, overwrite this archive?" in 7 different languages | [view](/images/kmbcj.acp.png) |
-| `lf9lb.cut`  | RGB565   | 640x280  | language selection, Portuguese selected (the sixth item) | [view](/images/lf9lb.cut.png) |
-| `lk7tc.bvs`  | BGRA8888 | 52x192   | key names (B, TB, C, TC, ST, ST, SL, SL, U, U, D, D, L, TL, R, TR, A, TA, Z, TZ, X, TX, Y, TY) | [view](/images/lk7tc.bvs.png) |
-| `mczwq.ikb`  | RGB565   | 640x336  | 6 device logos (the GB/GBC share one) for the top of the pause menu; whenever you press the DOWN key in the pause menu, it the image is shown or hidden depending on whether you are at the bottom (Joystick) of not | [view](/images/mczwq.ikb.png) |
-| `mhg4s.ihg`  | RGB565   | 400x192  | Background for confirmation messages, with 3 different buttons selected (English only) | [view](/images/mhg4s.ihg.png) |
-| `mksh.rcv`   | RGB565   | 640x288  | keyboard for search | [view](/images/mksh.rcv.png) |
-| `ntrcq.oba`  | BGRA8888 | 240x168  | "SEARCH" in 7 different languages | [view](/images/ntrcq.oba.png) |
-| `nvinf.hsp`  | BGRA8888 | 1200x120 | 12 bottom tab items, selected state | [view](/images/nvinf.hsp.png) |
-| `okcg2.old`  | BGRA8888 | 24x24    | star (for favorited games) | [view](/images/okcg2.old.png) |
-| `ouenj.dut`  | BGRA8888 | 240x168  | "FAVORITES" in 7 different languages | [view](/images/ouenj.dut.png) |
-| `pwsso.occ`  | RGB565   | 640x480  | pause menu, fourth entry selected | [view](/images/pwsso.occ.png) |
-| `qasfc.bel`  | BGRA8888 | 328x224  | "Favorites are full !" (when already having 1000) in 7 different languages | [view](/images/qasfc.bel.png) |
-| `qdbec.ofd`  | BGRA8888 | 240x168  | "DOWNLOAD ROMS" in 7 different languages | [view](/images/qdbec.ofd.png) |
-| `qwave.bke`  | BGRA8888 | 152x160  | the five words of the pause menu in Spanish | [view](/images/qwave.bke.png) |
-| `sdclt.occ`  | BGRA8888 | 424x58   | selection background | [view](/images/sdclt.occ.png) |
-| `sfcdr.cpl`  | RGB565   | 640x480  | main background | [view](/images/sfcdr.cpl.png) |
-| `sgotd.cwt`  | RGB565   | 640x280  | TV system selection, NTSC selected (first item) | [view](/images/sgotd.cwt.png) |
-| `snbqj.uby`  | RGB565   | 640x280  | TV system selection, PAL selected (second item) | [view](/images/snbqj.uby.png) |
-| `t2act.sgf`  | RGB565   | 640x280  | language selection, Chinese selected (the second item) | [view](/images/t2act.sgf.png) |
-| `tvctu.uby`  | RGB565   | 640x280  | language selection, Arabic selected (the third item) | [view](/images/tvctu.uby.png) |
-| `ucby4.aax`  | BGRA8888 | 448x224  | "Folder is empty!" in 7 different languages | [view](/images/ucby4.aax.png) |
-| `urlkp.bvs`  | BGRA8888 | 328x224  | "Remove from favorites?" in 7 different languages | [view](/images/urlkp.bvs.png) |
-| `vdaz5.bjk`  | RGB565   | 640x280  | language selection, Russian selected (the fourth item) | [view](/images/vdaz5.bjk.png) |
-| `wshrm.nec`  | BGRA8888 | 217x37   | Yes/No, Yes highlighted | [view](/images/wshrm.nec.png) |
-| `wtrxj.lbd`  | BGRA8888 | 192x224  | "LANGUAGE" in 7 different languages | [view](/images/wtrxj.lbd.png) |
-| `xajkg.hsp`  | BGRA8888 | 152x160  | the five words of the pause menu in Portuguese | [view](/images/xajkg.hsp.png) |
-| `xjebd.clq`  | BGRA8888 | 448x224  | "No games match the keyword!" in 7 different languages | [view](/images/xjebd.clq.png) |
-| `zaqrc.olc`  | BGRA8888 | 8x224    | message box left/right border | [view](/images/zaqrc.olc.png) |
-| `ztrba.nec`  | RGB565   | 64x320   | key names (single and prefixed with "T" for autofire; also without and with a whitish background) | [view](/images/ztrba.nec.png) |
-
-
-### ROM Lists
-
-Your custom ROMs are indexed into `tsmfk.tax` when the device boots. The following files contain the names of the stock ROMs:
-
-| Folder  | File name file | Chinese name file | Pinyin name file |
-| ------- | -------------- | ----------------- | ---------------- |
-| **FC**  | `rdbui.tax`    | `fhcfg.nec`       | `nethn.bvs`      |
-| **PCE** | `urefs.tax`    | `adsnt.nec`       | `xvb6c.bvs`      |
-| **SFC** | `scksp.tax`    | `setxa.nec`       | `wmiui.bvs`      |
-| **MD**  | `vdsdc.tax`    | `umboa.nec`       | `qdvd6.bvs`      |
-| **GB**  | `pnpui.tax`    | `wjere.nec`       | `mgdel.bvs`      |
-| **GBC** | `vfnet.tax`    | `htuiw.nec`       | `sppnp.bvs`      |
-| **GBA** | `mswb7.tax`    | `msdtc.nec`       | `mfpmp.bvs`      |
-
-The Pinyin name file contains a Latin transcription of the Chinese names, but without vowels. It is used for searching when language is set to Chinese. The folders these file names are relative to can be changed using `Foldername.ini`. The first row in this table refers to the third one in `Foldername.ini` and so on.
-
-
-### Foldername.ini
-
-`Foldername.ini` is neither an INI file, nor does it contain only folder names. It is a general menu configuration. Its default content is:
-
-```
-GB300
-7
-FFFFFF
-FF8000 FC
-FF8000 PCE
-FF8000 SFC
-FF8000 MD
-FF8000 GB
-FF8000 GBC
-FF8000 GBA
-FF8000 ROMS
-FF8000 ROMS
-FF8000 ROMS
-12 0 3
-7 8 9 10 11
-20 112 144 208
-424 58
-
-```
-
-The file's content is matched to a Format string to extract the values. Funnily, this file is Windows (CR+LF) by default, even though the format string is specifically Unix (LF).
-
-Let's have a closer look at it:
-
-| Default&nbsp;Content | Description |
-| -------------------- | ----------- |
-| `GB300`              | Name of the device. The BIOS is hardcoded to expect this header. Do not change. |
-| `7`                  | Number of languages. It affects how the language strings are loaded from the images with multiple languages inside, and is also the index of the first TV system setup item, counted starting from 0. So you can hide languages from the language menu of you move the TV System backgrounds to their image files. You better leave this. |
-| `FFFFFF`             | Default UI text color (HTML Code: `#FFFFFF`) unless selected (see below). All colors in this file are case-insensitive. |
-| `FF8000 FC`          | First folder and its selected color (HTML Code: `#FFF000`) |
-| `FF8000 PCE`         | Second folder and its selected color |
-| `FF8000 SFC`         | Third folder and its selected color |
-| `FF8000 MD`          | Fourth folder and its selected color |
-| `FF8000 GB`          | Fifth folder and its selected color |
-| `FF8000 GBC`         | Sixth folder and its selected color |
-| `FF8000 GBA`         | Seventh folder and its selected color |
-| `FF8000 ROMS`        | Eighth folder (see below) and its selected color |
-| `FF8000 ROMS`        | Ninth folder (see below) and its selected color |
-| `FF8000 ROMS`        | Tenth folder (see below) and its selected color |
-| `12 0 3`             | Number of bottom tabs (you better leave this), left tab (starting with 0) and default tab starting from the left tab (starting from 0) – so the selected tab is the sum of the latter two numbers (starting from 0)
-| `7 8 9 10 11`        | Index of the "ROMS", "FAVORITES", "HISTORY", "SEARCH" and "SETTINGS" tabs on the bottom tab bar (counting from 0). See below. |
-| `20 112 144 208`     | Position of the thumbnail (X, Y) and its width and height. Note that this does not cause the image to be stretched, so the latter two also affect the dimensions the device expects and loads from thumbnailed files. This means that decreasing the _height_ may make sense (clips off the bottom part of the image) whereas any other change to the last two numbers will glitch the thumbnails unless you recreate _all_ thumbnailed files. The width and height of `appvc.ikb` must be 6 more each. |
-| `424 58`             | Dimensions of `sdclt.occ`. As with the thumbnail file above, this changes the dimensions the device expects. |
-|                      | Trailing line feed |
-
-Note that the ROM List files (see the sections above) are bound to the folders in this file. So `rdbui.tax`, which is used for the FC by default, will always refer to the first folder listed here. So if you swap the order of the folders, you need to swap these files.
-
-Changing anything in the `7 8 9 10 11` row has a lot of strange side effects: The numbers `7`, `8` and `9` each correspond to a file, `tsmfk.tax`, `Favorites.bin` and `History.bin` respectively. The file that corresponds to the first number in this row is populated with the folder given in its corresponding the line above. Example: Say this line starts with `9`, meaning tenth folder and `History.bin`. If you turn on the device, `History.bin` gets populated with file names from the tenth (last) folder defined in `Foldername.ini` because the index `9` refers to `History.bin`. Now it gets inconsistent, because the eighth tab (count from 1) that you just changed (because it's the first number in this line) will look like the History tab now as it has a thumbnail image, but it will still use the `tsmfk.tax` ROM list and still use the eighth image from `ectte.bke`. Accessing the tab that originally was the History however will freeze the device because it too will load its original file, `History.bin`, which has just been populated with data in an unsupported format. Swapping `8` and `9` causes _existing_ Favorites and History lists to be _initially_ swapped, but from then being updated with the correct entries. So it seems that this modification works, so does swapping `10` and `11`. Changing `Foldername.ini` does not affect the order on the bottom tab bar. tl;dr: You better leave this line. Or better: The entire file.
-
-
-### Sounds
-
-* `c2fkec.pgt`
-* `dpnet.dll`
-* `help.lis`
-* `mfsvr.nkf`
-* `nyquest.gdb`
-* `oldversion.kbe`
-* `pagefile.sys`
-* `swapfile.sys`
-
-All files are completely identical and have the same use as on the SF2000 v1.71. See the [SF2000 documentation](https://vonmillhausen.github.io/sf2000/#sounds) for more details.
-
-
-### KeyMapInfo.kmp
-
-The GB300 uses a larger `KeyMapInfo.kmp` file because it stores 7 key mappings instead of just 6. This makes its file incompatible with the SF2000 key map editor. Another difference to the SF2000 is that this file does not exist by default and is only created once you assign non-standard keys.
-
-After each emulated console's key map (24 bytes), it is repeated instantly (probably for the second player, but 2-player capabilities of the GB300 are unknown). Then comes the next console.
-
-Consoles are encoded in the following order:
-
-| Console/Order | Physical Button Save Order   | Available Values per Physical Button                                         |
-| ------------- | ---------------------------- | ---------------------------------------------------------------------------- |
-| 1. **FC**     | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B                                                     |
-| 2. **PCE**    | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B, `0x0A00`: X, `0x0B00`: Y, `0x0100`: C, `0x0900`: Z |
-| 3. **SFC**    | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B, `0x0A00`: X, `0x0B00`: Y, `0x0100`: L, `0x0900`: R |
-| 4. **MD/SMS** | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B, `0x0A00`: X, `0x0B00`: Y, `0x0100`: C, `0x0900`: Z |
-| 5. **GB/GBC** | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B                                                     |
-| 6. **GBA**    | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B, `0x0A00`: X, `0x0B00`: Y, `0x0100`: L, `0x0900`: R |
-| 7. unknown    |                              | defaults identical to SFC's defaults                                         |
-
-After each button's 16-bit value from the table above comes a 16-bit flag for autofire: `0x0100` if autofire is active (indicated by a `T` in the console's key map editor), `0x0000` if not.
-
-Note that not all of the selectable button values actually exist on the console. For example, the GBA does not have X and Y buttons and will treat both like A. Assigning other values than those above does not usually give any result, but the Game Boy treats most (but not all) keys as B only when assigned to the R button.
-
-R and L buttons are swapped when you use the console's key map editor. If the button on the left (next to the five menu items where you selected "Joystick") is highlighted, you'll set the button physically labeled R. The table above uses the _physical_ labels, not what is highlighted by the console's key map editor.
-
-Per-game key mappings do not seem to work.
-
-
-### Other Files
-
-* `Archive.sys`
-* `Favorites.bin`
-* `History.bin`
-
-Once again, their format and use is identical to the SF2000.
-
-
