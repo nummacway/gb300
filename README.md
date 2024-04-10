@@ -1,27 +1,25 @@
 # GB300
 
-The Sup+ GB300 is a cheap handheld that emulates video game consoles. The cheapest way to get it is via [AliExpress "Pick 3 and Save"](https://www.aliexpress.com/gcp/300000512/nnmixupdatev3?productIds=1005006436983834) for $9.99 (_not_ a referral link!) if you can find two more items from that page (or simply buy three GB300!). At the start of each month and some "shopping festivals", there is a 10% discount, so you can get it for $8.99. That's a few dollars more than the cheapest game consoles on AliExpress often dubbed the Famiclones, but the GB300 offers eight classic consoles (instead of just the Famicon), comes with _way_ more games (even on the Famicon), you can add your own games, and you can save (states and sometimes standard GBA battery saves).
+The **Sup+ GB300** is a cheap handheld that emulates video game consoles. The cheapest way to get it is via [AliExpress's "Pick 3 and Save"](https://www.aliexpress.com/gcp/300000512/nnmixupdatev3?productIds=1005006436983834) for $9.99 (_not_ a referral link!) if you can find two more items from that page (or simply buy three GB300!). At the start of each month and some "shopping festivals", there is a 10% discount, so you can get it for $8.99. That's a few dollars more than the cheapest game consoles on AliExpress often dubbed the Famiclones, but the GB300 offers eight classic consoles (instead of just the Famicon), comes with _way_ more games (even on the Famicon), you can add your own games, and you can save (states and sometimes standard GBA battery saves).
 
 Some see it as a clone of the (usually a bit more expensive) Data Frog SF2000, which however is a bit different. Because the [SF2000 has already been documented](https://vonmillhausen.github.io/sf2000/), this page focusses primarily on the differences.
 
-This document is work in progress. Feel free to contribute by contacting `numma_cway` on Discord, creating a fork and pull request, or by opening an issue on Github (see link at the top of this page). If you have any questions, feel free to join the `#data_frog_sf2000` channel on the [Retro Handhelds Discord](https://discord.gg/retrohandhelds). There is also a [`Gb300 dev` thread](https://discord.com/channels/741895796315914271/1195581037003165796) on that Discord.
+This document is work in progress. Feel free to contribute by contacting `numma_cway` on Discord, creating a fork and pull request, or by opening an issue on Github (see link at the top of this page). If you have any questions, join the `#data_frog_sf2000` channel on the [Retro Handhelds Discord](https://discord.gg/retrohandhelds) (choose SF2000 during onboarding). There is also a [`Gb300 dev` thread](https://discord.com/channels/741895796315914271/1195581037003165796) on that Discord.
 
 
 ## Hardware
 
 The hardware seems somewhat similar to the SF2000. The most important difference is the vertical form factor which makes the device look a bit like the (much heavier) Game Boy Color. The GB300 lacks the SF2000's "digital analog stick" and the buttons feel somewhat cheap.
 
-The screen is a cheap LCD screen compared to the SF2000’s IPS screen. The horizontal angle (sideways) is extremely small, but vertical is alright. Especially when playing dark games in a dark room, the very bright black is an issue, as neither device has a brightness control. People who love the GB300 for its form factor and straight-forward interface have bought an SF2000 just to [swap its screen into the GB300](https://discord.com/channels/741895796315914271/1197607372277940314), so the rest of the device can't be that bad, hmm? The GB300's default screen has diagonal(!) screen tearing.
+The screen is a cheap LCD screen compared to the SF2000’s IPS screen. The horizontal viewing angle (sideways) is extremely small, but vertical is alright. Especially when playing dark games in a dark room, the very bright black is an issue, as neither device has a brightness control. People who love the GB300 for its form factor, working sound volume control and straight-forward interface have bought an SF2000 just to [swap its screen into the GB300](https://discord.com/channels/741895796315914271/1197607372277940314), so the rest of the device can't be that bad, hmm? The GB300's default screen has diagonal(!) screen tearing.
 
-Unlike the SF2000, the GB300 has a working volume control.
+Because it lacks arcade support accounting for 2.75 GB on the SF2000, the device ships with only a 8 GB TF/microSDHC card (42 MB of which arenn't allocated to a partition), formatted FAT32. It includes the firmware and the default set of 6267 ROMs. This leaves around 1.75 GB for your own ROMs. Actually, there's more space if you follow the manual: All the ROMs are just for demonstration and you are supposed to delete them right when you receive the console, even though the menus are hardcoded to exactly these files.
 
-Because it lacks arcade support accounting for 2.75 GB on the SF2000, the device ships with only a 8 GB TF/microSDHC card (42 MB of which not allocated to a partition), formatted FAT32. It includes the firmware and the default set of 6267 ROMs. This leaves around 1.75 GB for your own ROMs. Actually, there's more space if you follow the manual: All the ROMs are just for demonstration and you are supposed to delete them right when you receive the console, even though the menus are hardcoded to exactly these files.
-
-The device comes with a 70&thinsp;cm (28") cable from a 2.5mm male audio jack to two male RCA (cinch) jacks. The yellow RCA jack is for composite video and the red one for sound. You can plug them into older TVs either directly or via a SCART adapter. If you plug the cable in the GB300, its own screen will be turned off. The TV output has a better resolution (640x480) than the internal screen's 320x240. If your TV doesn't care, use NTSC 480i to prevent unnecessary vertical scaling to 576i. NTSC outputs a vertically pixel-perfect result of the interface. Unlike the SF2000, the TV signal will be fine while charging the GB300. Do not plug in the cable until the device has completely booted.
+The device comes with a 70&thinsp;cm (28") cable from a 2.5mm male audio plug to two male RCA (cinch) plug. The yellow RCA plug is for composite video and the red one for sound. You can plug them into older TVs either directly or via a SCART adapter. If you plug the cable in the GB300, its own screen will be turned off. The TV output has a better resolution (640x480) than the internal screen's 320x240. If your TV doesn't care, use NTSC 480i to prevent unnecessary vertical scaling to 576i. NTSC outputs a vertically pixel-perfect result of the user interface. Unlike the SF2000, the TV signal will be fine while charging the GB300. Do not plug in the cable until the device has completely booted.
 
 The GB300 works with the _wired_ gamepads that sometimes ship with some other cheap(er) consoles. You cannot normally buy them individually and the GB300 isn't sold bundled with them either. These devices work for solely the second player in games that support that. _Wireless_ gamepads don't work on the GB300, e.g. the gamepad bundled with the SF900 TV stick. Note that neither of these complies with industry standards like USB or BT, so they don't have any use with computers, laptops or mainstream consoles.
 
-The GB300 is powered by a 18650 battery that you can easily change. The default battery appears to have overcharge protection (the charging current will drop when the battery is full), yet the green charging light will not turn off. If the battery is very low, it will take around 4&thinsp;VAh until it stops charging. This suggests that the capacity is lower than the SF2000's 1750 mAh. This is supported by people reporting that the (light pink and completely unlabeled) battery of the GB300 is lighter than the SF2000's. Neither device has undercharge protection, so leaving the device on with a lower battery can kill the battery. One person reported that their GB300 came with the power switch in the 'ON' position and therefore a dead battery. While the SF2000 takes flat batteries, the GB300 seems to require some manipulation to its contact springs. It charges with around 2.5&thinsp;W, which slowly drops to around 2&thinsp;W as it charges. If you buy a new battery, consider one with both, over- and undercharge protection.
+The GB300 is powered by a standard 18650 battery that you can easily change. The default battery appears to have overcharge protection (the charging current will drop when the battery is full), yet the green charging light will not turn off. If the battery is very low, it will take around 4&thinsp;VAh until it stops charging. This suggests that the capacity is lower than the SF2000's 1750 mAh. This is supported by people reporting that the (light pink and completely unlabeled) battery of the GB300 is lighter than the SF2000's. Neither device has undercharge protection, so leaving the device on with a lower battery can kill the battery. One person reported that their GB300 came with the power switch in the 'ON' position and therefore a dead battery. Buying a new battery worked. If you buy a new battery, consider one with both, over- and undercharge protection. Althrough the SF2000 takes flat batteries, the GB300 seems to require some manipulation to its contact springs due to the console's case design. It charges with around 2.5&thinsp;W, which slowly drops to around 2&thinsp;W as it charges.
 
 
 ## General Firmware Features
@@ -36,11 +34,11 @@ The GB300 emulates the following devices:
 * Game Boy Color
 * Game Boy Advance
 
-Compared to the SF2000 stock firmware, the GB300 lacks the arcade section and adds the PCE. If you don't mind weird colors, you can also play the Game Gear games that do not make use of the Start button. Change the `.gg` extension to `.md` to make them show up.
+Compared to the SF2000 stock firmware, the GB300 lacks the arcade section and adds the PCE. If you don't mind the weird colors, you could also play Game Gear games that do not make use of the Start button. Change the `.gg` extension to `.sms` to make them show up. smspower.org has [color patches for many GG games](https://www.smspower.org/Hacks/GameGearToMasterSystem).
 
-The SF2000 firmware does not work on the GB300. There is no known way to retrieve an updated firmware because the manufacturer is unknown, so the only chance will be to wait for an alternative firmware to be released. The BIOS dates to the 15th of December, 2023.
+The SF2000 firmware does not work on the GB300. There is no known way to retrieve an updated firmware because the manufacturer is unknown, so the only chance will be to wait for an alternative firmware to be released. The default BIOS dates to the 15th of December, 2023.
 
-There's actually two things called Firmware on the GB300. There is a small bootloader that loads the firmware from the TF card. You should [patch the bootloader](https://vonmillhausen.github.io/sf2000/#bootloader-bug) to prevent issues after tampering with files in the BIOS folder. Really. This thing works for the GB300 as well.
+There's actually two things called Firmware on the GB300. There is a small bootloader that loads the firmware from the TF card. You should [patch that bootloader](https://vonmillhausen.github.io/sf2000/#bootloader-bug) to prevent issues after tampering with files in the `BIOS` folder on the TF card. Really. This patch works for the GB300 as well and takes only a few seconds.
 
 
 ### Saving
@@ -54,35 +52,35 @@ Normally, you would be able to exchange _battery_ files between emulators. These
 
 To play your own games, create the folder `Roms` (case-insensitive) on the TF card and put your ROMs there. You can also use single-file ZIP files to save memory. Also create a `save` subfolder (`Roms\save`), because the GB300 will not create one for you and fail saving.
 
-Stock ROMs however come in their own format. The first `0xEA00` bytes are a 144x208 pixel RGB565 images with no header whatsoever. After that comes a ZIP file, with four differences to keep you from opening it:
+Stock ROMs however come in their own format. The first `0xEA00` bytes are a 144x208 pixel RGB565 image with no header whatsoever. (You can technically change the size of the image, see the `Foldername.ini` section.) After that comes a ZIP file, obfuscated with five differences to keep you from opening it:
 * The magic numbers are different. There are three in a standard ZIP file with one file.
-  * The local block header magic number is `0x57515703` but should be `0x504B0304`.
+  * The local header magic number is `0x57515703` but should be `0x504B0304`.
   * The central directory header magic number is `0x57515702` but should be `0x504B0102`.
   * The end of central directory header magic number is `0x57515701` but should be `0x504B0506`.
-* All (two) filenames in these headers had their bytes `xor 0xE5`'d.
+* Both occurences of the file name in these headers had their bytes `xor 0xE5`'d.
 
-Changing the things above gives you a standard ZIP file. At least 7-Zip is already fine if you just fix the local block header magic number, even though the file inside will have a strange filename then.
+Changing the things above will give you a standard ZIP file. At least 7-Zip is already fine if you just fix the local header magic number, even though the file inside will have a strange filename then.
 
-| Emulator              | Version   | Git Commit | File Extensions in `libretro`  |
-| --------------------- | --------- | ---------- | ---------------- |
-| **FCEUmm**            | _none_    | `7cdfc7e`  | `.fds`, `.nes`, `.unf`, ~~`.unif`~~ |
-| **Mednafen PCE Fast** | v0.9.38.7 | _unknown_  | `.pce`, ~~`.cue`~~, ~~`.ccd`~~, ~~`.chd`~~ |
-| **Snes9x 2005**       | v1.36     | _unknown_  | `.smc`, `.fig`, `.sfc`, `.gd3`, `.gd7`, `.dx2`, `.bsx`, `.swc` |
+| Emulator              | Version   | Git Commit | File Extensions reported to `libretro`                                     |
+| --------------------- | --------- | ---------- | -------------------------------------------------------------------------- |
+| **FCEUmm**            | _none_    | `7cdfc7e`  | `.fds`, `.nes`, `.unf`, ~~`.unif`~~                                        |
+| **Mednafen PCE Fast** | v0.9.38.7 | _unknown_  | `.pce`, ~~`.cue`~~, ~~`.ccd`~~, ~~`.chd`~~                                 |
+| **Snes9x 2005**       | v1.36     | _unknown_  | `.smc`, `.fig`, `.sfc`, `.gd3`, `.gd7`, `.dx2`, `.bsx`, `.swc`             |
 | **PicoDrive**         | 1.91      | `cbc93b6`  | `.bin`, `.gen`, `.smd`, `.md`, ~~`.32x`~~, ~~`.cue`~~, ~~`.iso`~~, `.sms`  |
-| **TGB Dual**          | v0.8.3    | `9be31d3`  | `.gb`, `.gbc`, `.sgb` |
-| **gpSP**              | v0.91     | `261b2db`  | `.gba`, ~~`.bin`~~, `.agb`, `.gbz` |
+| **TGB Dual**          | v0.8.3    | `9be31d3`  | `.gb`, `.gbc`, `.sgb`                                                      |
+| **gpSP**              | v0.91     | `261b2db`  | `.gba`, ~~`.bin`~~, `.agb`, `.gbz`                                         |
 
-Extensions the GB300 does not even display are stroke-out. `.bin` files are associated with PicoDrive, not gpSP, so they are stroke-out for the latter.
-* `.bkp`
-* `.zip`
-* `.zfc`
-* `.zpc`
-* `.zmd`
-* `.zgb`
-* `.zfb` ("link" with thumbnail, intended for arcade games)
+Extensions the GB300 does not even display are stroke-out. `.bin` files are associated with PicoDrive, not gpSP, so they are stroke-out for the latter. In addition to the non-stroke-out extensions above, the GB300 lists the following files:
+* `.zfc`, `.zsf`, `.zpc`, `.zmd`, `.zgb`: These are compressed files. The obfuscation described above is optional. The device will look for the obfuscated or normal header of the ZIP file. In addition to that, it will display the thumbnail. The extension does not have to match the type of the ROM inside.
+* `.bkp`, `.zip` and `.zfb`: This is exactly the same as the files above, with only a single difference: The thumbnail is not displayed. This is funny because on the SF2000, the sole use of `.zfb` is to provide the thumbnail. And yes, even a `.zip` file is allowed to be obfuscated.
 * `.nfc` (Famicon, often used for stock ROMs)
 
-There are no signs of other supported emulators, but it looks like MPEG-2 support is included but inaccessible. If you force the GB300 to display `.chd` files, opening one will cause it to load indefinitely, even for the tiniest PCE-CD game out there, Hawaiian Island Girls (under 3 megabytes). Same goes for `.cue` files no matter if MD-CD or PCE-CD.
+The GB300 relies on the extension to decide what to do with the file:
+* Display a thumbnail?
+* Search for ZIP or WQW header and decompress the file before starting the file? All files with a thumbnail also belong into this category. This means that there is no way to have a thumbnail without compression.
+* Choose the emulator (see the table above).
+
+There are no signs of other supported emulators, but it looks like MPEG-2 support is included but inaccessible. If you force the GB300 to display `.chd` files, opening one will cause it to load indefinitely, even for the tiniest PCE-CD game out there, _Hawaiian Island Girls_ (under 3 megabytes). Same goes for `.cue` files no matter if MD-CD or PCE-CD.
 
 ### Nintendo Entertainment System
 
@@ -368,7 +366,7 @@ Unlike the SF2000, the GB300 supposedly does not have any unused images (not sur
 
 ### ROM Lists
 
-Your custom ROMs are alphabetically indexed into `tsmfk.tax` when the device boots. The following files contain the names of the stock ROMs:
+Your custom ROMs are alphabetically indexed into `tsmfk.tax` when the device boots. The following files contain the hardcoded names of the stock ROMs:
 
 | Folder  | File name file | Chinese name file | Pinyin name file |
 | ------- | -------------- | ----------------- | ---------------- |
@@ -380,14 +378,14 @@ Your custom ROMs are alphabetically indexed into `tsmfk.tax` when the device boo
 | **GBC** | `vfnet.tax`    | `htuiw.nec`       | `sppnp.bvs`      |
 | **GBA** | `mswb7.tax`    | `msdtc.nec`       | `mfpmp.bvs`      |
 
-The Pinyin name file contains a Latin transcription of the Chinese names, but without vowels. It is used for searching when language is set to Chinese. The folders these file names are relative to can be changed by editing `Foldername.ini`. The first row in this table refers to the third one in `Foldername.ini` and so on.
+The Pinyin name file contains a Latin transcription of the Chinese names, but without vowels. It is used for searching when language is set to Chinese. File names are relative to a folder that can be changed by editing `Foldername.ini`. The first row in the table above refers to the fourth row in `Foldername.ini` (which is `FC` by default) and so on. See the `Foldername.ini` section right below.
 
-In internally, the above table continues with the file name files `tsmfk.tax`, `Favorites.bin` and `History.bin`. The latter two however are in a different format. There are not corresponding Chinese name files or Pinyin name files.
+In internally, the above table continues with the _file name_ files `tsmfk.tax`, `Favorites.bin` and `History.bin`. The latter two however are in a different format. There are no corresponding Chinese name files or Pinyin name files.
 
 `tsmfk.tax` and the files in the table have the following format:
 * 1 Int32 for the number of items.
 * Now comes an array, consisting of Int32's for the position of the name inside this file.
-* After that comes the strings, encoded in UTF-8 (without BOM of course). They're C-style, meaning each is terminated with a NUL (`\0`), including the last one, meaning these files always end with a NUL.
+* After that comes the strings, encoded in UTF-8 (without BOM of course). Each string is terminated with a NUL (`\0`), including the last string, meaning these files always end with a NUL.
 
 
 ### Foldername.ini
@@ -465,7 +463,7 @@ Consoles are encoded in the following order:
 
 After each button's 16-bit value from the table above comes a 16-bit flag for autofire: `0x0100` if autofire is active (indicated by a `T` in the console's key map editor), `0x0000` if not.
 
-Note that not all of the selectable button values actually exist on the console. For example, the GBA does not have X and Y buttons and will treat both like A. Assigning other values than those above does not usually give any result, but the Game Boy treats most (but not all) keys as B only when assigned to the R button.
+Note that not all of the selectable button values actually exist on the console. For example, the GBA does not have X and Y buttons and will treat both like A. Assigning other values than those above does display a different text, but doesn't usually give any result. Just the Game Boy treats most (but not all) values assigned to the R button as B.
 
 R and L buttons are swapped when you use the console's key map editor. If the button on the left (next to the five menu items where you selected "Joystick") is highlighted, you'll set the button physically labeled R. The table above uses the _physical_ labels, not what is highlighted by the console's key map editor.
 
@@ -503,7 +501,7 @@ Note that all FC hashes are different for the GB300 because of the reasons expla
 
 To play your own games, create the folder `Roms` on the TF card. You can also use ZIP files to save space. Make sure to create a `save` subfolder to be able to save.
 
-In theorey, you can also make ROMs inside the `ROMS` folder a `Favorites.bin` or `History.bin` entry (first word = `0x0700`). But because the order changes whenever you add a game with a name lexically lower than any of your favorites, this will change the reference, so the GB300 does not add your own games there (I would guess the GB300 doesn't do that either).
+In theory, you can also add ROMs inside the `ROMS` to `Favorites.bin` and `History.bin` (first word = `0x0700`). But because the order changes whenever you add a game with a name lexically lower than any of your favorites, this will change the reference, so the GB300 does not add your own games there (I would guess the SF2000 doesn't do that either).
 
 
 ### List of PCE Games
