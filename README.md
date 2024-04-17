@@ -1,6 +1,6 @@
 # GB300
 
-The **Sup+ GB300** is a cheap handheld that emulates video game consoles. The cheapest way to get it is via [AliExpress's "Pick 3 and Save"](https://www.aliexpress.com/gcp/300000512/nnmixupdatev3?productIds=1005006436983834) for $9.99 (_not_ a referral link!) if you can find two more items from that page (or simply buy three GB300!). At the start of each month and some "shopping festivals", there is a 10% discount, so you can get it for $8.99. That's a few dollars more than the cheapest game consoles on AliExpress often dubbed the Famiclones, but the GB300 offers eight classic consoles (instead of just the Famicon), comes with _way_ more games (even on the Famicon), you can add your own games, and you can save (states and sometimes standard GBA battery saves).
+The **Sup+ GB300** (short for Game Box) is a cheap handheld that emulates video game consoles. The cheapest way to get it is via [AliExpress's "Pick 3 and Save"](https://www.aliexpress.com/gcp/300000512/nnmixupdatev3?productIds=1005006436983834) for $9.99 (_not_ a referral link!) if you can find two more items from that page (or simply buy three GB300!). At the start of each month and some "shopping festivals", there is a 10% discount, so you can get it for $8.99. That's a few dollars more than the cheapest game consoles on AliExpress often dubbed the Famiclones, but the GB300 offers eight classic consoles (instead of just the Famicon), comes with _way_ more games (even on the Famicon), you can add your own games, and you can save (states and sometimes standard GBA battery saves).
 
 Some see it as a clone of the (usually a bit more expensive) Data Frog SF2000, which however is a bit different. Because the [SF2000 has already been documented](https://vonmillhausen.github.io/sf2000/), this page focusses primarily on the differences.
 
@@ -13,13 +13,13 @@ The hardware seems somewhat similar to the SF2000. The most important difference
 
 The screen is a cheap LCD screen compared to the SF2000’s IPS screen. The horizontal viewing angle (sideways) is extremely small, but vertical is alright. Especially when playing dark games in a dark room, the very bright black is an issue, as neither device has a brightness control. People who love the GB300 for its form factor, working sound volume control and straight-forward interface have bought an SF2000 just to [swap its screen into the GB300](https://discord.com/channels/741895796315914271/1197607372277940314), so the rest of the device can't be that bad, hmm? The GB300's default screen has diagonal(!) screen tearing.
 
-Because it lacks arcade support accounting for 2.75 GB on the SF2000, the device ships with only a 8 GB TF/microSDHC card (42 MB of which arenn't allocated to a partition), formatted FAT32. It includes the firmware and the default set of 6267 ROMs. This leaves around 1.75 GB for your own ROMs. Actually, there's more space if you follow the manual: All the ROMs are just for demonstration and you are supposed to delete them right when you receive the console, even though the menus are hardcoded to exactly these files.
+Because it lacks the arcade support accounting for 2.75 GB on the SF2000, the device ships with only a 8 GB TF/microSDHC card (42 MB of which aren't allocated to a partition), formatted FAT32. It includes the firmware and the default set of 6267 ROMs. This leaves around 1.75 GB for your own ROMs. Actually, there's more space if you follow the manual: All the ROMs are just for demonstration and you are supposed to delete them right when you receive the console, even though the menus are hardcoded to exactly these files.
 
 The device comes with a 70&thinsp;cm (28") cable from a 2.5mm male audio plug to two male RCA (cinch) plug. The yellow RCA plug is for composite video and the red one for sound. You can plug them into older TVs either directly or via a SCART adapter. If you plug the cable in the GB300, its own screen will be turned off. The TV output has a better resolution (640x480) than the internal screen's 320x240. If your TV doesn't care, use NTSC 480i to prevent unnecessary vertical scaling to 576i. NTSC outputs a vertically pixel-perfect result of the user interface. Unlike the SF2000, the TV signal will be fine while charging the GB300. Do not plug in the cable until the device has completely booted.
 
 The GB300 works with the _wired_ gamepads that sometimes ship with some other cheap(er) consoles. You cannot normally buy them individually and the GB300 isn't sold bundled with them either. These devices work for solely the second player in games that support that. _Wireless_ gamepads don't work on the GB300, e.g. the gamepad bundled with the SF900 TV stick. Note that neither of these complies with industry standards like USB or BT, so they don't have any use with computers, laptops or mainstream consoles.
 
-The GB300 is powered by a standard 18650 battery that you can easily change. The default battery appears to have overcharge protection (the charging current will drop when the battery is full), yet the green charging light will not turn off. If the battery is very low, it will take around 4&thinsp;VAh until it stops charging. This suggests that the capacity is lower than the SF2000's 1750 mAh. This is supported by people reporting that the (light pink and completely unlabeled) battery of the GB300 is lighter than the SF2000's. Neither device has undercharge protection, so leaving the device on with a lower battery can kill the battery. One person reported that their GB300 came with the power switch in the 'ON' position and therefore a dead battery. Buying a new battery worked. If you buy a new battery, consider one with both, over- and undercharge protection. Althrough the SF2000 takes flat batteries, the GB300 seems to require some manipulation to its contact springs due to the console's case design. It charges with around 2.5&thinsp;W, which slowly drops to around 2&thinsp;W as it charges.
+The GB300 is powered by a standard 18650 battery that you can easily change. The default battery appears to have overcharge protection (the charging current will drop when the battery is full), yet the green charging light will not turn off. If the battery is very low (crashes and glitches), it will take a little under 4&thinsp;VAh until it stops charging. This suggests that the capacity is lower than the SF2000's 1750 mAh. This is supported by the manual listing 800 mAh, and people reporting that the (light pink and completely unlabeled) battery of the GB300 is lighter than the SF2000's. Neither device has undercharge protection, so leaving the device on with a low battery can kill the battery. One person reported that their GB300 came with the power switch in the 'ON' position and therefore a dead battery. Buying a new battery worked. If you buy a new battery, consider one with both, over- and undercharge protection. Althrough the SF2000 takes flat batteries, the GB300 seems to require some manipulation to its contact springs due to the console's case design. It charges with around 2.5 to 2.9&thinsp;W, which decreases as it charges.
 
 
 ## General Firmware Features
@@ -36,14 +36,14 @@ The GB300 emulates the following devices:
 
 Compared to the SF2000 stock firmware, the GB300 lacks the arcade section and adds the PCE. If you don't mind the weird colors, you could also play Game Gear games that do not make use of the Start button. Change the `.gg` extension to `.sms` to make them show up. smspower.org has [color patches for many GG games](https://www.smspower.org/Hacks/GameGearToMasterSystem).
 
-The SF2000 firmware does not work on the GB300. There is no known way to retrieve an updated firmware because the manufacturer is unknown, so the only chance will be to wait for an alternative firmware to be released. The default BIOS dates to the 15th of December, 2023.
+The SF2000 firmware does not work on the GB300. There is no known way to retrieve an updated firmware because the manufacturer is unknown, so the only chance will be to wait for an alternative firmware to be released. The default BIOS dates to the 15th of December, 2023. You can't use the GB300's firmware on the SF2000 either (because the GB300's firmware is much smaller, it would leave more of the 16 MiB available memory for modders to add more features).
 
-There's actually two things called Firmware on the GB300. There is a small bootloader that loads the firmware from the TF card. You should [patch that bootloader](https://vonmillhausen.github.io/sf2000/#bootloader-bug) to prevent issues after tampering with files in the `BIOS` folder on the TF card. Really. This patch works for the GB300 as well and takes only a few seconds.
+There's actually two things called "firmware" on the GB300: There is a small (~15KB) bootloader that loads the firmware from the TF card. You should [patch that bootloader](https://vonmillhausen.github.io/sf2000/#bootloader-bug) to prevent issues when tampering with files in the `BIOS` folder on the TF card. Really. This patch works for the GB300 as well and takes only a few seconds. With the bootloader separated from the rest of the firmware and the firmware on a TF card, any modding attempts are relatively safe.
 
 
 ### Saving
 
-The device features four save _states_ per game which allow saving at any point (press Start+Select). However, they are usually incompatible between different emulators. If you want to try anyway, you first need to extract them from their `zlib`-based format (same as on the SF2000). There is [a tool for that](https://vonmillhausen.github.io/sf2000/tools/saveStateTool.htm). Tests with VBA-M's save states (after extracting the gzip file that is VBA-M's save state format) didn't work (black screen on the GB300).
+The device features four save _states_ per game which allow saving at any point (press Start+Select). However, they are usually incompatible between different emulators. If you want to try anyway, you first need to extract them from their `zlib`-based format (same as on the SF2000). There is [a tool for that](https://vonmillhausen.github.io/sf2000/tools/saveStateTool.htm). The NES sometimes saves uncompressed states. Tests with VBA-M's GBA save states (after extracting the gzip file that is VBA-M's save state format) didn't work (black screen on the GB300).
 
 Normally, you would be able to exchange _battery_ files between emulators. These are the files that store the savegames created by the games' save feature. However, there's an issue with them on the GB300: To my knowledge, battery files do not work at all for all platforms but the GBA. So the rest of this paragraph is about the GBA only. If you want to _load_ a battery file from another emulator, place it in the `Roms` folder (not the `save` subfolder) - even for stock ROMs! Saving is a bit more complicated. Sometimes it works, sometimes it doesn't. And even if you can load a battery before turning off the device, this does not guarantee that you will still be able to load after turning off the device. Saving and loading between switching off the GB300 in the meantime seems to work, so games that force you to save and restart (e.g. Pokémon games) should work, at least on the GBA. Should you need to get your battery file from the device, load your state and save. Repeat until you can load your battery after restarting the GB300. Then you should have a working battery.
 
@@ -77,7 +77,7 @@ Extensions the GB300 does not even display are stroke-out. `.bin` files are asso
 
 The GB300 relies on the extension to decide what to do with the file:
 * Display a thumbnail?
-* Search for ZIP or WQW header and decompress the file before starting the file? All files with a thumbnail also belong into this category. This means that there is no way to have a thumbnail without compression.
+* Search for ZIP or WQW header and decompress the file before starting the ROM? All files with a thumbnail also belong into this category. This means that there is no way to have a thumbnail without compression.
 * Choose the emulator (see the table above).
 
 There are no signs of other supported emulators, but it looks like MPEG-2 support is included but inaccessible. If you force the GB300 to display `.chd` files, opening one will cause it to load indefinitely, even for the tiniest PCE-CD game out there, _Hawaiian Island Girls_ (under 3 megabytes). Same goes for `.cue` files no matter if MD-CD or PCE-CD.
@@ -117,42 +117,7 @@ Compared to the SF2000, the following file is missing:
 * `手柄测试.zsf`
 
 
-### SEGA Mega Drive and SEGA Master System
-
-Only MD is advertised and there are no SMS games included. The device will still play them if you add them yourself. The button assignments are strange, though.
-
-Despite the undocumented support for SMS, you aren't that lucky with the other Sega consoles. If you change the BIOS to display them or change the extension (it doesn't matter which of these you do, with the exception of a very few SG-1000 games), the following things will happen:
-* Sega CD games (`.bin` or `.cue`) will load indefinitely/freeze the console, even the tiniest and/or single-image ones (Ishii Hisaichi no Daiseikai, around 10 megabytes – the largest GBA games are 32 megabytes).
-* Most Sega 32X games will not display anything at all, even if you put the correct BIOS in the root or Roms directory. A few games like Knuckles' Chaotix display an error message.
-* Most SG-1000 games will load. (The games that don't load will freeze the device, e.g. Champion Baseball 40kB.) There is no video (black screen), but audio is fine. Buttons are also fine. (Note that applications like Home Basic likely don't have sound, so you can't tell if they're loading or not.)
-* Most Game Gear games will load. (The games that don't load will have a black screen.) The Game Gear's resolution is 160x144, but the emulator displays this in the center of the SMS's 256x192 pixel viewport. Graphics outside the center 160x144 area sometimes make sense (so you basically have an extended vision) but in some cases they're glitched. Colors are severely glitched all the time, but Audio is fine. If you don't mind the weird colors, you could play, if it wasn't about one other thing: The Game Gear has a D-Pad (which corresponds to the GB300's D-Pad), an A button (which the GB300 calls B and is mapped to the B button by default) and a B button (which the GB300 calls C and is mapped to R by default). And then, well, there's the Start button, which isn't mapped at all and none of the key IDs I tried (-1 through 19) corresponded to it. The majority of the Game Gear games require you to press it to get past the title screen, most notably all Sega games (the only exception that I know of is the beta version of the _Sega Game Pack 4 in 1_). Of the 25 best-rated Game Gear games on MobyGames, there are only seven that aren't blunt ports from other GB300 consoles and only one of the latter does not require the use of the Start button: _Magical Puzzle: Popils_. smspower.org has [patches for many games](https://www.smspower.org/Hacks/GameGearToMasterSystem), especially the unique ones, that will change them to SMS. The Start button seems to be an issue for them as well, so they bind it to a key combinations, an unused key or a key on the second controller.
-
-<details><summary>Just for your reference, click here to expand a list of Game Gear games that are technically normal SMS games and will therefore not have glitched colors. Some ROM sites list the files in the Game Gear section but with an `.sms` extension. Still, some games will not work.</summary>
- 
-| Game | Remarks |
-| ---- | ------- |
-| **Castle of Illusion Starring Mickey Mouse** | Start button is working |
-| **Cave Dude** (Beta) | Start button does not work but not mandatory |
-| **Chase H.Q.** | Start button neither working nor mandatory |
-| **Excellent Dizzy Collection, The** | Game does not load |
-| **Fantastic Dizzy** | No useful video, glitched audio |
-| **Jang Pung II** (Unl) | No useful video, no audio |
-| **Mickey Mouse no Castle Illusion** | Start button is working |
-| **Olympic Gold** | Start button is working |
-| **OutRun Europa** | Start button neither working nor mandatory |
-| **Predator 2** | Start button is working |
-| **Prince of Persia** | Start button is working |
-| **R.C. Grand Prix** | Start button neither working nor mandatory |
-| **Rastan Saga** | Start button is working |
-| **Street Battle** | No useful video, no audio |
-| **Street Hero** (Beta 1) | No video, glitched audio |
-| **Street Hero** (Beta 2) | Start button neither working nor mandatory |
-| **Super Kick Off** | Start button is working |
-| **Taito Chase H.Q.** | Start button is working |
-| **WWF Wrestlemania: Steel Cage Challenge** | Start button neither working nor mandatory |
-
-With the exception of Street Hero, the information applies to all versions of the games above.
-</details>
+### SEGA Mega Drive, SEGA Master System and SEGA Game Gear
 
 Compared to the SF2000, the following game is missing:
 * `007 Shitou - The Duel.zmd`
@@ -203,6 +168,65 @@ But one thing got better: Instead of the 225 broken thumbnails on the SF2000, th
 * `World Series Baseball 98.zmd`
 * `World Series Baseball.zmd`
 * `Wu Kong Wai Zhuan.zmd`
+
+#### SEGA Master System
+
+Only MD is advertised and there are no SMS games included. The device will still play them if you add them yourself. The button assignments are strange, though:
+* SMS Button 1 is called B by the GB300 and defaults to B.
+* SMS Button 2 is called C by the GB300 and defaults to R.
+* The pause key that is located on the SMS physical console (not on the gamepad) is on Start.
+
+#### Getting Game Gear to Run
+
+Most Game Gear games will load. (The games that don't load will have a black screen.) The Game Gear's resolution is 160x144, but the emulator displays this in the center of the SMS's 256x192 pixel viewport. Graphics outside the center 160x144 area sometimes make sense (so you basically have an extended vision) but in some cases they're glitched. Colors are severely glitched all the time, but Audio is fine. If you don't mind the weird colors, you could play, if it wasn't about one other thing: The Game Gear has a D-Pad (which corresponds to the GB300's D-Pad), a 1 button (which the GB300 calls B and is mapped to the B button by default) and a 2 button (which the GB300 calls C and is mapped to R by default). And then, well, there's the Start button, which isn't mapped at all and none of the key IDs I tried (-1 through 19) corresponded to it. The majority of the Game Gear games require you to press it to get past the title screen, most notably all Sega games (the only exception that I know of is the beta version of the _Sega Game Pack 4 in 1_). Of the 25 best-rated Game Gear games on MobyGames, there are only seven that aren't blunt ports from other GB300 consoles and only one of the latter does not require the use of the Start button: _Magical Puzzle: Popils_.
+
+smspower.org has [patches for many games](https://www.smspower.org/Hacks/GameGearToMasterSystem), especially the unique ones, that will change them to SMS. The Start button seems to be an issue for them as well, because the SMS has no direct equivalent.
+* The direct equivalent would be the Pause key, but it's located on the console and no on the gamepad. Most patches seem to be made for owners of the actual console, sitting a few meters away from it, so the Pause button is out of reach. A few patches use it anyway. This equals Start on your GB300.
+* A few games do not need both buttons on the controller, so hackers bind Start to the unused one.
+* You can connect an MD gamepad to the SMS, so hacks can make use of its dedicated Start button. A few hacks do that. I'm not a 100% sure if this works on the GB300.
+* A few hacks address the button issue on the title screen only, as both buttons have no use there anyway. That's not an issue for you, as the GB300 has its own pause menu.
+* All of the above options will work on the GB300, but by far the most common Start replacement in these patches is moving the second controller's D-pad down. Sadly, that's the most problematic one.
+
+In quite some GG games, pressing the Start button on the GB300 freezes or restarts the game. Not all hacks have addressed this. For example, _Bust-A-Move (U)_, _Buster Fight (J) GG2SMS v1.0_ and _Dr. Franken (E) [D]_ will all work fine – unless you are to press the Start button and make them crash. Note that not all GG2SMS ports will run on the GB300, especially if the base ROM doesn't run either.
+
+I'm currently preparing a compatibility list of GG2SMS ports that can be played on the GB300 without a second controller. That involves applying and playing around 500 different patches to more than 200 games, so give me some time. There are cases where the most recent patch isn't the best one, e.g. _Griffin (J) GG2SMS v1.01_ will work on the GB300, but v1.0 and 1.1 will not.
+
+Just for your reference, here's a list of Game Gear games that are technically normal SMS games and will therefore not have glitched colors. Some ROM sites list the files with an `.sms` extension althrough they're in the Game Gear section. Still, some of these games will not work.
+ 
+| Game | Remarks |
+| ---- | ------- |
+| **Castle of Illusion Starring Mickey Mouse** | Start button is working |
+| **Cave Dude** (Beta) | Start button does not work but not mandatory |
+| **Chase H.Q.** | Start button neither working nor mandatory |
+| **Excellent Dizzy Collection, The** | Game does not load |
+| **Fantastic Dizzy** | No useful video, glitched audio |
+| **Jang Pung II** (Unl) | No useful video, no audio |
+| **Mickey Mouse no Castle Illusion** | Start button is working |
+| **Olympic Gold** | Start button is working |
+| **OutRun Europa** | Start button neither working nor mandatory |
+| **Predator 2** | Start button is working |
+| **Prince of Persia** | Start button is working |
+| **R.C. Grand Prix** | Start button neither working nor mandatory |
+| **Rastan Saga** | Start button is working |
+| **Street Battle** | No useful video, no audio |
+| **Street Hero** (Beta 1) | No video, glitched audio |
+| **Street Hero** (Beta 2) | Start button neither working nor mandatory |
+| **Super Kick Off** | Start button is working |
+| **Taito Chase H.Q.** | Start button is working |
+| **WWF Wrestlemania: Steel Cage Challenge** | Start button neither working nor mandatory |
+
+With the exception of Street Hero, the information applies to all versions of the games above.
+
+#### Other SEGA consoles
+
+Despite the undocumented support for SMS and options to make GG games work, you aren't that lucky with the other Sega consoles. If you change the GB300's BIOS to display them or change the extension (it doesn't matter which of these you do, with the exception of a very few SG-1000 games), the following things will happen:
+* Sega CD games (`.bin` or `.cue`) will load indefinitely/freeze the console, even the tiniest and/or single-image ones (Ishii Hisaichi no Daiseikai, around 10 megabytes – the largest GBA games are 32 megabytes).
+* Most Sega 32X games will not display anything at all, even if you put the correct BIOS in the root or Roms directory. A few games will display "something":
+  * _Knuckles' Chaotix_ (both regional versions) display an error message.
+  * _NBA Jam: Tournament Edition_, _Star Trek: Starfleet Academy - Starship Bridge Simulator_ and _WWF Raw_ display glibberish.
+  * _Mars Check Program Version 1.0 (SDK Build) (Set 2)_ and _Toughman Contest_ display a green screen.
+  * _Mars Check Program Version 1.0 (SDK Build) (Set 1)_ and _WWF WrestleMania: The Arcade Game_ display a red/orange screen.
+* Most SG-1000 games will "load". (The games that don't load will freeze the device, e.g. Champion Baseball 40kB.) There is no video (black screen), but audio is fine. Buttons are also fine. (Note that applications like Home Basic likely don't have sound, so you can't tell if they're loading or not.) [SG to GG/SMS conversions]((https://www.smspower.org/forums/post103058#103058)) do _not_ work. Wenn, unless your goal is to analyse the screen tearing – _all_ these patches cause the entire screen to quickly change color. So: Do not try this if you're photosensitive.
 
 
 ### Game Boy
@@ -280,14 +304,14 @@ Tools for the SF2000 that should work for the GB300:
 * [BIOS CRC-32 Patcher](https://vonmillhausen.github.io/sf2000/tools/biosCRC32Patcher.htm) by Von Millhausen
 * [Generic Image Tool](https://vonmillhausen.github.io/sf2000/tools/genericImageTool.htm) by Von Millhausen, to convert to and from RGB565 and BGRA8888 images
 * [Kerokero - SF2000 BGM Tool](https://github.com/Dteyn/SF2000_BGM_Tool) by Dteyn
-* [Save State Tool](https://vonmillhausen.github.io/sf2000/tools/saveStateTool.htm) by Von Millhausen
+* [Save State Tool](https://vonmillhausen.github.io/sf2000/tools/saveStateTool.htm) by Von Millhausen – Due to the strange CPU architecture, people don't think that converting save states makes any sense. But you can use it to extract screenshots.
 * [Silent menu music](https://vonmillhausen.github.io/sf2000/sounds/silentMusic/pagefile.sys) by Von Millhausen
 * [Silent Sounds Pack](https://github.com/Dteyn/sf2000/raw/main/sounds/silentSounds/SF2000_Silent_Sounds_Pack.zip) by Dteyn
 
 Other links:
 * [Retro Handhelds Discord](https://discord.gg/retrohandhelds), select Data Frog SF2000 during onboarding and join the `#data_frog_sf2000` channel
   * [`Gb300 dev` thread](https://discord.com/channels/741895796315914271/1195581037003165796) 
-  * [`GB300 screen swap` thread](https://discord.com/channels/741895796315914271/1197607372277940314) on Retro Handhelds Discord
+  * [`GB300 screen swap` thread](https://discord.com/channels/741895796315914271/1197607372277940314)
 * [SF2000 Community Compatibility list](https://docs.google.com/spreadsheets/d/19TCedWEKFXlnS2dlmLxk1BcnlHrX-MSVrKwEURuiU0E/edit#gid=1327539659)
 
 
@@ -298,7 +322,7 @@ Note: There are no language strings on the GB300, just a few images.
 
 ### Fonts
 
-Only one file, `yahei_Arial.ttf`, identical to the SF2000's font file of the same file name. _Microsoft YaHei_ is a Chinese typeface that you can probably find on your computer. Despite also showing up as _Microsoft YaHei_ when you open, `yahai_Arial.ttf` uses Arial for non-Chinese script, but with some differences. For example, it does not feature so-called tabular figures (which make any lists look really odd because names are not aligned) and the baseline changes significantly between Latin letters, making the font look "wavy".
+There is only one file, `yahei_Arial.ttf`, identical to the SF2000's font file of the same file name. _Microsoft YaHei_ is a Chinese typeface that you can probably find on your computer. Despite also showing up as _Microsoft YaHei_ when you open it, `yahai_Arial.ttf` is different as it uses Arial for non-Chinese script, but with some differences to the usual Arial typeface. For example, it does not feature so-called tabular figures (which make any lists look really odd because names are not aligned) and the baseline varies significantly between Latin letters, making the font look "wavy".
 
 
 ### Images
@@ -307,7 +331,7 @@ Unlike the SF2000, the GB300 supposedly does not have any unused images (not sur
 
 | File         | Comp's   | Dim's    | Description | View |
 | ------------ | -------- | -------- | ----------- | ---- |
-| `appvc.ikb`  | BGRA8888 | 150x214  | "missing image" image | [view](/images/appvc.ikb.png) |
+| `appvc.ikb`  | BGRA8888 | 150x214  | "missing image" image, also the white frame for thumbnails | [view](/images/appvc.ikb.png) |
 | `bfrjd.odb`  | RGB565   | 640x280  | language selection, Korean selected (the seventh item) | [view](/images/bfrjd.odb.png) |
 | `bisrv.nec`  | RGB565   | 640x480  | pause menu, third entry selected | [view](/images/bisrv.nec.png) |
 | `bttlve.kbp` | BGRA8888 | 60x144   | 6 battery states | [view](/images/bttlve.kbp.png) |
@@ -385,7 +409,7 @@ In internally, the above table continues with the _file name_ files `tsmfk.tax`,
 `tsmfk.tax` and the files in the table have the following format:
 * 1 Int32 for the number of items.
 * Now comes an array, consisting of Int32's for the position of the name inside this file.
-* After that comes the strings, encoded in UTF-8 (without BOM of course). Each string is terminated with a NUL (`\0`), including the last string, meaning these files always end with a NUL.
+* After that, you have all the strings, encoded in UTF-8 (without BOM of course). Each string is terminated with a NUL (`\0`), including the last string, meaning these files always end with a NUL.
 
 
 ### Foldername.ini
@@ -413,7 +437,7 @@ FF8000 ROMS
 
 ```
 
-The file's content is matched to a Format string to extract the values. Funnily, this file is Windows (CR+LF) by default, even though the format string is specifically Unix (LF).
+The file's content is matched to a Format string to extract the values. Funnily, this file is Windows (CR+LF) by default, even though the Format string is specifically Unix (LF).
 
 Let's have a closer look at it:
 
