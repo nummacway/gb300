@@ -480,18 +480,24 @@ Consoles are encoded in the following order:
 | Console/Order | Physical Button Save Order   | Available Values per Physical Button                                         |
 | ------------- | ---------------------------- | ---------------------------------------------------------------------------- |
 | 1. **FC**     | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B                                                     |
-| 2. **PCE**    | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B, `0x0A00`: X, `0x0B00`: Y, `0x0100`: C, `0x0900`: Z |
-| 3. **SFC**    | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B, `0x0A00`: X, `0x0B00`: Y, `0x0100`: L, `0x0900`: R |
+| 2. **PCE**    | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: I, `0x0000`: II<!--, `0x0A00`: X, `0x0B00`: Y, `0x0100`: C, `0x0900`: Z--> |
+| 3. **SFC**    | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B, `0x0A00`: X, `0x0B00`: Y, `0x0900`: L, `0x0100`: R |
 | 4. **MD/SMS** | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B, `0x0A00`: X, `0x0B00`: Y, `0x0100`: C, `0x0900`: Z |
 | 5. **GB/GBC** | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B                                                     |
-| 6. **GBA**    | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B, `0x0A00`: X, `0x0B00`: Y, `0x0100`: L, `0x0900`: R |
+| 6. **GBA**    | `L`, `R`, `X`, `A`, `B`, `Y` | `0x0800`: A, `0x0000`: B, `0x0A00`: L, `0x0B00`: R<!--, `0x0100`: L, `0x0900`: R--> |
 | 7. unknown    |                              | defaults identical to SFC's defaults                                         |
 
 After each button's 16-bit value from the table above comes a 16-bit flag for autofire: `0x0100` (or any odd number) if autofire is active (indicated by a `T` in the console's key map editor), `0x0000` (or any even number) if not.
 
-Note that not all of the selectable button values actually exist on the console. For example, the GBA does not have X and Y buttons and will treat both like A. Assigning other values than those above does display a different text, but doesn't usually give any result. Just the Game Boy treats most (but not all) values assigned to the R button as B.
+Note that not all of the button values you can select in the device's key map editor actually exist on the PCE and GBA. Assigning other values than those above does display a different text, but doesn't usually give any result. Just the Game Boy treats most (but not all) values assigned to the R button as B.
 
-R and L buttons are swapped when you use the console's key map editor. If the button on the left (next to the five menu items where you selected "Joystick") is highlighted, you'll set the button physically labeled R. The table above uses the _physical_ labels, not what is highlighted by the console's key map editor.
+Note that the table above describes the _actual_ behavior, whereas the key map editor is bogus for a lot of reasons:
+* The editor's optical representation of the _physical_ R and L buttons are swapped for all emulators but GBA (see below) when you use the console's key map editor. If the button on the left (next to the five menu items where you selected "Joystick") is highlighted, you'll set the button physically labeled R.
+* To account for this bug, L and R _values_ are swapped for the SFC.
+* For GBA, editor's optical representation of the _physical_ L and R buttons are instead swapped with X and Y respectively.
+* To account for this bug, L and R _values_ are swapped with X and Y values respectively for the GBA.
+
+This means that the bugs cancel each other out when the _default_ key mappings are set, so the default mapping seemingly makes sense. Changing the buttons however will rarely ever do what you expect.
 
 Per-game key mappings do not seem to work.
 
