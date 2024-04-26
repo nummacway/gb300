@@ -4,7 +4,36 @@ The **Sup+ GB300** (short for Game Box) is a cheap handheld that emulates video 
 
 Some see it as a clone of the (usually a bit more expensive) Data Frog SF2000, which however is a bit different. Because the [SF2000 has already been documented](https://vonmillhausen.github.io/sf2000/), this page focusses primarily on the differences.
 
-This document is work in progress. Feel free to contribute by contacting `numma_cway` on Discord, creating a fork and pull request, or by opening an issue on [Github](https://github.com/nummacway/gb300/). If you have any questions, join the `#data_frog_sf2000` channel on the [Retro Handhelds Discord](https://discord.gg/retrohandhelds) (choose SF2000 during onboarding). There is also a [`Gb300 dev` thread](https://discord.com/channels/741895796315914271/1195581037003165796) on that Discord.
+This document is work in progress but mostly finished now. Large parts target developers and anyone willing to mod the device. Feel free to contribute by contacting `numma_cway` on Discord, creating a fork and pull request, or by opening an issue on [Github](https://github.com/nummacway/gb300/). If you have any questions, join the `#data_frog_sf2000` channel on the [Retro Handhelds Discord](https://discord.gg/retrohandhelds) (choose SF2000 during onboarding). There is also a [`Gb300 dev` thread](https://discord.com/channels/741895796315914271/1195581037003165796) on that Discord.
+
+
+## Table of Contents
+
+- [Hardware](#hardware)
+- [General Firmware Features](#general-firmware-features)
+    - [Saving](#saving)
+- [ROMs and Gameplay](#roms-and-gameplay)
+    - [Nintendo Entertainment System](#nintendo-entertainment-system)
+    - [PC Engine](#pc-engine)
+    - [Super Nintendo Entertainment System](#super-nintendo-entertainment-system)
+    - [SEGA Mega Drive, SEGA Master System and SEGA Game Gear](#sega-mega-drive-sega-master-system-and-sega-game-gear)
+        - [SEGA Master System](#sega-master-system)
+        - [SEGA Game Gear](#sega-game-gear)
+        - [Other SEGA Consoles](#other-sega-consoles)
+    - [Game Boy](#game-boy)
+    - [Game Boy Color](#game-boy-color)
+    - [Game Boy Advance](#game-boy-advance)
+- [Tools](#tools)
+- [Resources](#resources)
+    - [Fonts](#fonts)
+    - [Images](#images)
+    - [ROM Lists](#rom-lists)
+    - [Foldername.ini](#foldernameini)
+    - [KeyMapInfo.kmp](#keymapinfokmp)
+    - [Sounds](#sounds)
+    - [Other Files](#other-files)
+- [List of ROMs](#list-of-roms)
+    - [List of PCE Games](#list-of-pce-games)
 
 
 ## Hardware
@@ -36,11 +65,11 @@ The GB300 emulates the following devices:
 * Game Boy Color
 * Game Boy Advance
 
-Compared to the SF2000 stock firmware, the GB300 lacks the arcade section and adds the PCE. If you don't mind the weird colors, you could also play Game Gear games that do not make use of the Start button. Change the `.gg` extension to `.sms` to make them show up. smspower.org has [color patches for around 200 GG games](https://www.smspower.org/Hacks/GameGearToMasterSystem) (they list 185 different games, for which there are 225 versions on No-Intro, but not all versions are supported).
+Compared to the SF2000 stock firmware, the GB300 lacks the arcade section and adds the PCE. If you don't mind the weird colors, you could also play Game Gear games that do not make use of the Start button. Change the `.gg` extension to `.sms` to make them show up. smspower.org has color patches ("GG2SMS") for around 200 GG games (they list 185 different games, for which there are 225 versions on No-Intro, but not all versions are supported). There's a [list of GG2SMS patches that work on the GB300](#sega-game-gear) in this document.
 
 The SF2000 firmware does not work on the GB300. There is no known way to retrieve an updated firmware because the manufacturer is unknown, so the only chance will be to wait for an alternative firmware to be released. The default BIOS dates to the 15th of December, 2023. You can't use the GB300's firmware on the SF2000 either (because the GB300's firmware is much smaller, it would leave more of the 16 MiB available memory for modders to add more features).
 
-There's actually two things called "firmware" on the GB300: There is a small bootloader (512K) that loads the firmware from the TF card. You should [patch that bootloader](https://vonmillhausen.github.io/sf2000/#bootloader-bug) to prevent issues when tampering with files in the `BIOS` folder on the TF card. Really. This patch works for the GB300 as well and takes only a few seconds. With the bootloader separated from the rest of the firmware and the firmware on a TF card, any modding attempts are relatively safe.
+There's actually two things called "firmware" on the GB300: There is a small bootloader (512KiB) that loads the firmware from the TF card. You should [patch that bootloader](https://vonmillhausen.github.io/sf2000/#bootloader-bug) to prevent issues when tampering with files in the `BIOS` folder on the TF card. Really. This patch works for the GB300 as well and takes only a few seconds. With the bootloader separated from the rest of the firmware and the firmware on a TF card, any modding attempts are relatively safe.
 
 
 ### Saving
@@ -190,14 +219,14 @@ Most Game Gear games will load. (The games that don't load will have a black scr
 
 smspower.org has [patches for many games](https://www.smspower.org/Hacks/GameGearToMasterSystem), especially the unique ones, that will change them to SMS. The Start button seems to be an issue for them as well, because the SMS has no direct equivalent.
 * The logical equivalent would be the Pause key, but it's located on the console and not on the gamepad. Most patches seem to be made for owners of the actual console, sitting a few meters away from it, so the Pause button is out of reach. A few patches use it anyway. This equals Start on your GB300.
-* A few games do not need both buttons on the controller, so hackers bind Start to the unused one.
-* You can connect an MD gamepad to the SMS, so hacks can make use of its dedicated Start button. A few hacks do that. Even after playing almost 500 GG2SMS hacks, I'm still not a 100% sure if this works on the GB300.
-* A few hacks address the button issue on the title screen only, as both buttons have no use there anyway. That's not an issue for you, as the GB300 has its own pause menu. A few _games_ pause themselves when you enter the GB300's pause menu, even though you had no Start button and you cannot resume anymore...
+* A few games do not make use of both of the gamepad's buttons, so hackers bind Start (and pause) to the unused one.
+* You can connect an MD gamepad to the SMS, so hacks can make use of its dedicated Start button. A few hacks do that. Even after playing almost 500 GG2SMS hacks, I'm still not sure if this works on the GB300.
+* A few hacks address the button issue on the title screen only, as both available buttons have no use there anyway, but leave the pause function non-working. That's not an issue for you, as the GB300 has its own pause menu. A very few _games_ pause themselves when you enter the GB300's pause menu, even though you had no Start button and you cannot resume anymore...
 * All of the above options will work on the GB300, but by far the most common Start replacement in these patches is moving the second controller's D-pad down. Sadly, that's the most problematic one.
 
-Here's a complete list of Game Gear to SMS conversions that you can play on your GB300 because they work and do not require an external gamepad. There are 88 unique games (103 including regional versions, revisions and re-releases):
+Here's a complete list of Game Gear to SMS conversions that you can play on your GB300 because they work and do not require an external gamepad. There are 88 different games (103 including regional versions, revisions and re-releases). The following tables uses A and B for the buttons to make them easier to distinguish.
 
-| Name | ID | CRC-32<br>before | Best<br>Patch | CRC-32<br>after | Pause | Start<br>will | Outside<br>160×144 |
+| No-Intro Name <small style="font-weight:normal;">(Other Names)</small> | ID | CRC-32<br>Before | Best<br>Patch | CRC-32<br>After | Pause | Start<br>Does | Outside<br>160×144 |
 | ---- | -- | ------ | ----- | ----- | ----- | ---------- | ------- |
 | **Aa Harimanada (Japan)** | [0002](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0002) | `1d17d2a0` | [v0.6](https://www.smspower.org/Hacks/AaHarimanada-GG-GG2SMS) | `442398bb` | ? | - | useful |
 | **Arcade Classics (USA)** | [0013](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0013) | `3deca813` | [v1.0](https://www.smspower.org/Hacks/ArcadeClassics-GG-GG2SMS) | `3ea9582d` | ? | - | blank |
@@ -223,7 +252,7 @@ Here's a complete list of Game Gear to SMS conversions that you can play on your
 | **Ganbare Gorby! (Japan)** <small>(Factory Panic, Crazy Company)</small> | [0125](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0125) | `a1f2f4a1` | [v0.4](https://www.smspower.org/Hacks/FactoryPanic-GG-GG2SMS) | `ac0e19ea` | A | - | glitched |
 | **Fatal Fury Special (USA)<br>Fatal Fury Special (Europe)<br>Garou Densetsu Special (Japan)** | [0108](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0108)<br>[0458](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0458)<br>[0127](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0127) | `449787e2`<br>`fbd76387`<br>`9afb6f33`  | [v1.2](https://www.smspower.org/Hacks/FatalFurySpecial-GG-GG2SMS) | `4b7f7b2d`<br>`1c6cfac7`<br> | Start | Start | glitched |
 | **Frogger (USA) (Proto)** | [0117](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0117) | `02bbf994` | [v0.92a](https://www.smspower.org/Hacks/Frogger-GG-GG2SMS) | `71112e1e` | Start | Start | glitched |
-| **Galaga '91 (Japan)** <small>Galaga 2</small> | [0122](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0122) | `0593ba24` | [v1.0](https://www.smspower.org/Hacks/Galaga91-GG-GG2SMS) | `812d56ee` | B | - | mostly blank |
+| **Galaga '91 (Japan)** <small>(Galaga 2)</small> | [0122](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0122) | `0593ba24` | [v1.0](https://www.smspower.org/Hacks/Galaga91-GG-GG2SMS) | `812d56ee` | B | - | mostly blank |
 | **GG Aleste (Japan) (En)<br>GG Aleste (Japan) (En) (Aleste Collection)** | [0132](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0132)<br>[0807](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0807) | `1b80a75b`<br>`0a49407d` | [v1.2](https://www.smspower.org/Hacks/GGAleste-GG-GG2SMS) | `c84576ba`<br>`d98c919c` | B | - | background |
 | **Power Strike II (Japan, Europe) (En)** <small>(GG Aleste II)</small> | [0286](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0286) | `09de1528` | [v1.6](https://www.smspower.org/Hacks/GGAlesteII-GG-GG2SMS) | `f0b7cef6` | Start | Start | useful |
 | **GG Portrait - Pai Chen (Japan)** | [0134](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0134) | `695cc120` | [v1.0](https://www.smspower.org/Hacks/GGPortraitPaiChen-GG-GG2SMS) | `11875dea` | ? | - | glitched |
@@ -289,14 +318,28 @@ Here's a complete list of Game Gear to SMS conversions that you can play on your
 | **Yu Yu Hakusho - Horobishimono no Gyakushuu (Japan)** | [0438](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0438) | `88ebbf9e` | [v0.1](https://www.smspower.org/Hacks/YuYuHakusho-GG-GG2SMS) | `475b35f8` | ? | - | glitched |
 
 Notes:
-* There is a frequently-found 256K dump of _Frogger_. That's an overdump. The actual size is 128K and has the CRC-32 values above.
-* The version naming is inconsistent on SMS Power. This list uses v1.0 for releases called v1.
-* There is a patch of _Royal Stone_ that includes an English translation. There are many of these hacks including a translation for the respective game, but this is the only one that works.
-* Patch _Solitaire Poker_/_Ryuukyuu_ and _Slider_/_Skweek_ with the respective version's patch. The wrong one does not work. This is in contrast to _Pengo_, where BcnAbel76's patch only works for the wrong ROM (A button does not work when applied to the intended one), but nextvolume's patch is better and region-independent.
-* _Tails Adventure_ v1.4 and v1.5 do not work for the Virtual Console one. Patch the normal version if you can.
-* I applied 387 different patches to 225 games and then played the resulting 490 ROMs. Should there be new released after April 25th, they might be better than the ones above.
+- The versioning scheme is inconsistent on SMS Power. This list uses v1.0 for releases called v1.
 
-Just for your reference, here's a list of Game Gear games that are technically normal SMS games and will therefore not have glitched colors. Some ROM sites list the files with an `.sms` extension although they're in the Game Gear section. Still, some of these games will not work.
+- I applied 387 different patches to 225 games and then played the resulting 490 ROMs. Should there be new hacks released after April 25th, they might be better than the ones above.
+- The column "Pause" names the button to pause the game. "N/A" means that it is not necessary to pause the game according to SMS Power and probably not possible in the original game either. "?" means that you cannot pause with the GB300 alone. Usually, this means that a second gamepad's down button would work.
+- The column "Start Does" tells you what the Start button does with the ROM: "Start" means that it does what the Start button is supposed to do. Dash means that nothing happens at all when you press Start. "Restart", "Freeze" and "Crash" all mean that you cannot play anymore after pressing Start. "Crash" means that the game glitches and instantly freezes.
+- "Outside 160×144" explains what you can see outside the GG viewport: "blank" means nothing (solid color) and is preferable on games that do not scroll. "background" means that you can see the background but sprites still pop up only when entering the GG viewport. "glitched" describes that the non-GG part of the SMS viewport does not make sense and contains glibberish or parts of the map. "useful glitch" is used for games with a map that is only slightly bigger than the GG viewport. The map extends beyond the GG viewport, but can wrap to the other edge of the screen. "useful" means that the hacks use (almost) the entire SMS viewport and feel like a true SMS game.
+- Notes on individual games:
+  - _Aa Harimanada_: Starting with version v0.5 that fixed the colors after the end of a fight, the health bars often glitches. Because v0.6 even makes use of the full screen, I consider v0.6 to be the best patch.
+  - _Arcade Classics_: _Missile Command SEGA Version_ seems glitched.
+  - _Berenstain Bears' Camping Adventure, The_: I did start a _Cave Adventure_ during my first test by pressing the Start button, but never managed to do that ever again. So this game is not listed.
+  - _Frogger_: You'll often find a 256KiB ROM, but that's an overdump. The actual size is 128KiB and has the CRC-32 values above. The overdump has `da724710` and applying the patch results in a working ROM (`68b958f0`). The first half of the 256 KiB ROMs is identical to the 128 KiB ROM.
+  - _Magical Puzzle Popils_: The map editor is completely glitched and you cannot exit it.
+  - _Mighty Morphin Power Rangers - The Movie_: There is some white text on white background.
+  - _Pinball Dreams_: Heavily glitched colors in transitions.
+  - _Pop Breaker_: A+B is not only Pause but also self-destruct (I think that's only if you press them a bit longer). Beware!
+  - _Royal Stone_: One of the two patches includes an English translation. There are many of these hacks that include a translation for the respective game, but this is the only one that works.
+  - _Sega Game Pack 4 in 1_: Requires a second gamepad for the Start button and therefore isn't listed. The beta version didn't require the use of the Start button, but the hack results in a non-working ROM. I did test the earliest and latest beta version of all games whenever the final version required pressing the Start button and beta versions where available, but _Sega Game Pack 4 in 1_ was the only game whose beta version was different in this regard.
+  - _Slider_/_Skweek_ and _Solitaire Poker_/_Ryuukyuu_: Use the respective version's patch. The wrong one does not work. This is in contrast to _Pengo_, where BcnAbel76's patch only works for the wrong ROM (the A button does not work when the patch is applied to the intended ROM), but nextvolume's patch is better and region-independent.
+  - _Surf Ninjas_: Menu is completely glitched, but in-game it's okay.
+  - _Tails Adventure_: v1.4 and v1.5 do not work for the Virtual Console one. Patch the normal version if you can.
+
+There's a few more GG games that you can play, because technically these are normal SMS games and will therefore not have glitched colors. Some ROM sites even list the files with an `.sms` extension although they're in the Game Gear category. Still, some of these games will not work.
  
 | Game | Remarks |
 | ---- | ------- |
@@ -322,7 +365,7 @@ Just for your reference, here's a list of Game Gear games that are technically n
 
 With the exception of Street Hero, the information applies to all versions of the games above.
 
-#### Other SEGA consoles
+#### Other SEGA Consoles
 
 Despite the undocumented support for SMS and options to make GG games work, you aren't that lucky with the other Sega consoles. If you change the GB300's BIOS to display them or change the extension (it doesn't matter which of these you do, with the exception of a very few SG-1000 games), the following things will happen:
 * Sega CD games (`.bin` or `.cue`) will load indefinitely/freeze the console, even the tiniest and/or single-image ones (Ishii Hisaichi no Daiseikai, around 10 megabytes – the largest GBA games are 32 megabytes).
