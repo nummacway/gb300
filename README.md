@@ -12,6 +12,7 @@ This document is work in progress but mostly finished now. Large parts target de
 - [Hardware](#hardware)
 - [General Firmware Features](#general-firmware-features)
     - [Saving](#saving)
+    - [Multicore](#multicore)
 - [ROMs and Gameplay](#roms-and-gameplay)
     - [Nintendo Entertainment System](#nintendo-entertainment-system)
     - [PC Engine](#pc-engine)
@@ -79,7 +80,7 @@ Normally, you would be able to exchange _battery_ files between emulators. These
 
 ### Multicore
 
-Discord users osaka (`bnister`) and Prosty (`_prosty`) brought [multicore to GB300](https://github.com/tzubertowski/gb300_multicore/releases/tag/gb300_multicore1.0_0.1.0) on April 27th, 2024.
+Discord users osaka (`bnister`) and Prosty (`_prosty`) brought [multicore to GB300](https://github.com/tzubertowski/gb300_multicore/releases/tag/gb300_multicore1.0_0.1.0) on April 27th, 2024. This means that you can now access many more emulators.
 
 Multicore manual in a nutshell:
 * Put the release file's content on your TF card.
