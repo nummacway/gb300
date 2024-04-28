@@ -81,12 +81,12 @@ The SF2000 firmware does not work on the GB300. There is no known way to retriev
 
 ### multicore
 
-Discord users osaka (`bnister`) and Prosty (`_prosty`) brought [multicore to GB300](https://github.com/tzubertowski/gb300_multicore/releases) on April 27th, 2024. This means that you can now access many more emulators and enjoy way better GBA performance.
+Discord users osaka (`bnister`) and Prosty (`_prosty`) brought multicore to GB300 on April 27th, 2024. This means that you can now access many more emulators and enjoy way better GBA performance.
 
 Multicore manual in a nutshell:
 * Before you do anything else: [Patch the bootloader](https://vonmillhausen.github.io/sf2000/#bootloader-bug). Really! Spare yourself the possible trouble with the stock ROM.
-* Put the 7-Zip file's content on your TF card.
-* For each "core" (emulator) you want, create a subfolder with its name in `ROMS` and put your ROMs for that core in its subfolder. Here's a [list of cores](https://docs.google.com/spreadsheets/d/1BDPqLwRcY2cN7tObuyW7RzLw8oGyY9XGLS1D4jLgz2Q/edit#gid=1430267016).
+* Put the [7-Zip file](https://github.com/tzubertowski/gb300_multicore/releases)'s content on your existing TF card.
+* For each "core" (emulator, the GB300 is single-core) you want, create a subfolder with its name in `ROMS` and put your ROMs for that core in its subfolder. Here's a [list of cores](https://docs.google.com/spreadsheets/d/1BDPqLwRcY2cN7tObuyW7RzLw8oGyY9XGLS1D4jLgz2Q/edit#gid=1430267016).
 * Run `make-romlist` found in the root directory of your TF card now. It does not actually make a ROM _list_ but creates so-called stubs. These are zero-byte `.gba` files passed to the GBA emulator. However, the GBA emulator was given a hook that will run multicore if the file is named like these stubs.
   * If you don't want to run the script, you can create the stubs yourself. The pattern is `CORENAME;FILENAME.gba`. Example: `Zero Wing.MD` is placed in `ROMS\sega` to be launched with the `sega` core. Then you need to create `ROMS\sega;Zero Wing.MD.gba`.
 * Many of the emulators added by _multicore_ require one or more BIOS files. In the Google Spreadsheet linked above, there is one link to libretro docs per core. That linked page will explain what BIOS files you need (the section is missing if an emulator does not use BIOS files). BIOS files must be placed in the `bios` folder of your TF card.
@@ -460,10 +460,10 @@ As in the SF2000, performance varies heavily between games. And even language ve
 Most tools designed for the SF2000 don't work. Tools are often incompatible because not only is the BIOS different, but also the `Resources` have different names. This is especially true for Tadpole. Just starting it already patches your ROM lists and will break all default ROMs. It will only leave the GBA (because the files used for the GBA on the GB300 are used for the arcade on the SF2000, but there is no `ARCADE` folder for Tadpole to scan). If you did use Tadpole, look for the files in the Resources folder with the current date and restore the backups Tadpole put there.
 
 The following tools were made specifically for the GB300:
+* [multicore for GB300](https://github.com/tzubertowski/gb300_multicore/releases) by osaka, Prosty and the creators of the original multicore for SF2000.
+* [GB300 Tool](https://discord.com/channels/741895796315914271/1195581037003165796/1234253697295450183) by me (numma_cway); prerelease version without multicore support. Includes tons of features, including the functionality of any non-sound-related tool below.
 * [Customized _Frogtool_ (Beta)](https://discord.com/channels/741895796315914271/1195581037003165796/1211025634680119327) by tzlion (original version) and Dteyn (GB300 patch), used for rebuilding the console-dependent ROM lists.
 * [GB300 Boot Logo Changer](https://dteyn.github.io/sf2000/tools/bootLogoChangerGB300.htm) by Dteyn
-* [multicore for GB300](https://github.com/tzubertowski/gb300_multicore/releases) by osaka, Prosty and the creators of the original multicore for SF2000.
-* I am making a universal GB300 tool that can do anything you can do with the stock BIOS, except for anything related to sounds.
 
 Tools for the SF2000 that should work for the GB300:
 * [BIOS CRC-32 Patcher](https://vonmillhausen.github.io/sf2000/tools/biosCRC32Patcher.htm) by Von Millhausen
