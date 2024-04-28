@@ -12,7 +12,7 @@ This document is work in progress but mostly finished now. Large parts target de
 - [Hardware](#hardware)
 - [General Firmware Features](#general-firmware-features)
     - [Saving](#saving)
-    - [Multicore](#multicore)
+    - [multicore](#multicore)
 - [ROMs and Gameplay](#roms-and-gameplay)
     - [Nintendo Entertainment System](#nintendo-entertainment-system)
     - [PC Engine](#pc-engine)
@@ -45,7 +45,7 @@ The screen is a cheap LCD screen compared to the SF2000’s IPS screen. The hori
 
 Because it lacks the arcade support accounting for 2.75 GB on the SF2000, the device ships with only a 8 GB TF/microSDHC card (42 MB of which aren't allocated to a partition), formatted FAT32. It includes the firmware and the default set of 6267 ROMs. This leaves around 1.75 GB for your own ROMs. Actually, there's more space if you follow the manual: All the ROMs are just for demonstration and you are supposed to delete them right when you receive the console, even though the menus are hardcoded to exactly these files.
 
-The device comes with a 70&thinsp;cm (28") cable from a 2.5mm male audio plug to two male RCA (cinch) plug. The yellow RCA plug is for composite video and the red one for sound. You can plug them into older TVs either directly or via a SCART adapter. If you plug the cable in the GB300, its own screen will be turned off. The TV output has a better resolution (640x480) than the internal screen's 320x240. If your TV doesn't care, use NTSC 480i to prevent unnecessary vertical scaling to 576i. NTSC outputs a vertically pixel-perfect result of the user interface. Unlike the SF2000, the TV signal will be fine while charging the GB300. Do not plug in the cable until the device has completely booted.
+The device comes with a 70&thinsp;cm (28") cable from a 2.5mm male audio plug to two male RCA (cinch) plug. The yellow RCA plug is for composite video and the red one for sound. You can plug them into older TVs either directly or via a SCART adapter. If you plug the cable in the GB300, its own screen will be turned off. The TV output has a better resolution (640x480) than the internal screen's 320x240. If your TV doesn't care, use NTSC 480i to avoid unnecessary vertical scaling to 576i. NTSC outputs a vertically pixel-perfect result of the user interface. Unlike the SF2000, the TV signal will be fine while charging the GB300. Do not plug in the AV cable until the device has completely booted (that includes not plugging in the cable before switching the device on, meaning that the full-size bootlogo is never used).
 
 The GB300 works with the _wired_ gamepads that sometimes ship with some other cheap(er) consoles. You cannot normally buy them individually and the GB300 isn't sold bundled with them either. These devices work for solely the second player in games that support that. _Wireless_ gamepads don't work on the GB300, e.g. the gamepad bundled with the SF900 TV stick. Note that neither of these complies with industry standards like USB or BT, so they don't have any use with computers, laptops or mainstream consoles. There are two types of the wired gamepads, the common 5-wire and the rare 4-wire. The GB300 uses the latter. These gamepads have a Micro USB plug and need to be adapted to USB-C. This comes despite the fact that "external gamepad double against" is even promoted on the front of the GB300's box...
 
@@ -56,7 +56,7 @@ Another similar device is the 8-Bit King, but that's an HDMI stick with wireless
 
 ## General Firmware Features
 
-The GB300 emulates the following devices:
+The GB300's stock firmware emulates the following devices:
 * Nintendo Entertainment System (Famicon)
 * PC Engine (Turbografx-16)
 * Super Nintendo Entertainment System (Super Famicon)
@@ -70,27 +70,31 @@ Compared to the SF2000 stock firmware, the GB300 lacks the arcade section and ad
 
 There's actually two things called "firmware" on the GB300: There is a small bootloader (512KiB) that loads the firmware from the TF card. You should [patch that bootloader](https://vonmillhausen.github.io/sf2000/#bootloader-bug) to prevent issues when tampering with files in the `BIOS` folder on the TF card. Really. This patch works for the GB300 as well and takes only a few seconds. With the bootloader separated from the rest of the firmware and the firmware on a TF card, any modding attempts are relatively safe.
 
-The SF2000 firmware does not work on the GB300. There is no known way to retrieve an updated firmware because the manufacturer is unknown, so the only chance will be to wait for an alternative firmware to be released. The default BIOS dates to the 15th of December, 2023. You can't use the GB300's firmware on the SF2000 either (because the GB300's firmware is much smaller, it would leave more of the 16 MiB available memory for modders to add more features).
+The SF2000 firmware does not work on the GB300. There is no known way to retrieve an updated official firmware because the manufacturer is unknown, so the only chance will be to wait for an alternative firmware to be released. The default BIOS dates to the 15th of December, 2023. You can't use the GB300's firmware on the SF2000 either (because the GB300's firmware is much smaller, it would leave more of the 16 MiB available memory for modders to add more features). See (multicore)[#multicore] below for a firmware mod.
 
 ### Saving
 
-The device features four save _states_ per game which allow saving at any point (press Start+Select). However, they are usually incompatible between different emulators. If you want to try anyway, you first need to extract them from their `zlib`-based format (same as on the SF2000). There is [a tool for that](https://vonmillhausen.github.io/sf2000/tools/saveStateTool.htm). The NES sometimes saves uncompressed states. Tests with VBA-M's GBA save states (after extracting the gzip file that is VBA-M's save state format) didn't work (black screen on the GB300).
+***Savestates:*** The device features four save _states_ per game which allow saving at any point (press Start+Select). However, they are usually incompatible between different emulators. If you want to try anyway, you first need to extract them from their `zlib`-based format (same as on the SF2000). There is [a tool for that](https://vonmillhausen.github.io/sf2000/tools/saveStateTool.htm). `.nfc` ROMs (including those in compressed files) use uncompressed save states which are not supported by that tool. Tests with VBA-M's GBA save states (after extracting the `gzip` file that is VBA-M's save state format) didn't work (black screen on the GB300).
 
-Normally, you would be able to exchange _battery_ files between emulators. These are the files that store the savegames created by the games' save feature. However, there's an issue with them on the GB300: To my knowledge, battery files do not work at all for all platforms but the GBA. So the rest of this paragraph is about the GBA only. If you want to _load_ a battery file from another emulator, place it in the `ROMS` folder (not the `save` subfolder). For stock ROMs, is sometimes uses the (user) `ROMS` folder and sometimes the `GBA` folder, so put your saves in both folders. Saving is a bit more complicated. Sometimes it works, sometimes it doesn't. And even if you can load a battery before turning off the device, this does not guarantee that you will still be able to load after turning off the device. Saving and loading between switching off the GB300 in the meantime seems to work, so games that force you to save and restart (e.g. Pokémon games) should work, at least on the GBA. Should you need to get your battery file from the device, load your state and save in-game. Repeat until you can load your battery after restarting the GB300. Then you should have a working battery.
+***Battery Saves:*** Normally, you would be able to exchange _battery_ files between emulators. These are the files that store the savegames created by the _games'_ save feature (should one exist). However, there's an issue with them on the GB300: To my knowledge, battery files do not work at all for all platforms but the GBA. So the rest of this paragraph is about the GBA only. If you want to _load_ a battery file from another emulator, place it in the `ROMS` folder (not the `save` subfolder). For stock ROMs, is sometimes uses the (user) `ROMS` folder and sometimes the `GBA` folder, so put your saves in both folders. Saving is a bit more complicated. Sometimes it works, sometimes it doesn't. And even if you can load a battery before turning off the device, this does not guarantee that you will still be able to load it after turning off the device. Saving and loading without switching off the GB300 in the meantime seems to work, so games that force you to save and restart (e.g. Pokémon games) should work, at least on the GBA. Should you need to get your battery file from the device, load your state and save in-game. Repeat until you can load your battery after restarting the GB300. Then you should have a working battery file.
 
-### Multicore
 
-Discord users osaka (`bnister`) and Prosty (`_prosty`) brought [multicore to GB300](https://github.com/tzubertowski/gb300_multicore/releases/tag/gb300_multicore1.0_0.1.0) on April 27th, 2024. This means that you can now access many more emulators.
+### multicore
+
+Discord users osaka (`bnister`) and Prosty (`_prosty`) brought [multicore to GB300](https://github.com/tzubertowski/gb300_multicore/releases) on April 27th, 2024. This means that you can now access many more emulators and enjoy way better GBA performance.
 
 Multicore manual in a nutshell:
-* Put the release file's content on your TF card.
-* For each _core_ you want, create a subfolder with its name in `ROMS` and put your ROMs for that core in its subfolder. Here's a [list of cores](https://docs.google.com/spreadsheets/d/1BDPqLwRcY2cN7tObuyW7RzLw8oGyY9XGLS1D4jLgz2Q/edit#gid=1430267016).
+* Before you do anything else: [Patch the bootloader](https://vonmillhausen.github.io/sf2000/#bootloader-bug). Really! Spare yourself the possible trouble with the stock ROM.
+* Put the 7-Zip file's content on your TF card.
+* For each "core" (emulator) you want, create a subfolder with its name in `ROMS` and put your ROMs for that core in its subfolder. Here's a [list of cores](https://docs.google.com/spreadsheets/d/1BDPqLwRcY2cN7tObuyW7RzLw8oGyY9XGLS1D4jLgz2Q/edit#gid=1430267016).
 * Run `make-romlist` found in the root directory of your TF card now. It does not actually make a ROM _list_ but creates so-called stubs. These are zero-byte `.gba` files passed to the GBA emulator. However, the GBA emulator was given a hook that will run multicore if the file is named like these stubs.
   * If you don't want to run the script, you can create the stubs yourself. The pattern is `CORENAME;FILENAME.gba`. Example: `Zero Wing.MD` is placed in `ROMS\sega` to be launched with the `sega` core. Then you need to create `ROMS\sega;Zero Wing.MD.gba`.
-* Many of the emulators added by _multicore_ require one or more BIOS files. In the Google Spreadsheet linked above, there is one link to libretro docs per _core_. That linked page will explain what BIOS files you need (the section is missing if an emulator does not use BIOS files). BIOS files must be placed in the `bios` folder of your TF card.
+* Many of the emulators added by _multicore_ require one or more BIOS files. In the Google Spreadsheet linked above, there is one link to libretro docs per core. That linked page will explain what BIOS files you need (the section is missing if an emulator does not use BIOS files). BIOS files must be placed in the `bios` folder of your TF card.
 
 
 ## ROMs and Gameplay
+
+___* * * This entire section is about the stock firmware. It does not apply to [multicore](#multicore) which cannot run zipped ROMs and therefore none of the stock ROMs either. Multicore does not take away any functionality, so installing multicore will still allow you to use the stock emulators with stock ROMs and any custom ROMs that do not match the filename pattern described above. * * *___
 
 To play your own games, create the folder `ROMS` (case-insensitive like all filenames on FAT-32) on the TF card and put your ROMs there. You can also use single-file ZIP files to save memory. Also create a `save` subfolder (`ROMS\save`), because the GB300 will not create one for you and fail saving if that subfolder is missing.
 
@@ -334,7 +338,7 @@ Notes:
 - I applied 387 different patches to 225 games and then played the resulting 490 ROMs. Should there be new hacks released after April 25th, they might be better than the ones above.
 - The column "Pause" names the button to pause the game. "N/A" means that it is not necessary to pause the game according to SMS Power and probably not possible in the original game either. "?" means that you cannot pause with the GB300 alone. Usually, this means that a second gamepad's down button would work.
 - The column "Start Does" tells you what the Start button does with the ROM: "Start" means that it does what the Start button is supposed to do. Dash means that nothing happens at all when you press Start. "Restart", "Freeze" and "Crash" all mean that you cannot play anymore after pressing Start. "Crash" means that the game glitches and instantly freezes.
-- "Outside 160×144" explains what you can see outside the GG viewport: "blank" means nothing (solid color) and is preferable on games that do not scroll. "background" means that you can see the background but sprites still pop up only when entering the GG viewport. "glitched" describes that the non-GG part of the SMS viewport does not make sense and contains glibberish or parts of the map. "useful glitch" is used for games with a map that is only slightly bigger than the GG viewport. The map extends beyond the GG viewport, but can wrap to the other edge of the screen. "useful" means that the hacks use (almost) the entire SMS viewport and feel like a true SMS game.
+- "Outside 160×144" explains what you can see outside the GG viewport: "blank" means nothing (solid color, usually black) and is preferable on games that do not scroll. "background" means that you can see the background but sprites still pop up only when entering the GG viewport. "glitched" describes that the non-GG part of the SMS viewport does not make sense and contains glibberish or parts of the map. "useful glitch" is used for games with a map that is only slightly bigger than the GG viewport. The map extends beyond the GG viewport, but can wrap to the other edge of the screen. "useful" means that the hacks use (almost) the entire SMS viewport and feel like a true SMS game.
 - Notes on individual games:
   - _Aa Harimanada_: Starting with version v0.5 that fixed the colors after the end of a fight, the health bars often glitches. Because v0.6 even makes use of the full screen, I consider v0.6 to be the best patch.
   - _Arcade Classics_: _Missile Command SEGA Version_ seems glitched.
@@ -458,6 +462,7 @@ Most tools designed for the SF2000 don't work. Tools are often incompatible beca
 The following tools were made specifically for the GB300:
 * [Customized _Frogtool_ (Beta)](https://discord.com/channels/741895796315914271/1195581037003165796/1211025634680119327) by tzlion (original version) and Dteyn (GB300 patch), used for rebuilding the console-dependent ROM lists.
 * [GB300 Boot Logo Changer](https://dteyn.github.io/sf2000/tools/bootLogoChangerGB300.htm) by Dteyn
+* [multicore for GB300](https://github.com/tzubertowski/gb300_multicore/releases) by osaka, Prosty and the creators of the original multicore for SF2000.
 * I am making a universal GB300 tool that can do anything you can do with the stock BIOS, except for anything related to sounds.
 
 Tools for the SF2000 that should work for the GB300:
