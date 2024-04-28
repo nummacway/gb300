@@ -86,7 +86,7 @@ Discord users osaka (`bnister`) and Prosty (`_prosty`) brought multicore to GB30
 Multicore manual in a nutshell:
 * Before you do anything else: [Patch the bootloader](https://vonmillhausen.github.io/sf2000/#bootloader-bug). Really! Spare yourself the possible trouble with the stock ROM.
 * Put the [7-Zip file](https://github.com/tzubertowski/gb300_multicore/releases)'s content on your existing TF card.
-* For each "core" (emulator, the GB300 is single-core) you want, create a subfolder with its name in `ROMS` and put your ROMs for that core in its subfolder. Here's a [list of cores](https://docs.google.com/spreadsheets/d/1BDPqLwRcY2cN7tObuyW7RzLw8oGyY9XGLS1D4jLgz2Q/edit#gid=1430267016).
+* For each "core" (emulator, the GB300 CPU is single-core) you want, create a subfolder with its name in `ROMS` and put your ROMs for that core in its subfolder. Here's a [list of cores](https://docs.google.com/spreadsheets/d/1BDPqLwRcY2cN7tObuyW7RzLw8oGyY9XGLS1D4jLgz2Q/edit#gid=1430267016).
 * Run `make-romlist` found in the root directory of your TF card now. It does not actually make a ROM _list_ but creates so-called stubs. These are zero-byte `.gba` files passed to the GBA emulator. However, the GBA emulator was given a hook that will run multicore if the file is named like these stubs.
   * If you don't want to run the script, you can create the stubs yourself. The pattern is `CORENAME;FILENAME.gba`. Example: `Zero Wing.MD` is placed in `ROMS\sega` to be launched with the `sega` core. Then you need to create `ROMS\sega;Zero Wing.MD.gba`.
 * Many of the emulators added by _multicore_ require one or more BIOS files. In the Google Spreadsheet linked above, there is one link to libretro docs per core. That linked page will explain what BIOS files you need (the section is missing if an emulator does not use BIOS files). BIOS files must be placed in the `bios` folder of your TF card.
@@ -340,7 +340,7 @@ Notes:
 - The column "Start Does" tells you what the Start button does with the ROM: "Start" means that it does what the Start button is supposed to do. Dash means that nothing happens at all when you press Start. "Restart", "Freeze" and "Crash" all mean that you cannot play anymore after pressing Start. "Crash" means that the game glitches and instantly freezes.
 - "Outside 160×144" explains what you can see outside the GG viewport: "blank" means nothing (solid color, usually black) and is preferable on games that do not scroll. "background" means that you can see the background but sprites still pop up only when entering the GG viewport. "glitched" describes that the non-GG part of the SMS viewport does not make sense and contains glibberish or parts of the map. "useful glitch" is used for games with a map that is only slightly bigger than the GG viewport. The map extends beyond the GG viewport, but can wrap to the other edge of the screen. "useful" means that the hacks use (almost) the entire SMS viewport and feel like a true SMS game.
 - Notes on individual games:
-  - _Aa Harimanada_: Starting with version v0.5 that fixed the colors after the end of a fight, the health bars often glitches. Because v0.6 even makes use of the full screen, I consider v0.6 to be the best patch.
+  - _Aa Harimanada_: Version v0.5 fixed the colors after the end of a fight, but also introduced frequent health bar glitches. Since v0.6 makes use of the full screen, I consider v0.6 to be the best patch. If you're annoyed by the health bar glitch, use patch v0.4.
   - _Arcade Classics_: _Missile Command SEGA Version_ seems glitched.
   - _Berenstain Bears' Camping Adventure, The_: I did start a _Cave Adventure_ during my first test by pressing the Start button, but never managed to do that ever again. So this game is not listed.
   - _Frogger_: You'll often find a 256KiB ROM, but that's an overdump. The actual size is 128KiB and has the CRC-32 values above. The overdump has `da724710` and applying the patch results in a working ROM (`68b958f0`). The first half of the 256 KiB ROMs is identical to the 128 KiB ROM.
@@ -354,31 +354,33 @@ Notes:
   - _Surf Ninjas_: Menu is completely glitched, but in-game it's okay.
   - _Tails Adventure_: v1.4 and v1.5 do not work for the Virtual Console one. Patch the normal version if you can.
 
-There's a few more GG games that you can play, because technically these are normal SMS games and will therefore not have glitched colors. Some ROM sites even list the files with an `.sms` extension although they're in the Game Gear category. Still, some of these games will not work.
+There's a few more GG games that you can play, because technically they are normal SMS games and will therefore not have glitched colors. Some ROM sites even list these with an `.sms` extension although they're in the Game Gear category. Still, some ROMs will not work.
  
-| Game | Remarks |
-| ---- | ------- |
-| **Castle of Illusion Starring Mickey Mouse** | Start button is working |
-| **Cave Dude** (Beta) | Start button neither working nor mandatory |
-| **Chase H.Q.** | Start button neither working nor mandatory |
-| **Excellent Dizzy Collection, The** | Game does not load |
-| **Fantastic Dizzy** | No useful video, glitched audio |
-| **Jang Pung II** (Unl) | No useful video, no audio |
-| **Mickey Mouse no Castle Illusion** | Start button is working |
-| **Olympic Gold** | Start button is working |
-| **OutRun Europa** | Start button neither working nor mandatory |
-| **Predator 2** | Start button is working |
-| **Prince of Persia** | Start button is working |
-| **R.C. Grand Prix** | Start button neither working nor mandatory |
-| **Rastan Saga** | Start button is working |
-| **Street Battle** | No useful video, no audio |
-| **Street Hero** (Beta 1) | No video, glitched audio |
-| **Street Hero** (Beta 2) | Start button neither working nor mandatory |
-| **Super Kick Off** | Start button is working |
-| **Taito Chase H.Q.** | Start button is working |
-| **WWF Wrestlemania: Steel Cage Challenge** | Start button neither working nor mandatory |
+| No-Intro Name | ID | CRC-32 | Remarks |
+| ------------- | -- | ------ | ------- |
+| **Castle of Illusion Starring Mickey Mouse (USA, Europe, Brazil) (En)** | [0051](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0051) | `59840fd6` | Start button is working |
+| **Cave Dude (USA) (Proto)** | [0503](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0503) | `cc521975` | Start button neither working nor mandatory |
+| **Chase H.Q. (USA)** | [0480](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0480) | `c8381def` | Start button neither working nor mandatory |
+| **Excellent Dizzy Collection, The (Europe)** | [0100](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0100) | `aa140c9c` | Game does not load |
+| **Fantastic Dizzy (USA, Europe) (En,Fr,De,Es,It)** | [0105](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0105) | `c888222b` | No useful video, glitched audio |
+| **Jang Pung II (Korea) (En) (Unl)** | [0469](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0469) | `76c5bdfb` | No useful video, no audio |
+| **Mickey Mouse no Castle Illusion (Japan)** | [0050](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0050) | `9942b69b` | Start button is working |
+| **Olympic Gold (Europe) (En,Fr,De,Es,It,Nl,Pt,Sv)** | [0256](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0256) | `1d93246e` | Start button is working |
+| **Olympic Gold (Japan, USA, Brazil) (En,Fr,De,Es,It,Nl,Pt,Sv)** | [0257](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0257) | `a2f9c7af` | Start button is working |
+| **OutRun Europa (USA)** | [0260](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0260) | `f037ec00` | Start button neither working nor mandatory |
+| **Predator 2 (USA, Europe)** | [0287](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0287) | `e5f789b9` | Start button is working |
+| **Prince of Persia (USA, Europe) (Beta)** | [0290](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0290) | `45f058d6` | Start button is working |
+| **Prince of Persia (USA, Europe)** | [0289](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0289) | `311d2863` | Start button is working |
+| **R.C. Grand Prix (USA)** | [0305](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0305) | `56201996` | Start button neither working nor mandatory |
+| **Rastan Saga (Japan)** | [0306](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0306) | `9c76fb3a` | Start button is working |
+| **Street Battle (USA) (Proto) (Unl)** | [0506](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0506) | `01a2d595` | No useful video, no audio |
+| **Street Hero (USA) (Proto 1)** | [0489](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0489) | `9fa727a0` | No video, glitched audio |
+| **Street Hero (USA) (Proto 2)** | [0490](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0490) | `fb481971` | Start button neither working nor mandatory |
+| **Super Kick Off (Europe) (En,Fr,De,Es,It,Nl,Pt,Sv)** | [0374](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0374) | `10dbbef4` | Start button is working |
+| **Taito Chase H.Q. (Japan)** | [0391](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0391) | `7bb81e3d` | Start button is working |
+| **WWF Wrestlemania - Steel Cage Challenge (USA, Europe)** | [0433](https://datomatic.no-intro.org/index.php?page=show_record&s=25&n=0433) | `da8e95a9` | Start button neither working nor mandatory |
 
-With the exception of Street Hero, the information applies to all versions of the games above.
+This list contains only ROMs listed on No-Intro. GoodGG has more ROM than No-Intro.
 
 #### Other SEGA Consoles
 
