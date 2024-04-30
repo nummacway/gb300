@@ -18,6 +18,8 @@ This document is work in progress but mostly finished now. Large parts target de
     - [PC Engine](#pc-engine)
     - [Super Nintendo Entertainment System](#super-nintendo-entertainment-system)
     - [SEGA Mega Drive, SEGA Master System and SEGA Game Gear](#sega-mega-drive-sega-master-system-and-sega-game-gear)
+        - [SEGA Mega Drive](#sega-mega-drive)
+        - [SEGA PICO](#sega-pico)
         - [SEGA Master System](#sega-master-system)
         - [SEGA Game Gear](#sega-game-gear)
         - [Other SEGA Consoles](#other-sega-consoles)
@@ -39,7 +41,7 @@ This document is work in progress but mostly finished now. Large parts target de
 
 ## Hardware
 
-The hardware is very similar to the SF2000. The processor is the same 918 MHz MIPS chip with 128 MB of high-latency DDR2 RAM, originally designed to be used in DVD players and set-top boxes. The most important difference is the vertical form factor which makes the device look a bit like the (much heavier) Game Boy Color. The GB300 lacks the SF2000's "digital analog stick" and the buttons feel somewhat cheap.
+The hardware is very similar to the SF2000. The processor is the same 918 MHz MIPS processor (HiChip/HCSEMI B210, overclocked from 810 MHz) with 128 MB of high-latency DDR2 RAM, originally designed to be used in DVD players and set-top boxes. The most important difference is the vertical form factor which makes the GB300 look a bit like the (much heavier) Game Boy Color. The GB300 lacks the SF2000's "digital analog stick" and the buttons feel somewhat cheap.
 
 The screen is a cheap LCD screen compared to the SF2000’s IPS screen. The horizontal viewing angle (sideways) is extremely small, but vertical is alright. Especially when playing dark games in a dark room, the very bright black is an issue, as neither device has a brightness control. People who love the GB300 for its form factor, working sound volume control and straight-forward interface have bought an SF2000 just to [swap its screen into the GB300](https://discord.com/channels/741895796315914271/1197607372277940314), so the rest of the device can't be that bad, hmm? The GB300's default screen has diagonal(!) screen tearing. It isn't really noticeable unless there's flashing or fading.
 
@@ -62,6 +64,7 @@ The GB300's stock firmware emulates the following devices:
 * Super Nintendo Entertainment System (Super Famicon)
 * SEGA Master System (SEGA Mark III)
 * SEGA Mega Drive (SEGA Genesis)
+* SEGA PICO (Kids Computer Pico) – debatable if this is different from the Mega Drive
 * Game Boy
 * Game Boy Color
 * Game Boy Advance
@@ -70,13 +73,16 @@ Compared to the SF2000 stock firmware, the GB300 lacks the arcade section and ad
 
 There's actually two things called "firmware" on the GB300: There is a small bootloader (512KiB) that loads the firmware from the TF card. You should [patch that bootloader](https://vonmillhausen.github.io/sf2000/#bootloader-bug) to prevent issues when tampering with files in the `BIOS` folder on the TF card. Really. This patch works for the GB300 as well and takes only a few seconds. With the bootloader separated from the rest of the firmware and the firmware on a TF card, any modding attempts are relatively safe.
 
-The SF2000 firmware does not work on the GB300. There is no known way to retrieve an updated official firmware because the manufacturer is unknown, so the only chance will be to wait for an alternative firmware to be released. The default BIOS dates to the 15th of December, 2023. You can't use the GB300's firmware on the SF2000 either (because the GB300's firmware is much smaller, it would leave more of the 16 MiB available memory for modders to add more features). See (multicore)[#multicore] below for a firmware mod.
+The SF2000 firmware does not work on the GB300. There is no known way to retrieve an updated official firmware because the manufacturer is unknown, so the only chance will be to wait for an alternative firmware to be released. The default BIOS dates to the 15th of December, 2023. You can't use the GB300's firmware on the SF2000 either (because the GB300's firmware is much smaller, it would leave more of the 16 MiB available memory for modders to add more features). See [multicore](#multicore) below for a firmware mod.
 
 ### Saving
 
 ***Savestates:*** The device features four save _states_ per game which allow saving at any point (press Start+Select). However, they are usually incompatible between different emulators. If you want to try anyway, you first need to extract them from their `zlib`-based format (same as on the SF2000). There is [a tool for that](https://vonmillhausen.github.io/sf2000/tools/saveStateTool.htm). `.nfc` ROMs (including those in compressed files) use uncompressed save states which are not supported by that tool. Tests with VBA-M's GBA save states (after extracting the `gzip` file that is VBA-M's save state format) didn't work (black screen on the GB300).
 
-***Battery Saves:*** Normally, you would be able to exchange _battery_ files between emulators. These are the files that store the savegames created by the _games'_ save feature (should one exist). However, there's an issue with them on the GB300: To my knowledge, battery files do not work at all for all platforms but the GBA. So the rest of this paragraph is about the GBA only. If you want to _load_ a battery file from another emulator, place it in the `ROMS` folder (not the `save` subfolder). For stock ROMs, is sometimes uses the (user) `ROMS` folder and sometimes the `GBA` folder, so put your saves in both folders. Saving is a bit more complicated. Sometimes it works, sometimes it doesn't. And even if you can load a battery before turning off the device, this does not guarantee that you will still be able to load it after turning off the device. Saving and loading without switching off the GB300 in the meantime seems to work, so games that force you to save and restart (e.g. Pokémon games) should work, at least on the GBA. Should you need to get your battery file from the device, load your state and save in-game. Repeat until you can load your battery after restarting the GB300. Then you should have a working battery file.
+***Battery Saves:*** Normally, you would be able to exchange _battery_ files between emulators. These are the files that store the savegames created by the _games'_ save feature (should one exist). However, there's an issue with them on the GB300:
+* GBA: If you want to _load_ a battery file from another emulator, place it in the `ROMS` folder (not the `save` subfolder). For stock ROMs, is sometimes uses the (user) `ROMS` folder and sometimes the `GBA` folder, so put your saves in both folders. Saving is a bit more complicated. Sometimes it works, sometimes it doesn't. And even if you can load a battery before turning off the device, this does not guarantee that you will still be able to load it after turning off the device. Saving and loading without switching off the GB300 in the meantime works for GBA games. Should you need to get your battery file from the device, load your state and save in-game. Repeat until you can load your battery after restarting the GB300. Then you should have a working battery file.
+* GB/GBC: Many people are concerned about Pokémon games which force a soft reset after beating the Champ. Luckily, this is no issue at all for the stock GB/GBC emulator, if you saved in-game after you last loaded a state (or started a new game). This will normally be the case if you make sure that you _do not save a state before you're back in the game_. In other words: Do not save and load a state during the intro. How can you quickly test this with any GB/GBC/GBA emulator in the world? Save a game, and press A+B+Start+Select and you should be able to load the battery. This is not an emulator feature but implemented by nearly all ROMs.
+* Need to do more research on the other emulators.
 
 
 ### multicore
@@ -84,12 +90,14 @@ The SF2000 firmware does not work on the GB300. There is no known way to retriev
 Discord users osaka (`bnister`) and Prosty (`_prosty`) brought multicore to GB300 on April 27th, 2024. This means that you can now access many more emulators and enjoy way better GBA performance.
 
 Multicore manual in a nutshell:
-* Before you do anything else: [Patch the bootloader](https://vonmillhausen.github.io/sf2000/#bootloader-bug). Really! Spare yourself the possible trouble with the stock ROM.
+* Before you do anything else: [Patch the bootloader](https://vonmillhausen.github.io/sf2000/#bootloader-bug). Really! Spare yourself the possible trouble with the device not booting because of a buggy FAT-32 implementation.
 * Put the [7-Zip file](https://github.com/tzubertowski/gb300_multicore/releases)'s content on your existing TF card.
-* For each "core" (emulator, the GB300 CPU is single-core) you want, create a subfolder with its name in `ROMS` and put your ROMs for that core in its subfolder. Here's a [list of cores](https://docs.google.com/spreadsheets/d/1BDPqLwRcY2cN7tObuyW7RzLw8oGyY9XGLS1D4jLgz2Q/edit#gid=1430267016).
-* Run `make-romlist` found in the root directory of your TF card now. It does not actually make a ROM _list_ but creates so-called stubs. These are zero-byte `.gba` files passed to the GBA emulator. However, the GBA emulator was given a hook that will run multicore if the file is named like these stubs.
+* For each "core" (the term means emulator – the GB300 CPU is single-core) you want, create a subfolder with its name in `ROMS` and put your ROMs for that core in its subfolder. Here's a [list of cores](https://docs.google.com/spreadsheets/d/1BDPqLwRcY2cN7tObuyW7RzLw8oGyY9XGLS1D4jLgz2Q/edit#gid=1430267016).
+* Run `make-romlist` found in the root directory of your TF card now. It does not actually make a ROM _list_ but creates so-called stubs. These are zero-byte (empty) `.gba` files passed to the GBA emulator. However, the GBA emulator was given a hook that will run multicore if the file name conforms to a certain file name pattern.
   * If you don't want to run the script, you can create the stubs yourself. The pattern is `CORENAME;FILENAME.gba`. Example: `Zero Wing.MD` is placed in `ROMS\sega` to be launched with the `sega` core. Then you need to create `ROMS\sega;Zero Wing.MD.gba`.
 * Many of the emulators added by _multicore_ require one or more BIOS files. In the Google Spreadsheet linked above, there is one link to libretro docs per core. That linked page will explain what BIOS files you need (the section is missing if an emulator does not use BIOS files). BIOS files must be placed in the `bios` folder of your TF card.
+
+Note: Multicore saves in `ROMS\save`. The thumbnail (screenshot) named like always, but the state is in another file and isn't compressed.
 
 
 ## ROMs and Gameplay
@@ -116,7 +124,7 @@ Changing the things above will give you a standard ZIP file. At least 7-Zip is a
 | **PicoDrive**         | 1.91      | `cbc93b6`  | `.bin`, `.gen`, `.smd`, `.md`, ~~`.32x`~~, ~~`.cue`~~, ~~`.iso`~~, `.sms`  | `0x04000000` |
 | **TGB Dual**          | v0.8.3    | `9be31d3`  | `.gb`, `.gbc`, `.sgb`                                                      | `0x20000000` |
 | **gpSP**              | v0.91     | `261b2db`  | `.gba`, ~~`.bin`~~, `.agb`, `.gbz`                                         | `0x10000000` |
-| _(ZIP file)_          |           |            | `.bkp`, `.zip`                                                             | `0x00000100` |
+| _XZip-XUnZip_         | _unknown_ | _unknown_  | `.bkp`, `.zip`                                                             | `0x00000100` |
 | _(thumbnailed file)_  |           |            | `.zfc`, `.zsf`, `.zpc`, `.zmd`, `.zgb`, `.zfb` (?)                         | `0x00000300` |
 
 The _named_ emulators are from `libretro`. If they were used in that context, they'd report all the given extensions to `libretro`, but the the GB300 does not display the stroke-out ones. `.bin` files are associated with PicoDrive, not gpSP, so they are stroke-out for the latter.
@@ -171,6 +179,8 @@ Compared to the SF2000, the following file is missing:
 
 ### SEGA Mega Drive, SEGA Master System and SEGA Game Gear
 
+### SEGA Mega Drive
+
 Compared to the SF2000, the following game is missing:
 * `007 Shitou - The Duel.zmd`
 
@@ -221,12 +231,21 @@ But one thing got better: Instead of the 225 broken thumbnails on the SF2000, th
 * `World Series Baseball.zmd`
 * `Wu Kong Wai Zhuan.zmd`
 
+
+#### SEGA PICO
+
+The SEGA PICO is technically identical to the Mega Drive. It looks like a children's laptop, but you place the book-shaped cartridges ("storyware") where you would expect a screen (you use composite video to connect the PICO to a TV). As this is simply the Mega Drive, the GB300 can run SEGA PICO ~~games~~ software. No PICO storybook ROMs ship with the console though.
+
+Even current versions of PicoDrive do not support its successor, the SEGA Advanced Pico Beena.
+
+
 #### SEGA Master System
 
 Only MD is advertised and there are no SMS games included. The device will still play them if you add them yourself. The button assignments are strange, though:
 * SMS Button 1 is called B by the GB300 and defaults to B.
 * SMS Button 2 is called C by the GB300 and defaults to R.
 * The pause key that is located on the SMS physical console (not on the gamepad) is on Start.
+
 
 #### SEGA Game Gear
 
@@ -384,7 +403,7 @@ This list contains only ROMs listed on No-Intro. GoodGG has more ROM than No-Int
 
 #### Other SEGA Consoles
 
-Despite the undocumented support for SMS and options to make GG games work, you aren't that lucky with the other Sega consoles. If you change the GB300's BIOS to display them or change the extension (it doesn't matter which of these you do, with the exception of a very few SG-1000 games), the following things will happen:
+Despite the undocumented support for PICO, SMS and options to make GG games work, you aren't that lucky with the other Sega consoles. If you change the GB300's BIOS to display them or change the extension (it doesn't matter which of these you do, with the exception of a very few SG-1000 games), the following things will happen:
 * Sega CD games (`.bin` or `.cue`) will load indefinitely/freeze the console, even the tiniest and/or single-image ones (Ishii Hisaichi no Daiseikai, around 10 megabytes – the largest GBA games are 32 megabytes).
 * Most Sega 32X games will not display anything at all, even if you put the correct BIOS in the root or Roms directory. A few games will display "something":
   * Both versions of _Knuckles' Chaotix_ display an error message.
@@ -392,6 +411,7 @@ Despite the undocumented support for SMS and options to make GG games work, you 
   * _Mars Check Program Version 1.0 (SDK Build) (Set 2)_ and _Toughman Contest_ display a green screen.
   * _Mars Check Program Version 1.0 (SDK Build) (Set 1)_ and _WWF WrestleMania: The Arcade Game_ display a red/orange screen.
 * Most SG-1000 games will "load". (The games that don't load will freeze the device, e.g. Champion Baseball 40kB.) There is no video (black screen), but audio is fine. Buttons are also fine. (Note that applications like Home Basic likely don't have sound, so you can't tell if they're loading or not.) [SG to GG/SMS conversions](https://www.smspower.org/forums/post103058#103058) do _not_ work. Well, unless your goal is to analyse the screen tearing – _all_ these patches cause the entire screen to quickly change color. So: Do not try this if you're photosensitive.
+* Advanced Pico Beena ROMs display a black screen.
 
 
 ### Game Boy
