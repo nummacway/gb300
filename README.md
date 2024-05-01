@@ -45,7 +45,7 @@ The hardware is very similar to the SF2000. The processor is the same 918 MHz MI
 
 The screen is a cheap LCD screen compared to the SF2000’s IPS screen. The horizontal viewing angle (sideways) is extremely small, but vertical is alright. Especially when playing dark games in a dark room, the very bright black is an issue, as neither device has a brightness control. People who love the GB300 for its form factor, working sound volume control and straight-forward interface have bought an SF2000 just to [swap its screen into the GB300](https://discord.com/channels/741895796315914271/1197607372277940314), so the rest of the device can't be that bad, hmm? The GB300's default screen has diagonal(!) screen tearing. It isn't really noticeable unless there's flashing or fading.
 
-Because it lacks the arcade support accounting for 2.75 GB on the SF2000, the device ships with only a 8 GB TF/microSDHC card (42 MB of which aren't allocated to a partition), formatted FAT32. It includes the firmware and the default set of 6267 ROMs. This leaves around 1.75 GB for your own ROMs. Actually, there's more space if you follow the manual: All the ROMs are just for demonstration and you are supposed to delete them right when you receive the console, even though the menus are hardcoded to exactly these files.
+Because it lacks the arcade support accounting for 2.75 GB on the SF2000, the device ships with only a 8 GB TF/microSDHC card (42 MB of which aren't allocated to a partition), formatted FAT32. It includes the firmware and the default set of 6267 ROMs. This leaves around 1.75 GB for your own ROMs. Actually, there's more space if you follow the manual: All the ROMs are just for demonstration and you are supposed to delete them right when you receive the console, even though the menus are hardcoded to exactly these files. The GB300 is picky in terms of which TF cards it will accept.
 
 The device comes with a 70&thinsp;cm (28") cable from a 2.5mm male audio plug to two male RCA (cinch) plug. The yellow RCA plug is for composite video and the red one for sound. You can plug them into older TVs either directly or via a SCART adapter. If you plug the cable in the GB300, its own screen will be turned off. The TV output has a better resolution (640x480) than the internal screen's 320x240. If your TV doesn't care, use NTSC 480i to avoid unnecessary vertical scaling to 576i. NTSC outputs a vertically pixel-perfect result of the user interface. Unlike the SF2000, the TV signal will be fine while charging the GB300. Do not plug in the AV cable until the device has completely booted (that includes not plugging in the cable before switching the device on, meaning that the full-size bootlogo is never used).
 
@@ -117,21 +117,24 @@ Changing the things above will give you a standard ZIP file. At least 7-Zip is a
 
 | Emulator              | Version   | Git Commit | File Extensions                                                            | Bitmask      |
 | --------------------- | --------- | ---------- | -------------------------------------------------------------------------- | ------------ |
-| _unknown_             | _unknown_ | _unknown_  | `.nfc`                                                                     | `0x02000000` |
-| **FCEUmm**            | _none_    | `7cdfc7e`  | `.fds`, `.nes`, `.unf`, ~~`.unif`~~                                        | `0x01000000` |
-| **Mednafen PCE Fast** | v0.9.38.7 | _unknown_  | `.pce`, ~~`.cue`~~, ~~`.ccd`~~, ~~`.chd`~~                                 | `0x80000000` |
-| **Snes9x 2005**       | v1.36     | _unknown_  | `.smc`, `.fig`, `.sfc`, `.gd3`, `.gd7`, `.dx2`, `.bsx`, `.swc`             | `0x08000000` |
-| **PicoDrive**         | 1.91      | `cbc93b6`  | `.bin`, `.gen`, `.smd`, `.md`, ~~`.32x`~~, ~~`.cue`~~, ~~`.iso`~~, `.sms`  | `0x04000000` |
-| **TGB Dual**          | v0.8.3    | `9be31d3`  | `.gb`, `.gbc`, `.sgb`                                                      | `0x20000000` |
-| **gpSP**              | v0.91     | `261b2db`  | `.gba`, ~~`.bin`~~, `.agb`, `.gbz`                                         | `0x10000000` |
 | _XZip-XUnZip_         | _unknown_ | _unknown_  | `.bkp`, `.zip`                                                             | `0x00000100` |
-| _(thumbnailed file)_  |           |            | `.zfc`, `.zsf`, `.zpc`, `.zmd`, `.zgb`, `.zfb` (?)                         | `0x00000300` |
+| _(thumbnailed file)_  |           |            | `.zfc`, `.zsf`, `.zpc`, `.zmd`, `.zgb`                                     | `0x00000300` |
+| _XZip-XUnZip_         | _unknown_ | _unknown_  | `.zfb`*                                                                    | `0x00000300` |
+| **Snes9x 2005**       | v1.36     | _unknown_  | `.smc`, `.fig`, `.sfc`, `.gd3`, `.gd7`, `.dx2`, `.bsx`, `.swc`             | `0x08000000` |
+| **FCEUmm**            | _none_    | `7cdfc7e`  | `.nes`, `.fds`, `.unf`, ~~`.unif`~~                                        | `0x01000000` |
+| _unknown_             | _unknown_ | _unknown_  | `.nfc`                                                                     | `0x02000000` |
+| **TGB Dual**          | v0.8.3    | `9be31d3`  | `.gbc`, `.gb`, `.sgb`                                                      | `0x20000000` |
+| **gpSP**              | v0.91     | `261b2db`  | `.gba`, ~~`.bin`~~, `.agb`, `.gbz`                                         | `0x10000000` |
+| **PicoDrive**         | 1.91      | `cbc93b6`  | `.bin`, `.md`, `.smd`, `.gen`, ~~`.32x`~~, ~~`.cue`~~, ~~`.iso`~~, `.sms`  | `0x04000000` |
+| **Mednafen PCE Fast** | v0.9.38.7 | _unknown_  | `.pce`, ~~`.cue`~~, ~~`.ccd`~~, ~~`.chd`~~                                 | `0x80000000` |
+
+*&#32;= `.zfb` does have the bitmask `0x00000300` used for thumbnailed files, but the GB300 can only show thumbnails for the third to seventh file extension in its list (which is identical to the one above). `.zfb` is the eighth in that internal list so there is no thumbnail. This means that there is absolutely no chance to use thumbnails for ROMs launched with multicore. The lack of a thumbnail for `.zfb` is funny because on the SF2000, the sole use of `.zfb` is to provide the thumbnail for a file in another directory. ZFB is short for ZIP Final Burn (an emulator), despite not containing a ZIP file.
 
 The _named_ emulators are from `libretro`. If they were used in that context, they'd report all the given extensions to `libretro`, but the the GB300 does not display the stroke-out ones. `.bin` files are associated with PicoDrive, not gpSP, so they are stroke-out for the latter.
 
-ZIP and thumbnailed files are both allowed to be optionally obfuscated. I'm not sure where `.zfb` belongs, because from the BIOS' code, this should be a thumbnailed file, but I don't think I could get the GB300 to display the thumbnail for such file. This is funny because on the SF2000, the sole use of `.zfb` is to provide the thumbnail for a file in another directory. And yes, even a `.zip` file is allowed to be obfuscated.
+ZIP and thumbnailed files are both allowed to be optionally obfuscated. And yes, even a `.zip` file is allowed to be obfuscated.
 
-The bitmask is located in the BIOS where it comes _after_ the extension. The block with this data is close to the end of the BIOS file. Open it a hex editor and search for `NFC` because that string does not occur anywhere else. `.nfc` is associated with a different NES emulator than the `.fds`, `.nes` and `.unf`. That extension is frequently seen in stock ROMs. The most notable difference is that this emulator's save states are uncompressed. It is believed that this NES emulator is the BIOS creators' own NES emulator, probably the one that's also used in the cheap Famiclones (see the introduction). Neither NES emulator seems to be able to run VT03.
+The bitmask is located in the BIOS where it comes _after_ the extension. The block with this data is close to the end of the BIOS file. Open it a hex editor and search for `NFC` because that string does not occur anywhere else. `.nfc` is associated with a different NES emulator than the `.fds`, `.nes` and `.unf`. That extension is frequently seen in stock ROMs. The most notable difference is that this emulator's save states are uncompressed. It is believed that this NES emulator is the BIOS creators' own NES emulator, probably the one that's also used in the cheap Famiclones (see the introduction). Neither NES emulator seems to be able to run VT03. Loading `.fds` fails, even with the correct BIOS in the correct folder (`ROMS`).
 
 The GB300 relies on the extension (or, more precisely, the extension's bitmask) to decide what to do with the file:
 * Display a thumbnail?
@@ -179,7 +182,7 @@ Compared to the SF2000, the following file is missing:
 
 ### SEGA Mega Drive, SEGA Master System and SEGA Game Gear
 
-### SEGA Mega Drive
+#### SEGA Mega Drive
 
 Compared to the SF2000, the following game is missing:
 * `007 Shitou - The Duel.zmd`
@@ -234,7 +237,7 @@ But one thing got better: Instead of the 225 broken thumbnails on the SF2000, th
 
 #### SEGA PICO
 
-The SEGA PICO is technically identical to the Mega Drive. It looks like a children's laptop, but you place the book-shaped cartridges ("storyware") where you would expect a screen (you use composite video to connect the PICO to a TV). As this is simply the Mega Drive, the GB300 can run SEGA PICO ~~games~~ software. No PICO storybook ROMs ship with the console though.
+The SEGA PICO is technically identical to the Mega Drive. It looks like a children's laptop, but you place the book-shaped cartridges ("storyware") where you would expect a screen and connect it to a TV for video. As this is simply the Mega Drive, the GB300 can run SEGA PICO ~~games~~ software. No PICO storybook ROMs ship with the console though.
 
 Even current versions of PicoDrive do not support its successor, the SEGA Advanced Pico Beena.
 
