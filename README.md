@@ -486,7 +486,7 @@ Most tools designed for the SF2000 don't work. Tools are often incompatible beca
 
 The following tools were made specifically for the GB300:
 * [multicore for GB300](https://github.com/tzubertowski/gb300_multicore/releases) by osaka, Prosty and the creators of the original multicore for SF2000.
-* [GB300 Tool](https://discord.com/channels/741895796315914271/1195581037003165796/1234253697295450183) by me (numma_cway); prerelease version without multicore support. Includes tons of features, including the functionality of any non-sound-related tool below.
+* [GB300 Tool](https://discord.com/channels/741895796315914271/1195581037003165796/1236083284899926156) by me (numma_cway); now with multicore support! Includes tons of features, including the functionality of any non-sound-related tool below.
 * [Customized _Frogtool_ (Beta)](https://discord.com/channels/741895796315914271/1195581037003165796/1211025634680119327) by tzlion (original version) and Dteyn (GB300 patch), used for rebuilding the console-dependent ROM lists.
 * [GB300 Boot Logo Changer](https://dteyn.github.io/sf2000/tools/bootLogoChangerGB300.htm) by Dteyn
 
