@@ -91,13 +91,15 @@ Discord users osaka (`bnister`) and Prosty (`_prosty`) brought multicore to GB30
 
 Multicore manual in a nutshell:
 * Before you do anything else: [Patch the bootloader](https://vonmillhausen.github.io/sf2000/#bootloader-bug). Really! Spare yourself the possible trouble with the device not booting because of a buggy FAT-32 implementation.
-* Put the [7-Zip file](https://github.com/tzubertowski/gb300_multicore/releases)'s content on your existing TF card.
+* Put the [7-Zip file](https://github.com/tzubertowski/gb300_multicore/releases/)'s content on your existing TF card.
+
+Now you can add your ROMs. You can either do that by using [GB300 Tool](https://github.com/nummacway/gb300tool/releases/) (expand "Assets" and download the ZIP file) or by following the steps below:
 * For each "core" (the term means emulator – the GB300 CPU is single-core) you want, create a subfolder with its name in `ROMS` and put your ROMs for that core in its subfolder. Here's a [list of cores](https://docs.google.com/spreadsheets/d/1BDPqLwRcY2cN7tObuyW7RzLw8oGyY9XGLS1D4jLgz2Q/edit#gid=1430267016).
 * Run `make-romlist` found in the root directory of your TF card now. It does not actually make a ROM _list_ but creates so-called stubs. These are zero-byte (empty) `.gba` files passed to the GBA emulator. However, the GBA emulator was given a hook that will run multicore if the file name conforms to a certain file name pattern.
   * If you don't want to run the script, you can create the stubs yourself. The pattern is `CORENAME;FILENAME.gba`. Example: `Zero Wing.MD` is placed in `ROMS\sega` to be launched with the `sega` core. Then you need to create `ROMS\sega;Zero Wing.MD.gba`.
-* Many of the emulators added by _multicore_ require one or more BIOS files. In the Google Spreadsheet linked above, there is one link to libretro docs per core. That linked page will explain what BIOS files you need (the section is missing if an emulator does not use BIOS files). BIOS files must be placed in the `bios` folder of your TF card.
+* Many of the emulators added by _multicore_ require one or more BIOS files (GB300 Tool would tell you). In the Google Spreadsheet linked above, there is one link to libretro docs per core. That linked page will explain what BIOS files you need (the section is missing if an emulator does not use BIOS files). BIOS files must be placed in the `bios` folder of your TF card.
 
-Note: Multicore saves in `ROMS\save`. The thumbnail (screenshot) named like always, but the state is in another file and isn't compressed.
+Note: Multicore saves in `ROMS\save`. The thumbnail (screenshot) is named and formatted like always, but with no payload other than the image, as the state is in another file that isn't compressed.
 
 
 ## ROMs and Gameplay
@@ -486,7 +488,7 @@ Most tools designed for the SF2000 don't work. Tools are often incompatible beca
 
 The following tools were made specifically for the GB300:
 * [multicore for GB300](https://github.com/tzubertowski/gb300_multicore/releases) by osaka, Prosty and the creators of the original multicore for SF2000.
-* [GB300 Tool](https://discord.com/channels/741895796315914271/1195581037003165796/1236083284899926156) by me (numma_cway); now with multicore support! Includes tons of features, including the functionality of any non-sound-related tool below.
+* [GB300 Tool](https://github.com/nummacway/gb300tool/releases/) by me (numma_cway); now with multicore support! Includes tons of features, including the functionality of any non-sound-related tool below. **To download, expand "Assets" and download the ZIP file.**
 * [Customized _Frogtool_ (Beta)](https://discord.com/channels/741895796315914271/1195581037003165796/1211025634680119327) by tzlion (original version) and Dteyn (GB300 patch), used for rebuilding the console-dependent ROM lists.
 * [GB300 Boot Logo Changer](https://dteyn.github.io/sf2000/tools/bootLogoChangerGB300.htm) by Dteyn
 
