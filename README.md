@@ -89,11 +89,24 @@ The SF2000 firmware does not work on the GB300. There is no known way to retriev
 
 Discord users osaka (`bnister`) and Prosty (`_prosty`) brought multicore to GB300 on April 27th, 2024. This means that you can now access many more emulators and enjoy way better GBA performance.
 
-Multicore manual in a nutshell:
+#### Installing and using multicore with GB300 Tool
+
+The easiest way to use multicore is probably via [GB300 Tool](https://github.com/nummacway/gb300tool/releases/). Expand "Assets" on that page, download the ZIP file and start the tool. Enter your TF reader's drive letter and follow these steps:
+
+1. Check the first checkbox on the BIOS/Device page that comes up right after entering your drive letter.
+2. Put the TF card in your GB300 and boot. It will display some progress indicator during boot for a few seconds.
+3. Turn off the GB300 and put the card in your TF reader again.
+4. Put the [7-Zip file](https://github.com/tzubertowski/gb300_multicore/releases/)'s content on your existing TF card.
+5. Restart GB300 Tool to make it notice that you now have multicore.
+6. Select one of the first eight tabs in GB300 Tool and either click "Add..." or drop your ROMs on the tool. It will ask you for the multicore core, but will have recommendations for you. If GB300 tells you that you need a BIOS, you need to put it the `bios` folder on your TF card. Here's a [list of cores](https://docs.google.com/spreadsheets/d/1BDPqLwRcY2cN7tObuyW7RzLw8oGyY9XGLS1D4jLgz2Q/edit#gid=1430267016). Most cores link to libretro's docs with more information on BIOS.
+
+You only have to do steps 1 to 5 once.
+
+
+#### Installing and using multicore manually
+
 * Before you do anything else: [Patch the bootloader](https://vonmillhausen.github.io/sf2000/#bootloader-bug). Really! Spare yourself the possible trouble with the device not booting because of a buggy FAT-32 implementation.
 * Put the [7-Zip file](https://github.com/tzubertowski/gb300_multicore/releases/)'s content on your existing TF card.
-
-Now you can add your ROMs. You can either do that by using [GB300 Tool](https://github.com/nummacway/gb300tool/releases/) (expand "Assets" and download the ZIP file) or by following the steps below:
 * For each "core" (the term means emulator – the GB300 CPU is single-core) you want, create a subfolder with its name in `ROMS` and put your ROMs for that core in its subfolder. Here's a [list of cores](https://docs.google.com/spreadsheets/d/1BDPqLwRcY2cN7tObuyW7RzLw8oGyY9XGLS1D4jLgz2Q/edit#gid=1430267016).
 * Run `make-romlist` found in the root directory of your TF card now. It does not actually make a ROM _list_ but creates so-called stubs. These are zero-byte (empty) `.gba` files passed to the GBA emulator. However, the GBA emulator was given a hook that will run multicore if the file name conforms to a certain file name pattern.
   * If you don't want to run the script, you can create the stubs yourself. The pattern is `CORENAME;FILENAME.gba`. Example: `Zero Wing.MD` is placed in `ROMS\sega` to be launched with the `sega` core. Then you need to create `ROMS\sega;Zero Wing.MD.gba`.
