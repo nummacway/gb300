@@ -1,18 +1,23 @@
 # GB300
 
-The **Sup+ GB300** (short for Game Box) is a cheap handheld that emulates video game consoles. The cheapest way to get it was (but probably isn't anymore) via [AliExpress's "Pick 3 and Save"](https://www.aliexpress.com/gcp/300000512/nnmixupdatev3?productIds=1005006436983834) for $9.99 (_not_ a referral link!) if you can find two more items from that page (or simply buy three GB300!). At the start of each month and some "shopping festivals", there is a 10% discount, so you can get it for $8.99. In general, the GB300 is a few dollars more than the cheapest game consoles on AliExpress often dubbed the Famiclones, but the GB300 offers eight classic consoles (instead of just the Famicom), comes with _way_ more games (even on the Famicon), you can add your own games, and you can save (states and sometimes standard GBA battery saves).
+The **Sup+ GB300** (short for Game Box) is a cheap handheld that emulates video game consoles. You can find it on AliExpress (usually the cheapest way to get it) and other sites. <!-- The cheapest way to get it was (but probably isn't anymore) via [AliExpress's "Pick 3 and Save"](https://www.aliexpress.com/gcp/300000512/nnmixupdatev3?productIds=1005006436983834) for $9.99 (_not_ a referral link!) if you can find two more items from that page (or simply buy three GB300!). At the start of each month and some "shopping festivals", there is a 10% discount, so you can get it for $8.99. --> In general, the GB300 is a few dollars more than the cheapest game consoles on AliExpress often dubbed the Famiclones, but the GB300 offers eight classic consoles (instead of just the Famicom), comes with _way_ more games (even on the Famicom), you can add your own games, and you can save (states and sometimes standard GBA battery saves).
 
 Some see it as a clone of the (usually a bit more expensive) Data Frog SF2000, which however is a bit different. Because the [SF2000 has already been documented](https://vonmillhausen.github.io/sf2000/), this page focusses primarily on the differences.
 
-This document is work in progress but mostly finished now. Large parts target developers and anyone willing to mod the device. Feel free to contribute by contacting `numma_cway` on Discord, creating a fork and pull request, or by opening an issue on [Github](https://github.com/nummacway/gb300/). If you have any questions, join the `#data_frog_sf2000` channel on the [Retro Handhelds Discord](https://discord.gg/retrohandhelds) (choose SF2000 during onboarding). There is also a [`Gb300 dev` thread](https://discord.com/channels/741895796315914271/1195581037003165796) on that Discord.
+This document is work in progress but mostly finished now. Large parts target developers and anyone willing to mod the device, but the page has an [FAQ for Players](#faq-for-players) as well. Feel free to contribute by contacting `numma_cway` on Discord, creating a fork and pull request, or by opening an issue on [Github](https://github.com/nummacway/gb300/). If you have any questions, join the `#data_frog_sf2000` channel on the [Retro Handhelds Discord](https://discord.gg/retrohandhelds) (choose SF2000 during onboarding). There is also a [`Gb300 dev` thread](https://discord.com/channels/741895796315914271/1195581037003165796) on that Discord.
 
 
 ## Table of Contents
 
+User topics:
+- [FAQ for Players](#faq-for-players)
+- [Tools](#tools)
+    - [multicore](#multicore)
+
+In-depth technical analysis:
 - [Hardware](#hardware)
 - [General Firmware Features](#general-firmware-features)
     - [Saving](#saving)
-    - [multicore](#multicore)
 - [ROMs and Gameplay](#roms-and-gameplay)
     - [Nintendo Entertainment System](#nintendo-entertainment-system)
     - [PC Engine](#pc-engine)
@@ -26,7 +31,8 @@ This document is work in progress but mostly finished now. Large parts target de
     - [Game Boy](#game-boy)
     - [Game Boy Color](#game-boy-color)
     - [Game Boy Advance](#game-boy-advance)
-- [Tools](#tools)
+
+Developer and modding topics:
 - [Resources](#resources)
     - [Fonts](#fonts)
     - [Images](#images)
@@ -35,8 +41,84 @@ This document is work in progress but mostly finished now. Large parts target de
     - [KeyMapInfo.kmp](#keymapinfokmp)
     - [Sounds](#sounds)
     - [Other Files](#other-files)
+
+ Appendix:
 - [List of ROMs](#list-of-roms)
     - [List of PCE Games](#list-of-pce-games)
+
+
+## FAQ for Players
+
+| Topic | What you should know | What you can/should do |
+| ----- | -------------------- | ---------------------- |
+| **Device** | Giant step from _any_ cheaper handheld (the so-called Famiclones). 918&thinsp;MHz MIPS CPU with 128&thinsp;MB of high-latency DDR2. No networking whatsoever. | Buy one. Or spend a few dollars more on the Data Frog SF2000 which has the same performance but a better screen. |
+| **Screen** | 2.8" 320×240px LCD screen. Viewing angle from the sides is extremely bad, up/down is alright. Very bright black in dark environments. Cannot adjust brightness. | It is possible to take the screen from a SF2000, but no reliable source for a compatible _spare_ screen is known. Screen changes require firmware updates. |
+| **Buttons** | D-pad isn't very accurate. | You might want to [add some tape](https://www.youtube.com/watch?v=sMuv5TzCedY#t=377) (requires opening the console). |
+| **TV Out** | Comes with a 70&thinsp;cm cable from 3-pin 2.5&thinsp;mm audio to two RCA (cinch) jacks. Can be used with most older TVs. If you are in Europe, your TV might instead have SCART, for which there are adapters. Some TVs don't like the signal in general. | If possible, use NTSC to prevent unnecessary vertical scaling. Do not plug in the cable before the device has fully booted. |
+| **Battery** | Standard 800&thinsp;mAh 18650-type battery. Play and charge time both are around 2 hours. Device has overcharge protection but not undercharge. Do not use a quick charger, especially not if turned on. Cannot be charged with a USB-C-to-USB-C cable. | Do not leave the device turned on or undercharge will kill the battery. You can change the battery to a better one as 800&thinsp;mAh really small. You can buy them online and in e-cigarettes stores. Mind the polarity when replacing the battery or you will destroy the device. |
+| **TF Card<br>(=microSD)** | 8 GB card, 1.75 GiB free. Device is picky about the cards it takes at all, and cheap ones are more likely to work. Included card works with any standard TF reader or SD reader via any TF-SD adapter. You could use a phone to access the TF card, but that's not convenient. SDXC is supported (SDHC and SDXC hardware are exactly the same), but you will have to use FAT32 which is non-standard for SDXC for unknown reasons (FAT32 supports 16&thinsp;TiB, but SDXC is limited to 2&thinsp;TB). Yet some AliExpress microSDXC cards come preformatted to FAT32 so you can use those right away. We don't know the maximum TF capacity, but 64&thinsp;GB works. | Get a larger TF card and make sure it's formatted in FAT32 (Rufus has been suggested for SDXC, as Windows won't let you format SDXC in FAT32). Then just copy the content from your old card (you might want to copy the `bios` folder first, just in case). Before you copy any stuff to the new TF Card, patch the bootloader with your current card. The latter and general device management are greatly simplified by using [GB300 Tool](https://github.com/nummacway/gb300tool/releases/). |
+| **Firmware General** | Closed source OS based on `libretro` cores (see the [list of stock emulators](#roms-and-gameplay)). Also supports Sega Master System and Kids Computer Pico ROMs but doesn't come with ROMs for these. Could play VT03 ROMs, but that feature is disabled. Some SNES and many GBA games are slow. Access pause menu by pressing Start+Select. | Patch the bootloader to spare yourself of a bug in its FAT32 implementation. Copy `gba_bios.bin` where the firmware expects it to slightly improve compatibility. ([GB300 Tool](https://github.com/nummacway/gb300tool/releases/) can help you with both.) Install fan project [multicore](#multicore) on your TF card to add loads of new platforms and greatly improve GBA performance. |
+| **ROMs** | Comes with 6267 ROMs. Expecially the NES ROMs are ofter modified (hacks) according to No-Intro. There are seven hardcoded lists that you can edit with GB300 Tool and a modded version of Frogtool. | Create the folder `ROMS` and put your own ROMs there. Also create a subfolder `save` there so you can save. You can [patch Game Gear ROMs into SMS ROMs](#sega-game-gear). |
+| **Saving** | GBA does not reliably battery-save (battery is the correct term for an in-game save), all other emulators (including multicore) cannot battery-save at all. (Soft resets can load a battery if it was saved without leaving the emulator in the meantime, so you can complete Pokémon.) States work alright but you cannot (usually) use them in other emulators. | Use only save states. Import GBA battery saves by placing them in both, `ROMS` and `GBA`. |
+| **Interface** | There are [55 image files](#images) and a [text file](#foldernameini) that you can modify. You can also modify [sounds](#sounds) or replace the [font file](#fonts). | Use [GB300 Tool](https://github.com/nummacway/gb300tool/releases/) to edit the image files since the file names and file format are both very odd. It can also edit the text file. Sounds can be converted using [Kerokero - SF2000 BGM Tool](https://github.com/Dteyn/SF2000_BGM_Tool). The font file is a standard TTF font. |
+| **Button<br>Mapping** | You can reassign buttons for each console, but the editor is seriously bugged. | [GB300 Tool](https://github.com/nummacway/gb300tool/releases/) can tell you what you actually bind. |
+| **Accessories** | Supports connecting a very rare type of wired microUSB gamepad for the second player. There is no reliable source to buy one. Does not support wireless gamepads. | You probably shouldn't try to buy one. |
+| **Support** | There is no known way to contact the manufacturer because we don't know who that is. | Ask on [Retro Handhelds Discord](https://discord.gg/retrohandhelds) (choose SF2000 during onboarding) or [reddit](https://www.reddit.com/r/GB300/). |
+
+
+## Tools
+
+Most tools designed for the SF2000 don't work. Tools are often incompatible because not only is the BIOS different, but also the `Resources` have different names. This is especially true for Tadpole. Just starting it already patches your ROM lists and will break all default ROMs. It will only leave the GBA (because the files used for the GBA on the GB300 are used for the arcade on the SF2000, but there is no `ARCADE` folder for Tadpole to scan). If you did use Tadpole, look for the files in the Resources folder with the current date and restore the backups Tadpole put there.
+
+The following tools were made specifically for the GB300:
+* [multicore for GB300](https://github.com/tzubertowski/gb300_multicore/releases) by osaka, Prosty and the creators of the original multicore for SF2000.
+* [GB300 Tool](https://github.com/nummacway/gb300tool/releases/) by me (numma_cway); now with multicore support! Includes tons of features, including the functionality of any non-sound-related tool below. **To download, expand "Assets" and download the ZIP file.**
+* [Customized _Frogtool_ (Beta)](https://discord.com/channels/741895796315914271/1195581037003165796/1211025634680119327) by tzlion (original version) and Dteyn (GB300 patch), used for rebuilding the console-dependent ROM lists.
+* [GB300 Boot Logo Changer](https://dteyn.github.io/sf2000/tools/bootLogoChangerGB300.htm) by Dteyn
+
+Tools for the SF2000 that should work for the GB300:
+* [BIOS CRC-32 Patcher](https://vonmillhausen.github.io/sf2000/tools/biosCRC32Patcher.htm) by Von Millhausen
+* [Generic Image Tool](https://vonmillhausen.github.io/sf2000/tools/genericImageTool.htm) by Von Millhausen, to convert to and from RGB565 and BGRA8888 images
+* [Kerokero - SF2000 BGM Tool](https://github.com/Dteyn/SF2000_BGM_Tool) by Dteyn
+* [Save State Tool](https://vonmillhausen.github.io/sf2000/tools/saveStateTool.htm) by Von Millhausen – Due to the strange CPU architecture, people don't think that converting save states makes any sense. But you can use it to extract screenshots. NES ROMs with an `nfc` extension (that includes file names inside ZIP, obfuscated ZIP and thumbnailed files) create uncompressed snapshots which aren't supported by this tool because that emulator and the weird save states it creates do not exist on the SF2000.
+* [Silent menu music](https://vonmillhausen.github.io/sf2000/sounds/silentMusic/pagefile.sys) by Von Millhausen
+* [Silent Sounds Pack](https://github.com/Dteyn/sf2000/raw/main/sounds/silentSounds/SF2000_Silent_Sounds_Pack.zip) by Dteyn
+
+Other links:
+* [Retro Handhelds Discord](https://discord.gg/retrohandhelds), select Data Frog SF2000 during onboarding and join the `#data_frog_sf2000` channel
+  * [`Gb300 dev` thread](https://discord.com/channels/741895796315914271/1195581037003165796) 
+  * [`GB300 screen swap` thread](https://discord.com/channels/741895796315914271/1197607372277940314)
+* [SF2000 Community Compatibility list](https://docs.google.com/spreadsheets/d/19TCedWEKFXlnS2dlmLxk1BcnlHrX-MSVrKwEURuiU0E/edit#gid=1327539659)
+
+
+### multicore
+
+Discord users osaka (`bnister`) and Prosty (`_prosty`) brought multicore to GB300 on April 27th, 2024. This means that you can now access many more emulators and enjoy way better GBA performance.
+
+#### Installing and using multicore with GB300 Tool
+
+The easiest way to use multicore is probably via [GB300 Tool](https://github.com/nummacway/gb300tool/releases/). Expand "Assets" on that page, download the ZIP file and start the tool. Enter your TF reader's drive letter and follow these steps:
+
+1. Check the first checkbox on the BIOS/Device page that comes up right after entering your drive letter.
+2. Put the TF card in your GB300 and boot. It will display some progress indicator during boot for a few seconds.
+3. Turn off the GB300 and put the card in your TF reader again.
+4. Put `bios` and `cores` folders from the [7-Zip file](https://github.com/tzubertowski/gb300_multicore/releases/) on your existing TF card (so the `bios` folder overwrites (merges with) the existing folder).
+5. Restart GB300 Tool to make it notice that you now have multicore.
+6. Select one of the first eight tabs in GB300 Tool and either click "Add..." or drop your ROMs on the tool. It will ask you for the multicore core, but will have recommendations for you. If GB300 Tool tells you that you need a BIOS, you need to put it the `bios` folder on your TF card. Here's a [list of cores](https://docs.google.com/spreadsheets/d/1BDPqLwRcY2cN7tObuyW7RzLw8oGyY9XGLS1D4jLgz2Q/edit#gid=1430267016). Most cores link to libretro's docs with more information on BIOS.
+
+You only have to do steps 1 to 5 once.
+
+
+#### Installing and using multicore manually
+
+1. Before you do anything else: [Patch the bootloader](https://vonmillhausen.github.io/sf2000/#bootloader-bug). Really! Spare yourself the possible trouble with the device not booting because of a buggy FAT-32 implementation.
+2. Put the [7-Zip file](https://github.com/tzubertowski/gb300_multicore/releases/)'s content on your existing TF card.
+3. For each "core" (the term means emulator – the GB300 CPU is single-core) you want, create a subfolder with its name in `ROMS` and put your ROMs for that core in its subfolder. Here's a [list of cores](https://docs.google.com/spreadsheets/d/1BDPqLwRcY2cN7tObuyW7RzLw8oGyY9XGLS1D4jLgz2Q/edit#gid=1430267016).
+4. Run `make-romlist` found in the root directory of your TF card now. It does not actually make a ROM _list_ but creates so-called stubs. These are zero-byte (empty) `.gba` files passed to the GBA emulator. However, the GBA emulator was given a hook that will run multicore if the file name conforms to a certain file name pattern.
+   * If you don't want to run the script, you can create the stubs yourself. The pattern is `CORENAME;FILENAME.gba`. Example: `Zero Wing.MD` is placed in `ROMS\sega` to be launched with the `sega` core. Then you need to create `ROMS\sega;Zero Wing.MD.gba`, `ROMS\sega;Zero Wing.MD.agb` or `ROMS\sega;Zero Wing.MD.gbz`.
+5. Many of the emulators added by _multicore_ require one or more BIOS files. In the Google Spreadsheet linked above, there is one link to libretro docs per core. That linked page will explain what BIOS files you need (the section is missing if an emulator does not use BIOS files). BIOS files must be placed in the `bios` folder of your TF card.
+
+Note: Multicore saves in `ROMS\save`. The thumbnail (screenshot) is named and formatted like always, but with no payload other than the image, as the state is in another file that isn't compressed.
 
 
 ## Hardware
@@ -53,15 +135,15 @@ The GB300 works with the _wired_ gamepads that sometimes ship with some other ch
 
 The GB300 is powered by a standard 18650 battery that you can easily change. The default battery appears to have overcharge protection (the charging current will drop when the battery is full), yet the green charging light will not turn off. If the battery is very low (crashes and glitches), it will take a little under 4&thinsp;VAh until it stops charging. This suggests that the capacity is lower than the SF2000's 1750 mAh. This is supported by the manual and box listing 800 mAh, and people reporting that the (light pink and completely unlabeled) battery of the GB300 is lighter than the SF2000's. More recently, people have reported receiving labelled batteries, confirming the 800 mAh. Neither device has undercharge protection, so leaving the device on with a low battery can kill the battery. One person reported that their GB300 came with the power switch in the 'ON' position and therefore a dead battery. Buying a new battery worked. If you buy a new battery, consider one with both, over- and undercharge protection. Although the SF2000 takes flat batteries, the GB300 seems to require some manipulation to its contact springs due to the console's case design. It initially charges with around 2.5 to 2.9&thinsp;W, which decreases as it charges.
 
-Another similar device is the 8-Bit King, but that's an HDMI stick with wireless gamepads. It's usually around one dollar cheaper than the GB300 and lacks support for SNES, GBA and MD/SMS because it has worse RAM. There is a [hack](https://discord.com/channels/741895796315914271/1165850204713537637/1208756612051771413) for limited MD/SMS support though. The 8-Bit King too plays your own ROMs and can save.
+Another similar device is the 8-Bit King, but that's an HDMI stick with wireless gamepads. It's usually around one dollar cheaper than the GB300 and lacks support for SNES, GBA and MD/SMS because it has less/worse RAM. There is a [hack](https://discord.com/channels/741895796315914271/1165850204713537637/1208756612051771413) for limited MD/SMS support though. The 8-Bit King too plays your own ROMs and can save.
 
 
 ## General Firmware Features
 
 The GB300's stock firmware emulates the following devices:
-* Nintendo Entertainment System (Famicon)
+* Nintendo Entertainment System (Famicom)
 * PC Engine (Turbografx-16)
-* Super Nintendo Entertainment System (Super Famicon)
+* Super Nintendo Entertainment System (Super Famicom)
 * SEGA Master System (SEGA Mark III)
 * SEGA Mega Drive (SEGA Genesis)
 * SEGA PICO (Kids Computer Pico) – debatable if this is different from the Mega Drive
@@ -75,60 +157,32 @@ There's actually two things called "firmware" on the GB300: There is a small boo
 
 The SF2000 firmware does not work on the GB300. There is no known way to retrieve an updated official firmware because the manufacturer is unknown, so the only chance will be to wait for an alternative firmware to be released. The default BIOS dates to the 15th of December, 2023. You can't use the GB300's firmware on the SF2000 either (because the GB300's firmware is much smaller, it would leave more of the 16 MiB available memory for modders to add more features). See [multicore](#multicore) below for a firmware mod.
 
+
+
 ### Saving
 
 ***Savestates:*** The device features four save _states_ per game which allow saving at any point (press Start+Select). However, they are usually incompatible between different emulators. If you want to try anyway, you first need to extract them from their `zlib`-based format (same as on the SF2000). There is [a tool for that](https://vonmillhausen.github.io/sf2000/tools/saveStateTool.htm). `.nfc` ROMs (including those in compressed files) use uncompressed save states which are not supported by that tool. Tests with VBA-M's GBA save states (after extracting the `gzip` file that is VBA-M's save state format) didn't work (black screen on the GB300).
 
 ***Battery Saves:*** Normally, you would be able to exchange _battery_ files between emulators. These are the files that store the savegames created by the _games'_ save feature (should one exist). However, there's an issue with them on the GB300:
 * GBA: If you want to _load_ a battery file from another emulator, place it in the `ROMS` folder (not the `save` subfolder). For stock ROMs, is sometimes uses the (user) `ROMS` folder and sometimes the `GBA` folder, so put your saves in both folders. Saving is a bit more complicated. Sometimes it works, sometimes it doesn't. And even if you can load a battery before turning off the device, this does not guarantee that you will still be able to load it after turning off the device. Saving and loading without switching off the GB300 in the meantime works for GBA games. Should you need to get your battery file from the device, load your state and save in-game. Repeat until you can load your battery after restarting the GB300. Then you should have a working battery file.
-* GB/GBC: Many people are concerned about Pokémon games which force a soft reset after beating the Champ. Luckily, this is no issue at all for the stock GB/GBC emulator, if you saved in-game after you last loaded a state (or started a new game). This will normally be the case if you make sure that you _do not save a state before you're back in the game_. In other words: Do not save and load a state during the intro. How can you quickly test this with any GB/GBC/GBA emulator in the world? Save a game, and press A+B+Start+Select and you should be able to load the battery. This is not an emulator feature but implemented by nearly all ROMs.
+* GB/GBC: Many people are concerned about Pokémon games which force a soft reset after beating the Champ. Luckily, this is no issue at all for the stock GB/GBC emulator, if you saved in-game after you last loaded a state (or started a new game). This will normally be the case if you make sure that you _do not save a state before you're back in the game_. In other words: Do not save and load a state during the intro. How can you quickly test this with any GB/GBC/GBA emulator in the world? Save a game, press A+B+Start+Select and you should be able to load the battery. This is not an emulator feature but implemented by nearly all ROMs.
 * Need to do more research on the other emulators.
-
-
-### multicore
-
-Discord users osaka (`bnister`) and Prosty (`_prosty`) brought multicore to GB300 on April 27th, 2024. This means that you can now access many more emulators and enjoy way better GBA performance.
-
-#### Installing and using multicore with GB300 Tool
-
-The easiest way to use multicore is probably via [GB300 Tool](https://github.com/nummacway/gb300tool/releases/). Expand "Assets" on that page, download the ZIP file and start the tool. Enter your TF reader's drive letter and follow these steps:
-
-1. Check the first checkbox on the BIOS/Device page that comes up right after entering your drive letter.
-2. Put the TF card in your GB300 and boot. It will display some progress indicator during boot for a few seconds.
-3. Turn off the GB300 and put the card in your TF reader again.
-4. Put the [7-Zip file](https://github.com/tzubertowski/gb300_multicore/releases/)'s content on your existing TF card.
-5. Restart GB300 Tool to make it notice that you now have multicore.
-6. Select one of the first eight tabs in GB300 Tool and either click "Add..." or drop your ROMs on the tool. It will ask you for the multicore core, but will have recommendations for you. If GB300 tells you that you need a BIOS, you need to put it the `bios` folder on your TF card. Here's a [list of cores](https://docs.google.com/spreadsheets/d/1BDPqLwRcY2cN7tObuyW7RzLw8oGyY9XGLS1D4jLgz2Q/edit#gid=1430267016). Most cores link to libretro's docs with more information on BIOS.
-
-You only have to do steps 1 to 5 once.
-
-
-#### Installing and using multicore manually
-
-* Before you do anything else: [Patch the bootloader](https://vonmillhausen.github.io/sf2000/#bootloader-bug). Really! Spare yourself the possible trouble with the device not booting because of a buggy FAT-32 implementation.
-* Put the [7-Zip file](https://github.com/tzubertowski/gb300_multicore/releases/)'s content on your existing TF card.
-* For each "core" (the term means emulator – the GB300 CPU is single-core) you want, create a subfolder with its name in `ROMS` and put your ROMs for that core in its subfolder. Here's a [list of cores](https://docs.google.com/spreadsheets/d/1BDPqLwRcY2cN7tObuyW7RzLw8oGyY9XGLS1D4jLgz2Q/edit#gid=1430267016).
-* Run `make-romlist` found in the root directory of your TF card now. It does not actually make a ROM _list_ but creates so-called stubs. These are zero-byte (empty) `.gba` files passed to the GBA emulator. However, the GBA emulator was given a hook that will run multicore if the file name conforms to a certain file name pattern.
-  * If you don't want to run the script, you can create the stubs yourself. The pattern is `CORENAME;FILENAME.gba`. Example: `Zero Wing.MD` is placed in `ROMS\sega` to be launched with the `sega` core. Then you need to create `ROMS\sega;Zero Wing.MD.gba`.
-* Many of the emulators added by _multicore_ require one or more BIOS files (GB300 Tool would tell you). In the Google Spreadsheet linked above, there is one link to libretro docs per core. That linked page will explain what BIOS files you need (the section is missing if an emulator does not use BIOS files). BIOS files must be placed in the `bios` folder of your TF card.
-
-Note: Multicore saves in `ROMS\save`. The thumbnail (screenshot) is named and formatted like always, but with no payload other than the image, as the state is in another file that isn't compressed.
 
 
 ## ROMs and Gameplay
 
-___* * * This entire section is about the stock firmware. It does not apply to [multicore](#multicore) which cannot run zipped ROMs and therefore none of the stock ROMs either. Multicore does not take away any functionality, so installing multicore will still allow you to use the stock emulators with stock ROMs and any custom ROMs that do not match the filename pattern described above. * * *___
+___* * * This entire section is about the stock firmware. It does not apply to [multicore](#multicore) which cannot run zipped ROMs and therefore none of the stock ROMs either. Multicore does not take away any functionality, so installing multicore will still allow you to use the stock emulators with stock ROMs and any custom ROMs (unless the filename contains a semicolon and ends on any GBA extension). * * *___
 
 To play your own games, create the folder `ROMS` (case-insensitive like all filenames on FAT-32) on the TF card and put your ROMs there. You can also use single-file ZIP files to save memory. Also create a `save` subfolder (`ROMS\save`), because the GB300 will not create one for you and fail saving if that subfolder is missing.
 
-Stock ROMs however come in their own format. The first `0xEA00` bytes are a 144x208 pixel RGB565 image with no header whatsoever. (You can technically change the size of the image, see the `Foldername.ini` section.) After that comes a ZIP file, obfuscated with five differences to keep you from opening it:
-* The magic numbers are different. There are three in a standard ZIP file with one file.
-  * The local header magic number is `0x57515703` but should be `0x504B0304`.
-  * The central directory header magic number is `0x57515702` but should be `0x504B0102`.
-  * The end of central directory header magic number is `0x57515701` but should be `0x504B0506`.
+Stock ROMs however come in their own format. The first `0xEA00` bytes are a 144x208 pixel RGB565 image with no header whatsoever. (You can technically change the size of the image, see the `Foldername.ini` section of this document.) After that comes a ZIP file, obfuscated with five differences to keep you from opening it:
+* The magic numbers are different as they bear the initials of [CubeTac](https://bootleggames.fandom.com/wiki/Cube_Technology)'s **W**ang **Q**un**W**ei, or Wise Wang. There are three magic numbers in a standard ZIP file with one contained file:
+  * The local header magic number is `0x57515703` instead of the standard `0x504B0304`.
+  * The central directory header magic number is `0x57515702` instead of the standard `0x504B0102`.
+  * The end of central directory header magic number is `0x57515701` instead of the standard `0x504B0506`.
 * Both occurences of the file name in these headers had their bytes `xor 0xE5`'d.
 
-Changing the things above will give you a standard ZIP file. At least 7-Zip is already fine if you just fix the local header magic number, even though the file inside will have a strange filename then.
+Changing the things above will give you a standard ZIP file. At least 7-Zip is already fine if you just fix the local header's magic number, even though the file inside will have a strange filename then. The obfuscation is purely optional, but found in all stock ROMs.
 
 | Emulator              | Version   | Git Commit | File Extensions                                                            | Bitmask      |
 | --------------------- | --------- | ---------- | -------------------------------------------------------------------------- | ------------ |
@@ -143,7 +197,7 @@ Changing the things above will give you a standard ZIP file. At least 7-Zip is a
 | **PicoDrive**         | 1.91      | `cbc93b6`  | `.bin`, `.md`, `.smd`, `.gen`, ~~`.32x`~~, ~~`.cue`~~, ~~`.iso`~~, `.sms`  | `0x04000000` |
 | **Mednafen PCE Fast** | v0.9.38.7 | _unknown_  | `.pce`, ~~`.cue`~~, ~~`.ccd`~~, ~~`.chd`~~                                 | `0x80000000` |
 
-*&#32;= `.zfb` does have the bitmask `0x00000300` used for thumbnailed files, but the GB300 can only show thumbnails for the third to seventh file extension in its list (which is identical to the one above). `.zfb` is the eighth in that internal list so there is no thumbnail. This means that there is absolutely no chance to use thumbnails for ROMs launched with multicore. The lack of a thumbnail for `.zfb` is funny because on the SF2000, the sole use of `.zfb` is to provide the thumbnail for a file in another directory. ZFB is short for ZIP Final Burn (an emulator), despite not containing a ZIP file.
+*&#32;= `.zfb` does have the bitmask `0x00000300` used for thumbnailed files, but the GB300 can only show thumbnails for the third to seventh file extension in its list (which is identical to the one above). `.zfb` is the eighth in that internal list so there is no thumbnail. This means that there is absolutely no chance to use thumbnails for ROMs launched with multicore. The lack of a thumbnail for `.zfb` is funny because on the SF2000, the sole use of `.zfb` is to provide the thumbnail for a file in another directory. ZFB is short for ZIP Final Burn (an emulator), despite not containing zipped content on the SF2000.
 
 The _named_ emulators are from `libretro`. If they were used in that context, they'd report all the given extensions to `libretro`, but the the GB300 does not display the stroke-out ones. `.bin` files are associated with PicoDrive, not gpSP, so they are stroke-out for the latter.
 
@@ -495,31 +549,6 @@ As in the SF2000, performance varies heavily between games. And even language ve
 3D games on the GBA don't work well either. Of the five Need for Speed games for example (none of which are included), only Porsche (both regions) and Underground 2 will get past the language selection and the EA logo.
 
 
-## Tools
-
-Most tools designed for the SF2000 don't work. Tools are often incompatible because not only is the BIOS different, but also the `Resources` have different names. This is especially true for Tadpole. Just starting it already patches your ROM lists and will break all default ROMs. It will only leave the GBA (because the files used for the GBA on the GB300 are used for the arcade on the SF2000, but there is no `ARCADE` folder for Tadpole to scan). If you did use Tadpole, look for the files in the Resources folder with the current date and restore the backups Tadpole put there.
-
-The following tools were made specifically for the GB300:
-* [multicore for GB300](https://github.com/tzubertowski/gb300_multicore/releases) by osaka, Prosty and the creators of the original multicore for SF2000.
-* [GB300 Tool](https://github.com/nummacway/gb300tool/releases/) by me (numma_cway); now with multicore support! Includes tons of features, including the functionality of any non-sound-related tool below. **To download, expand "Assets" and download the ZIP file.**
-* [Customized _Frogtool_ (Beta)](https://discord.com/channels/741895796315914271/1195581037003165796/1211025634680119327) by tzlion (original version) and Dteyn (GB300 patch), used for rebuilding the console-dependent ROM lists.
-* [GB300 Boot Logo Changer](https://dteyn.github.io/sf2000/tools/bootLogoChangerGB300.htm) by Dteyn
-
-Tools for the SF2000 that should work for the GB300:
-* [BIOS CRC-32 Patcher](https://vonmillhausen.github.io/sf2000/tools/biosCRC32Patcher.htm) by Von Millhausen
-* [Generic Image Tool](https://vonmillhausen.github.io/sf2000/tools/genericImageTool.htm) by Von Millhausen, to convert to and from RGB565 and BGRA8888 images
-* [Kerokero - SF2000 BGM Tool](https://github.com/Dteyn/SF2000_BGM_Tool) by Dteyn
-* [Save State Tool](https://vonmillhausen.github.io/sf2000/tools/saveStateTool.htm) by Von Millhausen – Due to the strange CPU architecture, people don't think that converting save states makes any sense. But you can use it to extract screenshots. NES ROMs with an `nfc` extension (that includes file names inside ZIP, obfuscated ZIP and thumbnailed files) create uncompressed snapshots which aren't supported by this tool because that emulator and the weird save states it creates do not exist on the SF2000.
-* [Silent menu music](https://vonmillhausen.github.io/sf2000/sounds/silentMusic/pagefile.sys) by Von Millhausen
-* [Silent Sounds Pack](https://github.com/Dteyn/sf2000/raw/main/sounds/silentSounds/SF2000_Silent_Sounds_Pack.zip) by Dteyn
-
-Other links:
-* [Retro Handhelds Discord](https://discord.gg/retrohandhelds), select Data Frog SF2000 during onboarding and join the `#data_frog_sf2000` channel
-  * [`Gb300 dev` thread](https://discord.com/channels/741895796315914271/1195581037003165796) 
-  * [`GB300 screen swap` thread](https://discord.com/channels/741895796315914271/1197607372277940314)
-* [SF2000 Community Compatibility list](https://docs.google.com/spreadsheets/d/19TCedWEKFXlnS2dlmLxk1BcnlHrX-MSVrKwEURuiU0E/edit#gid=1327539659)
-
-
 ## Resources
 
 Note: There are no language strings on the GB300, just a few images.
@@ -575,7 +604,7 @@ Unlike the SF2000, the GB300 supposedly does not have any unused images (not sur
 | `pwsso.occ`  | RGB565   | 640x480  | pause menu, fourth entry selected | [view](/images/pwsso.occ.png) |
 | `qasfc.bel`  | BGRA8888 | 328x224  | "Favorites are full !" (when already having 1000) in 7 different languages | [view](/images/qasfc.bel.png) |
 | `qdbec.ofd`  | BGRA8888 | 240x168  | "DOWNLOAD ROMS" in 7 different languages | [view](/images/qdbec.ofd.png) |
-| `qwave.bke`  | BGRA8888 | 152x160  | the five words of the pause menu in Spanish | [view](/images/qwave.bke.png) |
+| `qwave.bke`  | BGRA8888 | 152x160  | the five words of the pause menu in Portuguese | [view](/images/qwave.bke.png) |
 | `sdclt.occ`  | BGRA8888 | 424x58   | selection background | [view](/images/sdclt.occ.png) |
 | `sfcdr.cpl`  | RGB565   | 640x480  | main background | [view](/images/sfcdr.cpl.png) |
 | `sgotd.cwt`  | RGB565   | 640x280  | TV system selection, NTSC selected (first item) | [view](/images/sgotd.cwt.png) |
@@ -587,7 +616,7 @@ Unlike the SF2000, the GB300 supposedly does not have any unused images (not sur
 | `vdaz5.bjk`  | RGB565   | 640x280  | language selection, Russian selected (the fourth item) | [view](/images/vdaz5.bjk.png) |
 | `wshrm.nec`  | BGRA8888 | 217x37   | Yes/No, Yes highlighted | [view](/images/wshrm.nec.png) |
 | `wtrxj.lbd`  | BGRA8888 | 192x224  | "LANGUAGE" in 7 different languages | [view](/images/wtrxj.lbd.png) |
-| `xajkg.hsp`  | BGRA8888 | 152x160  | the five words of the pause menu in Portuguese | [view](/images/xajkg.hsp.png) |
+| `xajkg.hsp`  | BGRA8888 | 152x160  | the five words of the pause menu in Spanish | [view](/images/xajkg.hsp.png) |
 | `xjebd.clq`  | BGRA8888 | 448x224  | "No games match the keyword!" in 7 different languages | [view](/images/xjebd.clq.png) |
 | `zaqrc.olc`  | BGRA8888 | 8x224    | message box left/right border | [view](/images/zaqrc.olc.png) |
 | `ztrba.nec`  | RGB565   | 64x320   | key names (single and prefixed with "T" for autofire; also without and with a whitish background) | [view](/images/ztrba.nec.png) |
@@ -649,7 +678,7 @@ Let's take a closer look at it:
 | Default&nbsp;Content | Description |
 | -------------------- | ----------- |
 | `GB300`              | Name of the device. The BIOS is hardcoded to expect this header. Do not change. |
-| `7`                  | Number of languages. It affects how the language strings are loaded from the images with multiple languages inside, and is also the index of the first TV system setup item, counted starting from 0. So you can hide languages from the language menu of you move the TV System backgrounds to their image files. You better leave this. |
+| `7`                  | Number of languages. It affects how the language strings are loaded from the images with multiple languages inside, and is also the index of the first TV system setup item, counted starting from 0. So you can hide languages from the language menu if you move the TV System backgrounds to their image files. You better leave this. |
 | `FFFFFF`             | Default UI text color (HTML Code: `#FFFFFF`) unless selected (see below). All colors in this file are case-insensitive. |
 | `FF8000 FC`          | First folder and its selected color (HTML Code: `#FF8000`) |
 | `FF8000 PCE`         | Second folder and its selected color |
