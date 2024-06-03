@@ -20,6 +20,7 @@ In-depth technical analysis:
     - [Saving](#saving)
 - [ROMs and Gameplay](#roms-and-gameplay)
     - [Nintendo Entertainment System](#nintendo-entertainment-system)
+        - [V.R. Technology VT02/VT03](#vr-technology-vt02vt03)
     - [PC Engine](#pc-engine)
     - [Super Nintendo Entertainment System](#super-nintendo-entertainment-system)
     - [SEGA Mega Drive, SEGA Master System and SEGA Game Gear](#sega-mega-drive-sega-master-system-and-sega-game-gear)
@@ -142,6 +143,7 @@ Another similar device is the 8-Bit King, but that's an HDMI stick with wireless
 
 The GB300's stock firmware emulates the following devices:
 * Nintendo Entertainment System (Famicom)
+* V.R. Technology VT02/VT03 (disabled, but can be enabled)
 * PC Engine (Turbografx-16)
 * Super Nintendo Entertainment System (Super Famicom)
 * SEGA Master System (SEGA Mark III)
@@ -203,7 +205,7 @@ The _named_ emulators are from `libretro`. If they were used in that context, th
 
 ZIP and thumbnailed files are both allowed to be optionally obfuscated. And yes, even a `.zip` file is allowed to be obfuscated.
 
-The bitmask is located in the BIOS where it comes _after_ the extension. The block with this data is close to the end of the BIOS file. Open it a hex editor and search for `NFC` because that string does not occur anywhere else. `.nfc` is associated with a different NES emulator than the `.fds`, `.nes` and `.unf`. That extension is frequently seen in stock ROMs. The most notable difference is that this emulator's save states are uncompressed. It is believed that this NES emulator is the BIOS creators' own NES emulator, probably the one that's also used in the cheap Famiclones (see the introduction). Neither NES emulator seems to be able to run VT03. Loading `.fds` fails, even with the correct BIOS in the correct folder (`ROMS`).
+The bitmask is located in the BIOS where it comes _after_ the extension. The block with this data is close to the end of the BIOS file. Open it a hex editor and search for `NFC` because that string does not occur anywhere else. `.nfc` is associated with a different NES emulator than the `.fds`, `.nes` and `.unf`. That extension is frequently seen in stock ROMs (280 of 868). The most notable difference is that this emulator's save states are uncompressed. It is believed that this NES emulator is the BIOS creators' own NES emulator, probably the one that's also used in the cheap Famiclones (see the introduction). Loading `.fds` fails for both, even with the correct BIOS in the correct folder (`ROMS`).
 
 The GB300 relies on the extension (or, more precisely, the extension's bitmask) to decide what to do with the file:
 * Display a thumbnail?
@@ -213,8 +215,6 @@ The GB300 relies on the extension (or, more precisely, the extension's bitmask) 
 There are no signs of other supported emulators, but it looks like MPEG-2 support is included but inaccessible. If you force the GB300 to display `.chd` files, opening one will cause it to load indefinitely, even for the tiniest PCE-CD game out there, _Hawaiian Island Girls_ (under 3 megabytes). Same goes for `.cue` files no matter if MD-CD or PCE-CD.
 
 ### Nintendo Entertainment System
-
-For some reason, _all_ (unpacked) FC ROMs had their header changed. `0x07` to `0x0F` (counting from 0) are zeroed. Sometimes `0x06` is changed as well (but not zeroed).
 
 Compared to the SF2000, the following games are missing:
 * `Island.zfc`
@@ -228,6 +228,32 @@ Compared to the SF2000, the following games are missing:
 * `Sodoku.zfc`*
 
 Games with an asterisk are duplicates of games that are still on the device.
+
+The GB300 comes with two NES emulators: FCEUmm is associated with `.nes`, `.fds`, `.unf`, whereas a mysterious other emulator is used for `.nfc`. To find out which one is used for which stock ROM, see [this list](https://vonmillhausen.github.io/sf2000/defaultRoms/defaultRomsNoIntroCheck.htm). FCEUmm seems to be the better one for NES.
+
+
+#### V.R. Technology VT02/VT03
+
+Now we get to something the SF2000 cannot do, not even with multicore: V.R. Technology made some Famicom clones (Famiclones) that weren't just clones but technically more advanced than the Famicom, called the [VTxx](https://bootleggames.fandom.com/wiki/VTxx). As Sup+ was mostly known for making Famiclones (400-in-1, 500-in-1, a.s.o.) before making the GB300, the GB300 retains their strange Famiclone emulator. Discord user `bnister` (osaka) did some research on this. Here's what you can do to make it work:
+
+**Enabling VTxx support:** In theory, this mysterious `.nfc` emulator is able to run VT02/VT03 ROMs, if it wasn't that this feature is disabled. However, you can enable it by just changing a single byte at `0x319ccc` in `bios\bisrv.asd` from `0x01` to `0x02`. Remember that you need to [rehash the BIOS](https://vonmillhausen.github.io/sf2000/tools/biosCRC32Patcher.htm) after making changes to it. The GB300 will now run `.nfc` VT02 ROMs that comply with the [(Archaic) iNES speficiation](https://www.nesdev.org/wiki/INES#Variant_comparison) and use mapper 12.
+
+**Fixing VT03 colors:** VT03 will also work but colors will be glitched because the emulator uses RGB555 instead of the correct RGB565. You can fix this by stuffing [this thing](https://discord.com/channels/741895796315914271/1195581037003165796/1236804993475018872) at `0x62270` in your `bios\bisrv.asd`. Remember to rehash BIOS. Also note that "stuffing" means overwriting the 8&thinsp;KiB of files that are currently in that location.<!-- You can also calculate the LUT yourself by running the following code for all 2 Kibiwords `w` starting from that location: `(w and $1f) or ((w and $8fe0) shl 1)`. This assumes that you are on a Little Endian system. -->
+
+**Fixing the memory size limit:** If you read the iNES specification carefully, you will have noticed that iNES prior to 2.0 will not support 4&thinsp;MiB ROMs because the size given at `0x04` would roll over. Storing the most-significant byte in `0x07` like it is in iNES 2.0 is not supported. This wasn't an issue back then, as the largest official NES game, _Kirby's Adventure_, is only 768&thinsp;KiB (of which only 512&thinsp;KiB are the PRG ROM, with the remaining 256&thinsp;KiB being the CHR ROM, which doesn't exist on VTxx due to [OneBus](https://bootleggames.fandom.com/wiki/Famiclone#VT02.2FVT03_.26_OneBus)). osaka worked around this by changing `0x319b38` in `bios\bisrv.asd` from `0x808b` to `0x008c` which changed the iNES PRG size multiplier from 16384 to 65536, increasing the maximum size to 8&thinsp;MiB. This breaks all `.nfc` NES ROMs (including stock ROMs based on this extension) and doesn't work for all VT03 games, the largest of which are 64&thinsp;MiB.
+
+**Making an iNES header:** Take this template `0x4E45531Axx00C2000000000000000000`. Divide the raw ROM size (without any headers) by 16384 (65536 with the above hack active) and put the result at `0x04` (where there are x's in the template). Then place at the start of the raw ROM and save as `.nfc`.
+
+You can get VTxx ROMs from _Project Plug-and-Play_ and from the Internet Archive. Note that the tagging of ROMs in Project Plug-and-Play is inconsistent and their games are more prone to issues than those from the Internet Archive. Notes on Project Plug-and-Play:
+* Most games that are untagged or tagged VT02 are actually NES games. You can play them via FCEUmm and the unknown emulator without changing the header.
+* Some VT03 games are not actually tagged as such, e.g. most/all TimeTop games are actually VT03.
+* Many VT03-tagged games in Project Plug-and-Play do not load on the GB300 or the sprites are glitched. Games available for different VTxx chips and games from Jungletac rarely load. TimeTop's games and e.g. Arrow Maze from Cube Tech however work very well.
+* Many soccer-related VT03 games do load but do not register the Start button.
+* A few untagged VT03 slot machine games from Jungletac do load, but have weird colors.
+* Some games changed platform during development. The first demo of Street Dance works on FCEUmm, whereas the second demo and the final bundle with Hit-Mouse require VTxx emulation. Said game is pointless on the GB300's nameless emulator since PCM audio does not work. (And you cannot connect your dance mat to the GB300, making this game even more pointless.)
+* Only half of the VT09 games in Project Plug-and-Play even load, but these have weird interlaced graphics, making them unplayable.
+
+VT32, VT168 and VT369 do not load.
 
 
 ### PC Engine
