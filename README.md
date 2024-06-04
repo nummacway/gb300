@@ -58,12 +58,12 @@ Developer and modding topics:
 | **TV Out** | Comes with a 70&thinsp;cm cable from 3-pin 2.5&thinsp;mm audio to two RCA (cinch) jacks. Can be used with most older TVs. If you are in Europe, your TV might instead have SCART, for which there are adapters. Some TVs don't like the signal in general. | If possible, use NTSC to prevent unnecessary vertical scaling. Do not plug in the cable before the device has fully booted. |
 | **Battery** | Standard 800&thinsp;mAh 18650-type battery. Play and charge time both are around 2 hours. Device has overcharge protection but not undercharge. Do not use a quick charger, especially not if turned on. Cannot be charged with a USB-C-to-USB-C cable. | Do not leave the device turned on or undercharge will kill the battery. You can change the battery to a better one as 800&thinsp;mAh really small. You can buy them online and in e-cigarettes stores. Mind the polarity when replacing the battery or you will destroy the device. |
 | **TF Card<br>(=microSD)** | 8 GB card, 1.75 GiB free. Device is picky about the cards it takes at all, and cheap ones are more likely to work. Included card works with any standard TF reader or SD reader via any TF-SD adapter. You could use a phone to access the TF card, but that's not convenient. SDXC is supported (SDHC and SDXC hardware are exactly the same), but you will have to use FAT32 which is non-standard for SDXC for unknown reasons (FAT32 supports 16&thinsp;TiB, but SDXC is limited to 2&thinsp;TB). Yet some AliExpress microSDXC cards come preformatted to FAT32 so you can use those right away. We don't know the maximum TF capacity, but 64&thinsp;GB works. | Get a larger TF card and make sure it's formatted in FAT32 (Rufus has been suggested for SDXC, as Windows won't let you format SDXC in FAT32). Then just copy the content from your old card (you might want to copy the `bios` folder first, just in case). Before you copy any stuff to the new TF Card, patch the bootloader with your current card. The latter and general device management are greatly simplified by using [GB300 Tool](https://github.com/nummacway/gb300tool/releases/). |
-| **Firmware General** | Closed source OS based on `libretro` cores (see the [list of stock emulators](#roms-and-gameplay)). Also supports Sega Master System and Kids Computer Pico ROMs but doesn't come with ROMs for these. Could play VT03 ROMs, but that feature is disabled. Some SNES and many GBA games are slow. Access pause menu by pressing Start+Select. | Patch the bootloader to spare yourself of a bug in its FAT32 implementation. Copy `gba_bios.bin` where the firmware expects it to slightly improve compatibility. ([GB300 Tool](https://github.com/nummacway/gb300tool/releases/) can help you with both.) Install fan project [multicore](#multicore) on your TF card to add loads of new platforms and greatly improve GBA performance. |
+| **Firmware General** | Closed source OS based on `libretro` cores (see the [list of stock emulators](#roms-and-gameplay)). Also supports Sega Master System and Kids Computer Pico ROMs but doesn't come with ROMs for these. Could play VT03 ROMs, but that feature is disabled. Some SNES and many GBA games are slow. Access pause menu by pressing Start+Select. | Patch the bootloader to spare yourself of a bug in its FAT32 implementation. Copy `gba_bios.bin` where the firmware expects it to slightly improve compatibility. ([GB300 Tool](https://github.com/nummacway/gb300tool/releases/) can help you with both.) Install fan project [multicore](#multicore) on your TF card to add loads of new platforms and greatly improve GBA performance. It can be a bit complicated to add ROMs and configure it, but GB300 Tool can ease that once multicore is installed. |
 | **ROMs** | Comes with 6267 ROMs. Expecially the NES ROMs are ofter modified (hacks) according to No-Intro. There are seven hardcoded lists that you can edit with GB300 Tool and a modded version of Frogtool. | Create the folder `ROMS` and put your own ROMs there. Also create a subfolder `save` there so you can save. You can [patch Game Gear ROMs into SMS ROMs](#sega-game-gear). |
 | **Saving** | GBA does not reliably battery-save (battery is the correct term for an in-game save), all other emulators (including multicore) cannot battery-save at all. (Soft resets can load a battery if it was saved without leaving the emulator in the meantime, so you can complete Pokémon.) States work alright but you cannot (usually) use them in other emulators. | Use only save states. Import GBA battery saves by placing them in both, `ROMS` and `GBA`. |
 | **Interface** | There are [55 image files](#images) and a [text file](#foldernameini) that you can modify. You can also modify [sounds](#sounds) or replace the [font file](#fonts). | Use [GB300 Tool](https://github.com/nummacway/gb300tool/releases/) to edit the image files since the file names and file format are both very odd. It can also edit the text file. Sounds can be converted using [Kerokero - SF2000 BGM Tool](https://github.com/Dteyn/SF2000_BGM_Tool). The font file is a standard TTF font. |
 | **Button<br>Mapping** | You can reassign buttons for each console, but the editor is seriously bugged. | [GB300 Tool](https://github.com/nummacway/gb300tool/releases/) can tell you what you actually bind. |
-| **Accessories** | Supports connecting a very rare type of wired microUSB gamepad for the second player. There is no reliable source to buy one. Does not support wireless gamepads. | You probably shouldn't try to buy one. |
+| **Accessories** | Supports connecting a very rare type of wired gamepad for the second player. A likely source has been discovered only recently. Wireless gamepads are not supported. | It is believed that [this](https://www.aliexpress.com/item/1005006900177735.html) is the only way to buy one. They don't ship worldwide. Make sure to buy the wired version. Note that sell them in pairs, but you can only connect one. |
 | **Support** | There is no known way to contact the manufacturer because we don't know who that is. | Ask on [Retro Handhelds Discord](https://discord.gg/retrohandhelds) (choose SF2000 during onboarding) or [reddit](https://www.reddit.com/r/GB300/). |
 
 
@@ -132,7 +132,7 @@ Because it lacks the arcade support accounting for 2.75 GB on the SF2000, the de
 
 The device comes with a 70&thinsp;cm (28") cable from a 2.5mm male audio plug to two male RCA (cinch) plug. The yellow RCA plug is for composite video and the red one for sound. You can plug them into older TVs either directly or via a SCART adapter. If you plug the cable in the GB300, its own screen will be turned off. The TV output has a better resolution (640x480) than the internal screen's 320x240. If your TV doesn't care, use NTSC 480i to avoid unnecessary vertical scaling to 576i. NTSC outputs a vertically pixel-perfect result of the user interface. Unlike the SF2000, the TV signal will be fine while charging the GB300. Do not plug in the AV cable until the device has completely booted (that includes not plugging in the cable before switching the device on, meaning that the full-size bootlogo is never used).
 
-The GB300 works with the _wired_ gamepads that sometimes ship with some other cheap(er) consoles. You cannot normally buy them individually and the GB300 isn't sold bundled with them either. These devices work for solely the second player in games that support that. _Wireless_ gamepads don't work on the GB300, e.g. the gamepad bundled with the SF900 TV stick. Note that neither of these complies with industry standards like USB or BT, so they don't have any use with computers, laptops or mainstream consoles. There are two types of the wired gamepads, the common 5-wire and the rare 4-wire. The GB300 uses the latter. These gamepads have a Micro USB plug and need to be adapted to USB-C. This comes despite the fact that "external gamepad double against" is even promoted on the front of the GB300's box...
+The GB300 works with the _wired_ gamepads that sometimes ship with some other cheap(er) consoles. You cannot normally buy them individually and the GB300 isn't sold bundled with them either. These devices work for solely the second player in games that support that. _Wireless_ gamepads don't work on the GB300, e.g. the gamepad bundled with the SF900 TV stick that works with the SF2000. Note that neither of these complies with industry standards like USB or BT, so they don't have any use with computers, laptops or mainstream consoles. If your gamepad does, it's definitely not compatible with the GB300. There are two types of the wired gamepads for console like the GB300, the common 5-wire used by all the cheaper Famiclones and the super-rare 4-wire. The GB300 uses the latter. A [source for these](https://www.aliexpress.com/item/1005006900177735.html) has been discovered only recently. This comes despite the fact that "external gamepad double against" is even promoted on the front of the GB300's box...
 
 The GB300 is powered by a standard 18650 battery that you can easily change. The default battery appears to have overcharge protection (the charging current will drop when the battery is full), yet the green charging light will not turn off. If the battery is very low (crashes and glitches), it will take a little under 4&thinsp;VAh until it stops charging. This suggests that the capacity is lower than the SF2000's 1750 mAh. This is supported by the manual and box listing 800 mAh, and people reporting that the (light pink and completely unlabeled) battery of the GB300 is lighter than the SF2000's. More recently, people have reported receiving labelled batteries, confirming the 800 mAh. Neither device has undercharge protection, so leaving the device on with a low battery can kill the battery. One person reported that their GB300 came with the power switch in the 'ON' position and therefore a dead battery. Buying a new battery worked. If you buy a new battery, consider one with both, over- and undercharge protection. Although the SF2000 takes flat batteries, the GB300 seems to require some manipulation to its contact springs due to the console's case design. It initially charges with around 2.5 to 2.9&thinsp;W, which decreases as it charges.
 
@@ -153,12 +153,11 @@ The GB300's stock firmware emulates the following devices:
 * Game Boy Color
 * Game Boy Advance
 
-Compared to the SF2000 stock firmware, the GB300 lacks the arcade section and adds the PCE. If you don't mind the weird colors, you could also play Game Gear games that do not make use of the Start button. Change the `.gg` extension to `.sms` to make them show up. smspower.org has color patches ("GG2SMS") for around 200 GG games (they list 185 different games, for which there are 225 versions on No-Intro, but not all versions are supported). There's a [list of GG2SMS patches that work on the GB300](#sega-game-gear) in this document.
+Compared to the SF2000 stock firmware, the GB300 lacks the arcade section and adds the PCE (and VTxx). If you don't mind the weird colors, you could also play Game Gear games that do not make use of the Start button. Change the `.gg` extension to `.sms` to make them show up. smspower.org has color patches ("GG2SMS") for around 200 GG games (they list 185 different games, for which there are 225 versions on No-Intro, but not all versions are supported). There's a [list of GG2SMS patches that work on the GB300](#sega-game-gear) in this document.
 
 There's actually two things called "firmware" on the GB300: There is a small bootloader (512KiB) that loads the firmware from the TF card. You should [patch that bootloader](https://vonmillhausen.github.io/sf2000/#bootloader-bug) to prevent issues when tampering with files in the `BIOS` folder on the TF card. Really. This patch works for the GB300 as well and takes only a few seconds. With the bootloader separated from the rest of the firmware and the firmware on a TF card, any modding attempts are relatively safe.
 
-The SF2000 firmware does not work on the GB300. There is no known way to retrieve an updated official firmware because the manufacturer is unknown, so the only chance will be to wait for an alternative firmware to be released. The default BIOS dates to the 15th of December, 2023. You can't use the GB300's firmware on the SF2000 either (because the GB300's firmware is much smaller, it would leave more of the 16 MiB available memory for modders to add more features). See [multicore](#multicore) below for a firmware mod.
-
+The SF2000 firmware does not work on the GB300. There is no known way to retrieve an updated official firmware because the manufacturer is unknown. See [multicore](#multicore) below for a modified firmware for the GB300 made by the users. A [port of GB300's firmware to SF2000](https://vonmillhausen.github.io/sf2000/#gb300-firmware-ported) has been made so people can enjoy the easier interface and use GB300 Tool. The default BIOS dates to the 15th of December, 2023. There might be an older version dating back to the 26th of October, 2023, but the only evidence of that was corrupted.
 
 
 ### Saving
@@ -238,20 +237,20 @@ Now we get to something the SF2000 cannot do, not even with multicore: V.R. Tech
 
 **Enabling VTxx support:** In theory, this mysterious `.nfc` emulator is able to run VT02/VT03 ROMs, if it wasn't that this feature is disabled. However, you can enable it by just changing a single byte at `0x319ccc` in `bios\bisrv.asd` from `0x01` to `0x02`. Remember that you need to [rehash the BIOS](https://vonmillhausen.github.io/sf2000/tools/biosCRC32Patcher.htm) after making changes to it. The GB300 will now run `.nfc` VT02 ROMs that comply with the [(Archaic) iNES speficiation](https://www.nesdev.org/wiki/INES#Variant_comparison) and use mapper 12.
 
-**Fixing VT03 colors:** VT03 will also work but colors will be glitched because the emulator uses RGB555 instead of the correct RGB565. You can fix this by stuffing [this thing](https://discord.com/channels/741895796315914271/1195581037003165796/1236804993475018872) at `0x62270` in your `bios\bisrv.asd`. Remember to rehash BIOS. Also note that "stuffing" means overwriting the 8&thinsp;KiB of files that are currently in that location.<!-- You can also calculate the LUT yourself by running the following code for all 2 Kibiwords `w` starting from that location: `(w and $1f) or ((w and $8fe0) shl 1)`. This assumes that you are on a Little Endian system. -->
+**Fixing VT03 colors:** VT03 will also work but colors will be glitched because the emulator's LUT (look-up table) for the colors uses RGB555 instead of the correct RGB565. You can fix this by stuffing [this thing](https://discord.com/channels/741895796315914271/1195581037003165796/1236804993475018872) at `0x62270` in your `bios\bisrv.asd`. Remember to rehash BIOS. Also note that "stuffing" means overwriting the 8&thinsp;KiB of data that are currently in that location.<!-- You can also calculate the LUT yourself by running the following code for all 4 Kibiwords `w` starting from that location: `(w and $1f) or ((w and $8fe0) shl 1)`. This assumes that you are on a Little Endian system. -->
 
 **Fixing the memory size limit:** If you read the iNES specification carefully, you will have noticed that iNES prior to 2.0 will not support 4&thinsp;MiB ROMs because the size given at `0x04` would roll over. Storing the most-significant byte in `0x07` like it is in iNES 2.0 is not supported. This wasn't an issue back then, as the largest official NES game, _Kirby's Adventure_, is only 768&thinsp;KiB (of which only 512&thinsp;KiB are the PRG ROM, with the remaining 256&thinsp;KiB being the CHR ROM, which doesn't exist on VTxx due to [OneBus](https://bootleggames.fandom.com/wiki/Famiclone#VT02.2FVT03_.26_OneBus)). osaka worked around this by changing `0x319b38` in `bios\bisrv.asd` from `0x808b` to `0x008c` which changed the iNES PRG size multiplier from 16384 to 65536, increasing the maximum size to 8&thinsp;MiB. This breaks all `.nfc` NES ROMs (including stock ROMs based on this extension) and doesn't work for all VT03 games, the largest of which are 64&thinsp;MiB.
 
-**Making an iNES header:** Take this template `0x4E45531Axx00C2000000000000000000`. Divide the raw ROM size (without any headers) by 16384 (65536 with the above hack active) and put the result at `0x04` (where there are x's in the template). Then place at the start of the raw ROM and save as `.nfc`.
+**Making an iNES header:** Take this template `0x4E45531Axx00C2000000000000000000`. Divide the raw ROM size (without any headers) by 16384 (65536 with the above hack active) and put the resulting number at `0x04` (where there are x's in the template). Then place at the start of the raw ROM and save as `.nfc`.
 
 You can get VTxx ROMs from _Project Plug-and-Play_ and from the Internet Archive. Note that the tagging of ROMs in Project Plug-and-Play is inconsistent and their games are more prone to issues than those from the Internet Archive. Notes on Project Plug-and-Play:
 * Most games that are untagged or tagged VT02 are actually NES games. You can play them via FCEUmm and the unknown emulator without changing the header.
 * Some VT03 games are not actually tagged as such, e.g. most/all TimeTop games are actually VT03.
 * Many VT03-tagged games in Project Plug-and-Play do not load on the GB300 or the sprites are glitched. Games available for different VTxx chips and games from Jungletac rarely load. TimeTop's games and e.g. Arrow Maze from Cube Tech however work very well.
-* Many soccer-related VT03 games do load but do not register the Start button.
+* Many soccer-related VT03 games do load but do not register input.
 * A few untagged VT03 slot machine games from Jungletac do load, but have weird colors.
 * Some games changed platform during development. The first demo of Street Dance works on FCEUmm, whereas the second demo and the final bundle with Hit-Mouse require VTxx emulation. Said game is pointless on the GB300's nameless emulator since PCM audio does not work. (And you cannot connect your dance mat to the GB300, making this game even more pointless.)
-* Only half of the VT09 games in Project Plug-and-Play even load, but these have weird interlaced graphics, making them unplayable.
+* Roughly half of the VT09-tagged games in Project Plug-and-Play even load, but these have weird interlaced graphics, making them unplayable.
 
 VT32, VT168 and VT369 do not load.
 
@@ -328,6 +327,8 @@ But one thing got better: Instead of the 225 broken thumbnails on the SF2000, th
 * `World Series Baseball 98.zmd`
 * `World Series Baseball.zmd`
 * `Wu Kong Wai Zhuan.zmd`
+
+GB300 Tool can fix them for you.
 
 
 #### SEGA PICO
@@ -577,7 +578,7 @@ As in the SF2000, performance varies heavily between games. And even language ve
 
 ## Resources
 
-Note: There are no language strings on the GB300, just a few images.
+Note: There are no language strings on the GB300, just a few images. Everything that is not in an image is hardcoded in English. For example, this applies for the error if your `save` subfolder is missing, both low battery warnings and of course the "Loading ..." screen.
 
 
 ### Fonts
@@ -652,17 +653,17 @@ Unlike the SF2000, the GB300 supposedly does not have any unused images (not sur
 
 Your custom ROMs are alphabetically indexed into `tsmfk.tax` when the device boots. The following files contain the hardcoded names of the stock ROMs:
 
-| Folder  | File name file | Chinese name file | Pinyin name file |
-| ------- | -------------- | ----------------- | ---------------- |
-| **FC**  | `rdbui.tax`    | `fhcfg.nec`       | `nethn.bvs`      |
-| **PCE** | `urefs.tax`    | `adsnt.nec`       | `xvb6c.bvs`      |
-| **SFC** | `scksp.tax`    | `setxa.nec`       | `wmiui.bvs`      |
-| **MD**  | `vdsdc.tax`    | `umboa.nec`       | `qdvd6.bvs`      |
-| **GB**  | `pnpui.tax`    | `wjere.nec`       | `mgdel.bvs`      |
-| **GBC** | `vfnet.tax`    | `htuiw.nec`       | `sppnp.bvs`      |
-| **GBA** | `mswb7.tax`    | `msdtc.nec`       | `mfpmp.bvs`      |
+| DefaultFolder | File name file | Chinese name file | Pinyin name file |
+| ------------- | -------------- | ----------------- | ---------------- |
+| **FC**        | `rdbui.tax`    | `fhcfg.nec`       | `nethn.bvs`      |
+| **PCE**       | `urefs.tax`    | `adsnt.nec`       | `xvb6c.bvs`      |
+| **SFC**       | `scksp.tax`    | `setxa.nec`       | `wmiui.bvs`      |
+| **MD**        | `vdsdc.tax`    | `umboa.nec`       | `qdvd6.bvs`      |
+| **GB**        | `pnpui.tax`    | `wjere.nec`       | `mgdel.bvs`      |
+| **GBC**       | `vfnet.tax`    | `htuiw.nec`       | `sppnp.bvs`      |
+| **GBA**       | `mswb7.tax`    | `msdtc.nec`       | `mfpmp.bvs`      |
 
-The Pinyin name file contains a Latin transcription of the Chinese names, but without vowels. It is used for searching when language is set to Chinese. File names are relative to a folder that can be changed by editing `Foldername.ini`. The first row in the table above refers to the fourth row in `Foldername.ini` (which is `FC` by default) and so on. See the `Foldername.ini` section right below.
+The Pinyin name file contains a Latin transcription of the Chinese names, but without vowels (except for Latin vowels in the Chinese names, e.g. FIFA). It is used for searching when language is set to Chinese. File names are relative to a folder that can be changed by editing `Foldername.ini`. The first row in the table above refers to the fourth row in `Foldername.ini` (which is `FC` by default) and so on. See the `Foldername.ini` section right below.
 
 In internally, the above table continues with the _file name_ files `tsmfk.tax`, `Favorites.bin` and `History.bin`. The latter two however are in a different format. There are no corresponding Chinese name files or Pinyin name files.
 
@@ -670,6 +671,7 @@ In internally, the above table continues with the _file name_ files `tsmfk.tax`,
 * 1 Int32 for the number of items.
 * Now comes an array, consisting of Int32's for the position of the name inside this file.
 * After that, you have all the strings, encoded in UTF-8 (without BOM of course). Each string is terminated with a NUL (`\0`), including the last string, meaning these files always end with a NUL.
+* Do note that the order of the two arrays does **not** necessarily match! I copied over 2300 VTxx files to my device and the second half of the strings came before the first half (they weren't exactly halves) and some items were logically ordered (e.g. ignoring case) instead of binarily, probably because Windows put them there in logical order. I believe the default files' order of the arrays does match though.
 
 
 ### Foldername.ini
@@ -722,9 +724,9 @@ Let's take a closer look at it:
 | `424 58`             | Dimensions of `sdclt.occ`. As with the thumbnail file above, this changes the dimensions the device expects. |
 |                      | Trailing line feed |
 
-Note that the ROM List files (see the sections above) are bound to the folders in this file. So `rdbui.tax`, which is used for the FC by default, will always refer to the first folder listed here. So if you swap the order of the folders, you need to swap these files.
+Note that the ROM List files (see the sections above) are bound to the folders in this file. So `rdbui.tax`, which is used for the FC by default, will always refer to the first folder listed here. So if you swap the order of the folders, you need to swap (or rebuild) these files.
 
-Changing anything in the `7 8 9 10 11` row has a lot of strange side effects: The numbers `7`, `8` and `9` each correspond to a file, `tsmfk.tax`, `Favorites.bin` and `History.bin` respectively. The file that corresponds to the first number in this row is populated with the folder given in its corresponding the line above. Example: Say this line starts with `9`, meaning tenth folder and `History.bin`. If you turn on the device, `History.bin` gets populated with file names from the tenth (last) folder defined in `Foldername.ini` because the index `9` refers to `History.bin`. Now it gets inconsistent, because the eighth tab (count from 1) that you just changed (because it's the first number in this line) will look like the History tab now as it has a thumbnail image, but it will still use the `tsmfk.tax` ROM list and still use the eighth image from `ectte.bke`. Accessing the tab that originally was the History however will freeze the device because it too will load its original file, `History.bin`, which has just been populated with data in an unsupported format. Swapping `8` and `9` causes _existing_ Favorites and History lists to be _initially_ swapped, but from then being updated with the correct entries. So it seems that this modification works, so does swapping `10` and `11`. Changing `Foldername.ini` does not affect the order on the bottom tab bar. tl;dr: You better leave this line. Or better: The entire file except for the colors.
+Changing anything in the `7 8 9 10 11` row has a lot of strange side effects: The numbers `7`, `8` and `9` each correspond to a file, `tsmfk.tax`, `Favorites.bin` and `History.bin` respectively. The file that corresponds to the first number in this row is populated with the folder given in its corresponding the line above. Example: Say this line starts with `9`, meaning tenth folder and `History.bin`. If you turn on the device, `History.bin` gets populated with file names from the tenth (last) folder defined in `Foldername.ini` because the index `9` refers to `History.bin`. Now it gets inconsistent, because the eighth tab (count from 1) that you just changed (because it's the first number in this line) will look like the History tab now as it has a thumbnail image, but it will still use the `tsmfk.tax` ROM list and still use the eighth image from `ectte.bke`. Accessing the tab that originally was the History however will freeze the device because it too will load its original file, `History.bin`, which has just been populated with data in an unsupported format. Swapping `8` and `9` causes _existing_ Favorites and History lists to be _initially_ swapped, but from then being updated with the correct entries. So it seems that this modification works, so does swapping `10` and `11`. Changing `Foldername.ini` does not affect the order of the bottom tab bar - it's still the same as in the images. tl;dr: You better leave this line. Or better: The entire file except for the colors.
 
 
 ### KeyMapInfo.kmp
@@ -782,21 +784,19 @@ All files are completely identical and have the same use as on the SF2000 v1.71.
 
 Once again, their format and use is identical to the SF2000.
 
+In theory, you can also add ROMs inside the `ROMS` to `Favorites.bin` and `History.bin` (first word = `0x0700`). But because the order changes whenever you add a game with a name lexically lower than any of your favorites, this will change the reference, so the GB300 does not add your own games there (I would guess the SF2000 doesn't do that either).
+
 
 ## List of ROMs
 
 For the FC, MD, GB, GBC, GBA and SFC see [vonmillhausen's list](https://vonmillhausen.github.io/sf2000/defaultRoms/defaultRomsNoIntroCheck.htm). Games that are missing in the GB300 are listed above in this document. There are no new games for consoles that the SF2000 has, but [Final Knockout](https://datomatic.no-intro.org/index.php?page=show_record&s=49&n=0816) does work on the GB300.
 
-Note that all FC hashes are different for the GB300 because of the reasons explained above.
-
 To play your own games, create the folder `Roms` on the TF card. You can also use ZIP files to save space. Make sure to create a `save` subfolder to be able to save.
-
-In theory, you can also add ROMs inside the `ROMS` to `Favorites.bin` and `History.bin` (first word = `0x0700`). But because the order changes whenever you add a game with a name lexically lower than any of your favorites, this will change the reference, so the GB300 does not add your own games there (I would guess the SF2000 doesn't do that either).
 
 
 ### List of PCE Games
 
-The following is a list of all PCE games that ship with the GB300. The names listed here are the names on No-Intro. Their catalog knows _all_ of the hashes, meaning that the PCE games are likely no strange hacks like many of the other ROMs. Thumbnails use only covers here, whereas other consoles use at least some screenshots instead. If you remove everything in brackets (and trailing spaces resulting hereof) from the No-Intro name, you get the name on the GB300, with four exceptions given in non-bold brackets after the No-Intro name.
+The following is a list of all PCE games that ship with the GB300. The names listed here are the names on No-Intro. Their catalog knows _all_ of the hashes, meaning that the PCE games no strange hacks like many of the other ROMs, especially FC. Thumbnails use only covers here, whereas other consoles use at least some screenshots instead. If you remove everything in brackets (and trailing spaces resulting hereof) from the No-Intro name, you get the name on the GB300, with four exceptions given in non-bold brackets after the No-Intro name.
 
 | No-Intro Name | CRC32 | No-Intro # | No-Intro Status |
 | ------------- | ----- | ---------- | --------------- |
