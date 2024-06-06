@@ -40,6 +40,7 @@ Developer and modding topics:
     - [ROM Lists](#rom-lists)
     - [Foldername.ini](#foldernameini)
     - [KeyMapInfo.kmp](#keymapinfokmp)
+      - [multicore Key Maps](#multicore-key-maps)
     - [Sounds](#sounds)
     - [Other Files](#other-files)
 
@@ -81,7 +82,7 @@ Tools for the SF2000 that should work for the GB300:
 * [BIOS CRC-32 Patcher](https://vonmillhausen.github.io/sf2000/tools/biosCRC32Patcher.htm) by Von Millhausen
 * [Generic Image Tool](https://vonmillhausen.github.io/sf2000/tools/genericImageTool.htm) by Von Millhausen, to convert to and from RGB565 and BGRA8888 images
 * [Kerokero - SF2000 BGM Tool](https://github.com/Dteyn/SF2000_BGM_Tool) by Dteyn
-* [Save State Tool](https://vonmillhausen.github.io/sf2000/tools/saveStateTool.htm) by Von Millhausen – Due to the strange CPU architecture, people don't think that converting save states makes any sense. But you can use it to extract screenshots. NES ROMs with an `nfc` extension (that includes file names inside ZIP, obfuscated ZIP and thumbnailed files) create uncompressed snapshots which aren't supported by this tool because that emulator and the weird save states it creates do not exist on the SF2000.
+* [Save State Tool](https://vonmillhausen.github.io/sf2000/tools/saveStateTool.htm) by Von Millhausen – Due to the strange CPU architecture, people don't think that converting save states makes any sense. But you can use it to extract screenshots. This tool relies on the first four bytes storing the compressed size. However, NES ROMs with an `.nfc` extension (that includes file names inside ZIP, obfuscated ZIP and thumbnailed files) and multicore don't have that, because compressed size is also in the last four bytes, meaning these don't work.
 * [Silent menu music](https://vonmillhausen.github.io/sf2000/sounds/silentMusic/pagefile.sys) by Von Millhausen
 * [Silent Sounds Pack](https://github.com/Dteyn/sf2000/raw/main/sounds/silentSounds/SF2000_Silent_Sounds_Pack.zip) by Dteyn
 
@@ -192,19 +193,19 @@ Changing the things above will give you a standard ZIP file. At least 7-Zip is a
 | _XZip-XUnZip_         | _unknown_ | _unknown_  | `.zfb`*                                                                    | `0x00000300` |
 | **Snes9x 2005**       | v1.36     | _unknown_  | `.smc`, `.fig`, `.sfc`, `.gd3`, `.gd7`, `.dx2`, `.bsx`, `.swc`             | `0x08000000` |
 | **FCEUmm**            | _none_    | `7cdfc7e`  | `.nes`, `.fds`, `.unf`, ~~`.unif`~~                                        | `0x01000000` |
-| _unknown_             | _unknown_ | _unknown_  | `.nfc`                                                                     | `0x02000000` |
+| **wiseemu**           | _unknown_ | _unknown_  | `.nfc`                                                                     | `0x02000000` |
 | **TGB Dual**          | v0.8.3    | `9be31d3`  | `.gbc`, `.gb`, `.sgb`                                                      | `0x20000000` |
 | **gpSP**              | v0.91     | `261b2db`  | `.gba`, ~~`.bin`~~, `.agb`, `.gbz`                                         | `0x10000000` |
 | **PicoDrive**         | 1.91      | `cbc93b6`  | `.bin`, `.md`, `.smd`, `.gen`, ~~`.32x`~~, ~~`.cue`~~, ~~`.iso`~~, `.sms`  | `0x04000000` |
 | **Mednafen PCE Fast** | v0.9.38.7 | _unknown_  | `.pce`, ~~`.cue`~~, ~~`.ccd`~~, ~~`.chd`~~                                 | `0x80000000` |
 
-*&#32;= `.zfb` does have the bitmask `0x00000300` used for thumbnailed files, but the GB300 can only show thumbnails for the third to seventh file extension in its list (which is identical to the one above). `.zfb` is the eighth in that internal list so there is no thumbnail. This means that there is absolutely no chance to use thumbnails for ROMs launched with multicore. The lack of a thumbnail for `.zfb` is funny because on the SF2000, the sole use of `.zfb` is to provide the thumbnail for a file in another directory. ZFB is short for ZIP Final Burn (an emulator), despite not containing zipped content on the SF2000.
+*&#32;= `.zfb` does have the bitmask `0x00000300` used for thumbnailed files, but the GB300 can only show thumbnails for the third to seventh file extension in its list (which is identical to the one above). `.zfb` is the eighth in that internal list so there is no thumbnail. This means that there is absolutely no chance to use thumbnails for ROMs launched with multicore. The lack of a thumbnail for `.zfb` is funny because on the SF2000, the sole use of `.zfb` is to provide the thumbnail for a file in another directory. ZFB is short for ZIP Final Burn (an arcade emulator), despite not containing zipped content on the SF2000.
 
-The _named_ emulators are from `libretro`. If they were used in that context, they'd report all the given extensions to `libretro`, but the the GB300 does not display the stroke-out ones. `.bin` files are associated with PicoDrive, not gpSP, so they are stroke-out for the latter.
+_wiseemu_ is the name this emulator has on platforms where it is a seperate file. It was created by Wise Wang. The the other emulators are from `libretro`. If they were used in that context, they'd report all the given extensions to `libretro`, but the the GB300 does not display the stroke-out ones. `.bin` files are associated with PicoDrive, not gpSP, so they are stroke-out for the latter.
 
 ZIP and thumbnailed files are both allowed to be optionally obfuscated. And yes, even a `.zip` file is allowed to be obfuscated.
 
-The bitmask is located in the BIOS where it comes _after_ the extension. The block with this data is close to the end of the BIOS file. Open it a hex editor and search for `NFC` because that string does not occur anywhere else. `.nfc` is associated with a different NES emulator than the `.fds`, `.nes` and `.unf`. That extension is frequently seen in stock ROMs (280 of 868). The most notable difference is that this emulator's save states are uncompressed. It is believed that this NES emulator is the BIOS creators' own NES emulator, probably the one that's also used in the cheap Famiclones (see the introduction). Loading `.fds` fails for both, even with the correct BIOS in the correct folder (`ROMS`).
+The bitmask is located in the BIOS where it comes _after_ the extension. The block with this data is close to the end of the BIOS file. Open it a hex editor and search for `NFC` because that string does not occur anywhere else. `.nfc` is associated with a different NES emulator (wiseemu) than the `.fds`, `.nes` and `.unf` (FCEUmm). The `.nfc` extension is seen in 280 of the 868 stock ROMs. The most notable difference is that wiseemu's save states are uncompressed. Loading `.fds` fails for both, even with the correct BIOS in the correct folder (`ROMS`). osaka (`bnister`) is trying to figure out why.
 
 The GB300 relies on the extension (or, more precisely, the extension's bitmask) to decide what to do with the file:
 * Display a thumbnail?
@@ -228,31 +229,33 @@ Compared to the SF2000, the following games are missing:
 
 Games with an asterisk are duplicates of games that are still on the device.
 
-The GB300 comes with two NES emulators: FCEUmm is associated with `.nes`, `.fds`, `.unf`, whereas a mysterious other emulator is used for `.nfc`. To find out which one is used for which stock ROM, see [this list](https://vonmillhausen.github.io/sf2000/defaultRoms/defaultRomsNoIntroCheck.htm). FCEUmm seems to be the better one for NES.
+The GB300 comes with two NES emulators: _FCEUmm_ is associated with `.nes`, `.fds`, `.unf`, whereas a mysterious other emulator called _wiseemu_ is used for `.nfc`. To find out which one is used for which stock ROM, see [this list](https://vonmillhausen.github.io/sf2000/defaultRoms/defaultRomsNoIntroCheck.htm). FCEUmm seems to be the better one for NES. You can see the difference in Galaxian which clearly glitches/tears.
 
 
 #### V.R. Technology VT02/VT03
 
-Now we get to something the SF2000 cannot do, not even with multicore: V.R. Technology made some Famicom clones (Famiclones) that weren't just clones but technically more advanced than the Famicom, called the [VTxx](https://bootleggames.fandom.com/wiki/VTxx). As Sup+ was mostly known for making Famiclones (400-in-1, 500-in-1, a.s.o.) before making the GB300, the GB300 retains their strange Famiclone emulator. Discord user `bnister` (osaka) did some research on this. Here's what you can do to make it work:
+Now we get to something the SF2000 cannot do, not even with multicore: V.R. Technology made some Famicom clones (Famiclones) that weren't just clones but technically more advanced than the Famicom, called the [VTxx](https://bootleggames.fandom.com/wiki/VTxx). As Sup+ was mostly known for making Famiclones (400-in-1, 500-in-1, a.s.o.) before making the GB300, the GB300 retains Wise Wang's strange Famiclone emulator. Discord user `bnister` (osaka) did some research on this. Here's what you can do to make it work:
 
-**Enabling VTxx support:** In theory, this mysterious `.nfc` emulator is able to run VT02/VT03 ROMs, if it wasn't that this feature is disabled. However, you can enable it by just changing a single byte at `0x319ccc` in `bios\bisrv.asd` from `0x01` to `0x02`. Remember that you need to [rehash the BIOS](https://vonmillhausen.github.io/sf2000/tools/biosCRC32Patcher.htm) after making changes to it. The GB300 will now run `.nfc` VT02 ROMs that comply with the [(Archaic) iNES speficiation](https://www.nesdev.org/wiki/INES#Variant_comparison) and use mapper 12.
+**Enabling VTxx support:** In theory, this mysterious `.nfc` emulator is able to run VT02/VT03 ROMs, if it wasn't that this feature is disabled. However, you can enable it by just changing a single byte at `0x319ccc` in `bios\bisrv.asd` from `0x01` to `0x02`. Remember that you need to [rehash the BIOS](https://vonmillhausen.github.io/sf2000/tools/biosCRC32Patcher.htm) after making changes to it. The GB300 will now run `.nfc` VT02 ROMs that comply with the [(Archaic) iNES speficiation](https://www.nesdev.org/wiki/INES#Variant_comparison) and use strictly mapper 12.
 
-**Fixing VT03 colors:** VT03 will also work but colors will be glitched because the emulator's LUT (look-up table) for the colors uses RGB555 instead of the correct RGB565. You can fix this by stuffing [this thing](https://discord.com/channels/741895796315914271/1195581037003165796/1236804993475018872) at `0x62270` in your `bios\bisrv.asd`. Remember to rehash BIOS. Also note that "stuffing" means overwriting the 8&thinsp;KiB of data that are currently in that location.<!-- You can also calculate the LUT yourself by running the following code for all 4 Kibiwords `w` starting from that location: `(w and $1f) or ((w and $8fe0) shl 1)`. This assumes that you are on a Little Endian system. -->
+**Fixing VT03 colors:** VT03 will also work but colors will be glitched because the emulator's LUT (look-up table) for the colors uses RGB555 instead of the correct RGB565. You can fix this by stuffing [this thing](https://discord.com/channels/741895796315914271/1195581037003165796/1236804993475018872) at `0x62270` in your `bios\bisrv.asd`. Remember to rehash BIOS. Also note that "stuffing" means overwriting the 8&thinsp;KiB of data that are currently in that location. You can also calculate the LUT yourself by running the following code for all 4 Kibiwords `w` starting from that location: `(w and $1f) or ((w and $7fe0) shl 1)`. This assumes that you are on a little-endian system.
 
 **Fixing the memory size limit:** If you read the iNES specification carefully, you will have noticed that iNES prior to 2.0 will not support 4&thinsp;MiB ROMs because the size given at `0x04` would roll over. Storing the most-significant byte in `0x07` like it is in iNES 2.0 is not supported. This wasn't an issue back then, as the largest official NES game, _Kirby's Adventure_, is only 768&thinsp;KiB (of which only 512&thinsp;KiB are the PRG ROM, with the remaining 256&thinsp;KiB being the CHR ROM, which doesn't exist on VTxx due to [OneBus](https://bootleggames.fandom.com/wiki/Famiclone#VT02.2FVT03_.26_OneBus)). osaka worked around this by changing `0x319b38` in `bios\bisrv.asd` from `0x808b` to `0x008c` which changed the iNES PRG size multiplier from 16384 to 65536, increasing the maximum size to 8&thinsp;MiB. This breaks all `.nfc` NES ROMs (including stock ROMs based on this extension) and doesn't work for all VT03 games, the largest of which are 64&thinsp;MiB.
 
 **Making an iNES header:** Take this template `0x4E45531Axx00C2000000000000000000`. Divide the raw ROM size (without any headers) by 16384 (65536 with the above hack active) and put the resulting number at `0x04` (where there are x's in the template). Then place at the start of the raw ROM and save as `.nfc`.
 
 You can get VTxx ROMs from _Project Plug-and-Play_ and from the Internet Archive. Note that the tagging of ROMs in Project Plug-and-Play is inconsistent and their games are more prone to issues than those from the Internet Archive. Notes on Project Plug-and-Play:
-* Most games that are untagged or tagged VT02 are actually NES games. You can play them via FCEUmm and the unknown emulator without changing the header.
+* Most games that are untagged or tagged VT02 are actually NES games. You can play them in FCEUmm and wiseemu without changing the iNES header.
 * Some VT03 games are not actually tagged as such, e.g. most/all TimeTop games are actually VT03.
-* Many VT03-tagged games in Project Plug-and-Play do not load on the GB300 or the sprites are glitched. Games available for different VTxx chips and games from Jungletac rarely load. TimeTop's games and e.g. Arrow Maze from Cube Tech however work very well.
+* Many VT03-tagged games in Project Plug-and-Play do not load on the GB300 or the sprites are glitched. Games available for different VTxx chips and games from Jungletac rarely load. Not a single original CubeTac game works. TimeTop's games and a few of CubeTac's hacks (e.g. Arrow Maze) however work very well.
 * Many soccer-related VT03 games do load but do not register input.
 * A few untagged VT03 slot machine games from Jungletac do load, but have weird colors.
 * Some games changed platform during development. The first demo of Street Dance works on FCEUmm, whereas the second demo and the final bundle with Hit-Mouse require VTxx emulation. Said game is pointless on the GB300's nameless emulator since PCM audio does not work. (And you cannot connect your dance mat to the GB300, making this game even more pointless.)
-* Roughly half of the VT09-tagged games in Project Plug-and-Play even load, but these have weird interlaced graphics, making them unplayable.
+* Roughly half of the VT09-tagged games in Project Plug-and-Play do load, but these have weird interlaced graphics, making them unplayable. The other half does not load.
 
 VT32, VT168 and VT369 do not load.
+
+Research is still going on. I am preparing a list of Project Plug-and-Play games and VT03 ROMs from the Internet Archive that you can play on the GB300. But this is around 2500 files, so it takes a while. osaka might be looking into the low compatibility.
 
 
 ### PC Engine
@@ -737,15 +740,15 @@ After each emulated console's key map (24 bytes), it is repeated instantly (prob
 
 Consoles are encoded in the following order:
 
-| Console/Order | Physical Button Save Order   | Available Values per Physical Button                                         |
-| ------------- | ---------------------------- | ---------------------------------------------------------------------------- |
-| 1. **FC**     | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B                                                     |
-| 2. **PCE**    | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: I, `0x0000`: II<!--, `0x0A00`: X, `0x0B00`: Y, `0x0100`: C, `0x0900`: Z--> |
-| 3. **SFC**    | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B, `0x0A00`: X, `0x0B00`: Y, `0x0900`: L, `0x0100`: R |
-| 4. **MD/SMS** | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B, `0x0A00`: X, `0x0B00`: Y, `0x0100`: C, `0x0900`: Z |
-| 5. **GB/GBC** | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B                                                     |
-| 6. **GBA**    | `L`, `R`, `X`, `A`, `B`, `Y` | `0x0800`: A, `0x0000`: B, `0x0A00`: L, `0x0B00`: R<!--, `0x0100`: L, `0x0900`: R--> |
-| 7. unknown    |                              | defaults identical to SFC's defaults                                         |
+| Console/Order    | Physical Button Save Order   | Available Values per Physical Button                                         |
+| ---------------- | ---------------------------- | ---------------------------------------------------------------------------- |
+| 1. **FC**        | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B                                                     |
+| 2. **PCE**       | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: I, `0x0000`: II<!--, `0x0A00`: X, `0x0B00`: Y, `0x0100`: C, `0x0900`: Z--> |
+| 3. **SFC**       | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B, `0x0A00`: X, `0x0B00`: Y, `0x0900`: L, `0x0100`: R |
+| 4. **MD/SMS**    | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B, `0x0A00`: X, `0x0B00`: Y, `0x0100`: C, `0x0900`: Z<br>(SMS: `0x0000`: 1, `0x0100`: 2) |
+| 5. **GB/GBC**    | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B                                                     |
+| 6. **GBA**       | `L`, `R`, `X`, `A`, `B`, `Y` | `0x0800`: A, `0x0000`: B, `0x0A00`: L, `0x0B00`: R<!--, `0x0100`: L, `0x0900`: R--> |
+| 7. unknown       |                              | defaults identical to SFC's defaults                                         |
 
 After each button's 16-bit value from the table above comes a 16-bit flag for autofire: `0x0100` (or any odd number) if autofire is active (indicated by a `T` in the console's key map editor), `0x0000` (or any even number) if not.
 
@@ -760,6 +763,20 @@ Note that the table above describes the _actual_ behavior, whereas the key map e
 This means that the bugs cancel each other out when the _default_ key mappings are set, so the default mapping seemingly makes sense. Changing the buttons however will rarely ever do what you expect.
 
 Per-game key mappings do not seem to work.
+
+#### multicore Key Maps
+
+multicore is affected by the stock GBA's mapping, so it is still the sixth entry in the file, the physical button save order is still `L`, `R`, `X`, `A`, `B`, `Y` and the bugs described above still make the GB300's key map editor worthless.
+
+Here are a few examples:
+
+| Core    | Emulator           | Available Values per Physical Button                                           | Test ROM                                                   |
+| ------- | ------------------ | ------------------------------------------------------------------------------ | ---------------------------------------------------------- |
+| `gba`   | **gpSP**           | `0x0800`: A, `0x0000`: B, `0x0A00`: L, `0x0B00`: R, `0x0100`: TB, `0x0900`: TA | [GBA D-Pad Test](https://www.romhacking.net/homebrew/142/) |
+| `pokem` | **PokeMini**       | `0x0800`: A, `0x0000`: B, `0x0B00`: C, `0x0900`: TA                            | Zany Cards (no test ROM available)                         |
+| `sega`  | **Picodrive** (MD) | `0x0800`: C, `0x0000`: B, `0x0A00`: X, `0x0B00`: Z, `0x0100`: A, `0x0900`: Y   | Contra - Hard Corps                                        |
+
+`T` indicates autofire. Only officially-assignable button values are listed because the values between `0x0200` and `0x0700` either did nothing or counted as `0x0000`, depending on the emulator, assigned value and physical button. Only `B`, `R` and `X` had the chance of counting as `0x0000` whereas the others seemed to always be useless.
 
 
 ### Sounds
