@@ -770,14 +770,32 @@ multicore is affected by the stock GBA's mapping, so it is still the sixth entry
 
 Here are a few examples:
 
-| Core    | Emulator           | Available Values per Physical Button                                           | Test ROM                                                   |
-| ------- | ------------------ | ------------------------------------------------------------------------------ | ---------------------------------------------------------- |
-| `gba`   | **gpSP**           | `0x0800`: A, `0x0000`: B, `0x0A00`: L, `0x0B00`: R, `0x0100`: TB, `0x0900`: TA | [GBA D-Pad Test](https://www.romhacking.net/homebrew/142/) |
-| `pokem` | **PokeMini**       | `0x0800`: A, `0x0000`: B, `0x0B00`: C, `0x0900`: TA                            | Zany Cards (no test ROM available)                         |
-| `sega`  | **Picodrive** (MD) | `0x0800`: C, `0x0000`: B, `0x0A00`: X, `0x0B00`: Z, `0x0100`: A, `0x0900`: Y   | Contra - Hard Corps                                        |
+| Core     | Emulator        | Con-<br>sole | `0800`<br>(A) | `0000`<br>(B) | `0900`<br>(X) | `0100`<br>(Y) | `0A00`<br>(L) | `0B00`<br>(R) | Test ROM                                                                         |
+| -------- | --------------- | ------------ | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | -------------------------------------------------------------------------------- |
+| `msx`    | **blueMSX**     | CV           | L             | R             | 1             | 2             | 4             | 3             | Final Test Cartridge                                                             |
+| `msx`    | **blueMSX**     | SG           | L             | R             |               |               |               |               | SG-1000 M2 Check Program Proto                                                   |
+| `col`    | **Gearcoleco**  | CV           | R             | L             | 2             | 1             | 3             | 4             | Final Test Cartridge                                                             |
+| `gg`     | **Gearsystem**  | SG           | R             | L             |               |               |               |               | SG-1000 M2 Check Program Proto                                                   |
+| `gg`     | **Gearsystem**  | GG           | 2             | 1             |               |               |               |               | [Gamegear button test](https://www.smspower.org/Homebrew/GamegearButtonTest-GG)  |
+| `gba`    | **gpSP**        | GBA          | A             | B             | TA            | TB            | L             | R             | [GBA D-Pad Test](https://www.romhacking.net/homebrew/142/)                       |
+| `sega`   | **gpSP**        | GBA          | C             | B             | Y             | A             | X             | Z             | Contra - Hard Corps                                                              |
+| `sega`   | **Picodrive**   | SG*          | R             | L             |               |               |               |               | SG-1000 M2 Check Program Proto                                                   |
+| `sega`   | **Picodrive**   | SMS          | 2             | 1             |               |               |               |               | [SMS Test Suite v0.35](https://github.com/sverx/SMSTestSuite/releases/tag/v0.35) |
+| `pokem`  | **PokeMini**    | PM           | A,            | B             | TA            |               |               | C             | Zany Cards (no test ROM available)                                               |
+| `snes`   | **Snes9x 2005** | SFC          | A             | B             | X             | Y             | L             | R             | NTF 2.5 Test Cartridge                                                           |
+| `snes02` | **Snes9x 2002** | SFC          | A             | B             | X             | Y             | L             | R             | NTF 2.5 Test Cartridge                                                           |
 
-`T` indicates autofire. Only officially-assignable button values are listed because the values between `0x0200` and `0x0700` either did nothing or counted as `0x0000`, depending on the emulator, assigned value and physical button. Only `B`, `R` and `X` had the chance of counting as `0x0000` whereas the others seemed to always be useless.
+`T` indicates autofire. Homebrew test ROMs are linked, official and/or commercial ones are not. Platforms with an asterisk are not officially supported. Only if you are using the _default_ GBA key mapping, the hex numbers above correspond to the _physical_ buttons in brackets.
 
+Notes:
+* Only officially-assignable button values are listed because the values between `0x0200` and `0x0700` either did nothing or counted as `0x0000`, depending on the emulator, assigned value and physical button. Only `B`, `R` and `X` had the chance of counting as `0x0000` whereas the others seemed to always be useless. This was tested with `gba`, `pokem` and `sega`.
+* `pokem`: Select is reset.
+* There is a [GG button test ROM](https://www.smspower.org/Homebrew/GamegearButtonTest-GG) on smspower.org, but `gg` and `sega` both think it was SMS, so neither the Start button nor the colors work. (Stock also thinks it's SMS, but that's expected because it doesn't even know GG.) You can force `gg` to GG mode. You can do this with `sega` too, but that doesn't work. GG support is unofficial on 
+* GearSystem cannot run [SMS Test Suite v0.35](https://github.com/sverx/SMSTestSuite/releases/tag/v0.35), v0.29 and probably all other versions of that ROM.
+* There is an [SMS test ROM for the MD controller](https://www.smspower.org/Homebrew/MegaDrive6ButtonControllerTest-SMS) which does not register the keys properly on `gg`, `sega` and stock. This ROM is also notable for looking completely different on all of these three: It's blue on stock, grey on `sega` and mixed on `gg`.
+* The default key order on SMS actually makes sense because that's how the buttons are aligned. Start is Pause.
+* `bluemsx`'s mapping seems to make less sense than the others emulators' for the same platform.
+* `col`: Select is #, Start is *. `bluemsx` is the other way around.
 
 ### Sounds
 
