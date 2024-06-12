@@ -122,6 +122,8 @@ You only have to do steps 1 to 5 once.
 
 Note: Multicore saves in `ROMS\save`. The thumbnail (screenshot) is named and formatted like always, but with no payload other than the image, as the state is in another file that isn't compressed.
 
+Making thumbnailed multicore files is super weird: The _filename_ (without the extension) of the `.zfc`, `.zsf`, `.zpc`, `.zmd`, `.zgb` file must conform to the multicore pattern, however, the _extension_ is pulled from the contained file. So the file name inside the ZIP file does not matter, but must end on `.gba`, `.zgb` or `.agb`. So basically you could take any stock GBA file, and for example name it `sega;Zero Wing.md.zsf` to make it launch `ROMS\sega\Zero Wing.md` with the `sega` core.
+
 
 ## Hardware
 
@@ -170,6 +172,8 @@ The SF2000 firmware does not work on the GB300. There is no known way to retriev
 * GB/GBC: Many people are concerned about Pokémon games which force a soft reset after beating the Champ. Luckily, this is no issue at all for the stock GB/GBC emulator, if you saved in-game after you last loaded a state (or started a new game). This will normally be the case if you make sure that you _do not save a state before you're back in the game_. In other words: Do not save and load a state during the intro. How can you quickly test this with any GB/GBC/GBA emulator in the world? Save a game, press A+B+Start+Select and you should be able to load the battery. This is not an emulator feature but implemented by nearly all ROMs.
 * Need to do more research on the other emulators.
 
+Multicore generally cannot battery-save if the core conforms to `libretro`'s standards. However, `pokem` for example does not conform to libretro's standards, so it can battery-save (`.eep`). It can also create/load states (`.state0` to `.state3`) from the PC version of PokeMini. Note that all `pokem` games create a `.eep`, even those without a save feature like _Zany Cards_.
+
 
 ## ROMs and Gameplay
 
@@ -199,7 +203,7 @@ Changing the things above will give you a standard ZIP file. At least 7-Zip is a
 | **PicoDrive**         | 1.91      | `cbc93b6`  | `.bin`, `.md`, `.smd`, `.gen`, ~~`.32x`~~, ~~`.cue`~~, ~~`.iso`~~, `.sms`  | `0x04000000` |
 | **Mednafen PCE Fast** | v0.9.38.7 | _unknown_  | `.pce`, ~~`.cue`~~, ~~`.ccd`~~, ~~`.chd`~~                                 | `0x80000000` |
 
-*&#32;= `.zfb` does have the bitmask `0x00000300` used for thumbnailed files, but the GB300 can only show thumbnails for the third to seventh file extension in its list (which is identical to the one above). `.zfb` is the eighth in that internal list so there is no thumbnail. This means that there is absolutely no chance to use thumbnails for ROMs launched with multicore. The lack of a thumbnail for `.zfb` is funny because on the SF2000, the sole use of `.zfb` is to provide the thumbnail for a file in another directory. ZFB is short for ZIP Final Burn (an arcade emulator), despite not containing zipped content on the SF2000.
+*&#32;= `.zfb` does have the bitmask `0x00000300` used for thumbnailed files, but the GB300 can only show thumbnails for the third to seventh file extension in its list (which is identical to the one above). `.zfb` is the eighth in that internal list so there is no thumbnail. The lack of a thumbnail for `.zfb` is funny because on the SF2000, the sole use of `.zfb` is to provide the thumbnail for a file in another directory. ZFB is short for ZIP Final Burn (an arcade emulator), despite not containing zipped content on the SF2000. See [above](#installing-and-using-multicore-manually) for more information on creating a multicore thumbnail.
 
 _wiseemu_ is the name this emulator has on platforms where it is a seperate file. It was created by Wise Wang. The the other emulators are from `libretro`. If they were used in that context, they'd report all the given extensions to `libretro`, but the the GB300 does not display the stroke-out ones. `.bin` files are associated with PicoDrive, not gpSP, so they are stroke-out for the latter.
 
@@ -213,6 +217,7 @@ The GB300 relies on the extension (or, more precisely, the extension's bitmask) 
 * Choose the emulator (see the table above).
 
 There are no signs of other supported emulators, but it looks like MPEG-2 support is included but inaccessible. If you force the GB300 to display `.chd` files, opening one will cause it to load indefinitely, even for the tiniest PCE-CD game out there, _Hawaiian Island Girls_ (under 3 megabytes). Same goes for `.cue` files no matter if MD-CD or PCE-CD.
+
 
 ### Nintendo Entertainment System
 
@@ -236,13 +241,10 @@ The GB300 comes with two NES emulators: _FCEUmm_ is associated with `.nes`, `.fd
 
 Now we get to something the SF2000 cannot do, not even with multicore: V.R. Technology made some Famicom clones (Famiclones) that weren't just clones but technically more advanced than the Famicom, called the [VTxx](https://bootleggames.fandom.com/wiki/VTxx). As Sup+ was mostly known for making Famiclones (400-in-1, 500-in-1, a.s.o.) before making the GB300, the GB300 retains Wise Wang's strange Famiclone emulator. Discord user `bnister` (osaka) did some research on this. Here's what you can do to make it work:
 
-**Enabling VTxx support:** In theory, this mysterious `.nfc` emulator is able to run VT02/VT03 ROMs, if it wasn't that this feature is disabled. However, you can enable it by just changing a single byte at `0x319ccc` in `bios\bisrv.asd` from `0x01` to `0x02`. Remember that you need to [rehash the BIOS](https://vonmillhausen.github.io/sf2000/tools/biosCRC32Patcher.htm) after making changes to it. The GB300 will now run `.nfc` VT02 ROMs that comply with the [(Archaic) iNES speficiation](https://www.nesdev.org/wiki/INES#Variant_comparison) and use strictly mapper 12.
-
-**Fixing VT03 colors:** VT03 will also work but colors will be glitched because the emulator's LUT (look-up table) for the colors uses RGB555 instead of the correct RGB565. You can fix this by stuffing [this thing](https://discord.com/channels/741895796315914271/1195581037003165796/1236804993475018872) at `0x62270` in your `bios\bisrv.asd`. Remember to rehash BIOS. Also note that "stuffing" means overwriting the 8&thinsp;KiB of data that are currently in that location. You can also calculate the LUT yourself by running the following code for all 4 Kibiwords `w` starting from that location: `(w and $1f) or ((w and $7fe0) shl 1)`. This assumes that you are on a little-endian system.
-
-**Fixing the memory size limit:** If you read the iNES specification carefully, you will have noticed that iNES prior to 2.0 will not support 4&thinsp;MiB ROMs because the size given at `0x04` would roll over. Storing the most-significant byte in `0x07` like it is in iNES 2.0 is not supported. This wasn't an issue back then, as the largest official NES game, _Kirby's Adventure_, is only 768&thinsp;KiB (of which only 512&thinsp;KiB are the PRG ROM, with the remaining 256&thinsp;KiB being the CHR ROM, which doesn't exist on VTxx due to [OneBus](https://bootleggames.fandom.com/wiki/Famiclone#VT02.2FVT03_.26_OneBus)). osaka worked around this by changing `0x319b38` in `bios\bisrv.asd` from `0x808b` to `0x008c` which changed the iNES PRG size multiplier from 16384 to 65536, increasing the maximum size to 8&thinsp;MiB. This breaks all `.nfc` NES ROMs (including stock ROMs based on this extension) and doesn't work for all VT03 games, the largest of which are 64&thinsp;MiB.
-
-**Making an iNES header:** Take this template `0x4E45531Axx00C2000000000000000000`. Divide the raw ROM size (without any headers) by 16384 (65536 with the above hack active) and put the resulting number at `0x04` (where there are x's in the template). Then place at the start of the raw ROM and save as `.nfc`.
+1. **Enabling VTxx support:** In theory, this mysterious `.nfc` emulator is able to run VT02/VT03 ROMs, if it wasn't that this feature is disabled. However, you can enable it by just changing a single byte at `0x319ccc` in `bios\bisrv.asd` from `0x01` to `0x02`. Remember that you need to [rehash the BIOS](https://vonmillhausen.github.io/sf2000/tools/biosCRC32Patcher.htm) after making changes to it. The GB300 will now run `.nfc` VT02 ROMs that comply with the [(Archaic) iNES speficiation](https://www.nesdev.org/wiki/INES#Variant_comparison) and use strictly mapper 12.
+2. **Fixing VT03 colors:** VT03 will also work but colors will be glitched because the emulator's LUT (look-up table) for the colors uses RGB555 instead of the correct RGB565. You can fix this by stuffing [this thing](https://discord.com/channels/741895796315914271/1195581037003165796/1236804993475018872) at `0x62270` in your `bios\bisrv.asd`. Remember to rehash BIOS. Also note that "stuffing" means overwriting the 8&thinsp;KiB of data that are currently in that location. You can also calculate the LUT yourself by running the following code for all 4 Kibiwords `w` starting from that location: `(w and $1f) or ((w and $7fe0) shl 1)`. This assumes that you are on a little-endian system.
+3. (only required for games larger than 2&thinsp;MiB) **Fixing the memory size limit:** If you read the iNES specification carefully, you will have noticed that iNES prior to 2.0 will not support 4&thinsp;MiB ROMs because the size given at `0x04` would roll over. Storing the most-significant byte in `0x07` like it is in iNES 2.0 is not supported. This wasn't an issue back then, as the largest official NES game, _Kirby's Adventure_, is only 768&thinsp;KiB (of which only 512&thinsp;KiB are the PRG ROM, with the remaining 256&thinsp;KiB being the CHR ROM, which doesn't exist on VTxx due to [OneBus](https://bootleggames.fandom.com/wiki/Famiclone#VT02.2FVT03_.26_OneBus)). osaka worked around this by changing `0x319b38` in `bios\bisrv.asd` from `0x808b` to `0x008c` which changed the iNES PRG size multiplier from 16384 to 65536, increasing the maximum size to 8&thinsp;MiB. This breaks all `.nfc` NES ROMs (including stock ROMs based on this extension) and doesn't work for all VT03 games, the largest of which are 64&thinsp;MiB.
+4. **Making an iNES header:** Take this template `0x4E45531Axx00C2000000000000000000`. Divide the raw ROM size (without any headers) by 16384 (65536 with the above hack active) and put the resulting number at `0x04` (where there are x's in the template). Then place at the start of the raw ROM and save as `.nfc`.
 
 You can get VTxx ROMs from _Project Plug-and-Play_ and from the Internet Archive. Note that the tagging of ROMs in Project Plug-and-Play is inconsistent and their games are more prone to issues than those from the Internet Archive. Notes on Project Plug-and-Play:
 * Most games that are untagged or tagged VT02 are actually NES games. You can play them in FCEUmm and wiseemu without changing the iNES header.
@@ -251,11 +253,65 @@ You can get VTxx ROMs from _Project Plug-and-Play_ and from the Internet Archive
 * Many soccer-related VT03 games do load but do not register input.
 * A few untagged VT03 slot machine games from Jungletac do load, but have weird colors.
 * Some games changed platform during development. The first demo of Street Dance works on FCEUmm, whereas the second demo and the final bundle with Hit-Mouse require VTxx emulation. Said game is pointless on the GB300's nameless emulator since PCM audio does not work. (And you cannot connect your dance mat to the GB300, making this game even more pointless.)
-* Roughly half of the VT09-tagged games in Project Plug-and-Play do load, but these have weird interlaced graphics, making them unplayable. The other half does not load.
+* Roughly half of the VT09-tagged games in Project Plug-and-Play do load, but these have weird interlaced graphics, making most of them unplayable. The other half does not load.
 
-VT32, VT168 and VT369 do not load.
+Only about 10% of the OneBus games in Project Plug-and-Play work. OneBus is a requirement for VTxx. Checking for OneBus is easy in Project Plug-and-Play files because you just look at address `0x05` in the iNES header. If it's `0x00`, the game has no CHR ROM and is therefore a OneBus ROM.
 
-Research is still going on. I am preparing a list of Project Plug-and-Play games and VT03 ROMs from the Internet Archive that you can play on the GB300. But this is around 2500 files, so it takes a while. osaka might be looking into the low compatibility.
+This is the full list of the 784 OneBus games from Project Plug-and-Play (2023-12-31) that you can play on the GB300 after applying the modifications 1, 2 (not required for games listed as VT02) and 4 above:
+
+| Group (`.7z`) | Game (`.nes`)                    | Type |
+| ----- | ---------------- | ---- |
+| **Cube Tech\Hacks**
+| Arkanoid | Pocket | VT03 |
+| Balloon Fight |Beat Ballute | VT03 |
+| Battle City | S Move | VT03 |
+| Brush Roller | Pengoo | VT03 |
+| Duck Maze | Maze Trooper | VT03 |
+| Elevator Action | Spy vs. Spy Combat | VT03 |
+| Flappy | Pro Genius | VT03 |
+| International Cricket | Cricket World Cup 2003 | VT02 |
+| Magmax | 3D Machine | VT03 |
+| Penguin-kun Wars | Fire Ball | VT03 |
+| Pooyan | Maze Arrow (VT03) | VT03 |
+| Raid on Bungeling Bay | Aero Gyrodine | VT03 |
+| Spelunker | Ghost Zero Trap | VT03 |
+| Sqoon | Deep Fighter | VT03 |
+| Thexder | Xtreme Robot | VT03 |
+| **Hummer**
+| Ping Pong | Ping Pong | VT02 |
+| **Inventor**
+| Street Dance | Street Dance (rev1)* | VT02 |
+| **Jungletac**
+| Bubble Blaster | Bubble Blaster (rev0) | VT02 |
+| Go Bang | Go Bang | VT02 |
+| Number Quest | Number Quest | VT02 |
+| Pool Pro | Billiards Master | VT02 |
+| Submarine War | Submarine War (VT09) | VT02 |
+| **Nice Code Software**
+| Mad Xmas | Lucky Time (VT03) | VT03 |
+| **Nice Code Software\Intellivision**
+| Snafu | Star (VT03) | VT03 |
+| **TimeTop**
+| Adventure | Adventure | VT03 |
+| Bomb Boy | Bomb Boy | VT03 |
+| Firebolt | Firebolt | VT03 |
+| Gun-Force | Gun-Force* | VT03 |
+| Risker | Risker* | VT03 |
+| Stone Age | Stone Age* | VT03 |
+| **TimeTop\Hacks**
+| F-1 Race | Crazy Speed* | VT03 |
+| **Unknown Developer**
+| Duck & Dodge | Duck & Dodge | VT03 |
+| Hip-Hop Scotch | Hip-Hop Scotch | VT03 |
+| Snowstorm | Snowstorm | VT03 |
+| **Unknown Developer\Hacks**
+| Pinball | Radium Star | VT03 |
+
+The type given above is what I think is the cartridge type (VT02: requires mapper 12; VT03 also requites LUT patch to not look green-ish). NintendulatorNRS distributed by Project Plug-and-Play does not always agree with me. Games with an asterisk have some glitches that do not technically prevent you from playing them.
+
+UM6578, VT32, VT168 and VT369 never load.
+
+Research is still going on. I am also preparing a list VT03 ROMs from the Internet Archive that you can play on the GB300.
 
 
 ### PC Engine
@@ -770,20 +826,25 @@ multicore is affected by the stock GBA's mapping, so it is still the sixth entry
 
 Here are a few examples:
 
-| Core     | Emulator        | Con-<br>sole | `0800`<br>(A) | `0000`<br>(B) | `0900`<br>(X) | `0100`<br>(Y) | `0A00`<br>(L) | `0B00`<br>(R) | Test ROM                                                                         |
-| -------- | --------------- | ------------ | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | -------------------------------------------------------------------------------- |
-| `msx`    | **blueMSX**     | CV           | L             | R             | 1             | 2             | 4             | 3             | Final Test Cartridge                                                             |
-| `msx`    | **blueMSX**     | SG           | L             | R             |               |               |               |               | SG-1000 M2 Check Program Proto                                                   |
-| `col`    | **Gearcoleco**  | CV           | R             | L             | 2             | 1             | 3             | 4             | Final Test Cartridge                                                             |
-| `gg`     | **Gearsystem**  | SG           | R             | L             |               |               |               |               | SG-1000 M2 Check Program Proto                                                   |
-| `gg`     | **Gearsystem**  | GG           | 2             | 1             |               |               |               |               | [Gamegear button test](https://www.smspower.org/Homebrew/GamegearButtonTest-GG)  |
-| `gba`    | **gpSP**        | GBA          | A             | B             | TA            | TB            | L             | R             | [GBA D-Pad Test](https://www.romhacking.net/homebrew/142/)                       |
-| `sega`   | **gpSP**        | GBA          | C             | B             | Y             | A             | X             | Z             | Contra - Hard Corps                                                              |
-| `sega`   | **Picodrive**   | SG*          | R             | L             |               |               |               |               | SG-1000 M2 Check Program Proto                                                   |
-| `sega`   | **Picodrive**   | SMS          | 2             | 1             |               |               |               |               | [SMS Test Suite v0.35](https://github.com/sverx/SMSTestSuite/releases/tag/v0.35) |
-| `pokem`  | **PokeMini**    | PM           | A,            | B             | TA            |               |               | C             | Zany Cards (no test ROM available)                                               |
-| `snes`   | **Snes9x 2005** | SFC          | A             | B             | X             | Y             | L             | R             | NTF 2.5 Test Cartridge                                                           |
-| `snes02` | **Snes9x 2002** | SFC          | A             | B             | X             | Y             | L             | R             | NTF 2.5 Test Cartridge                                                           |
+| Core      | Emulator        | Con-<br>sole | `0800`<br>(A) | `0000`<br>(B) | `0900`<br>(X) | `0100`<br>(Y) | `0A00`<br>(L) | `0B00`<br>(R) | Test ROM                                                                         |
+| --------- | --------------- | ------------ | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | -------------------------------------------------------------------------------- |
+| `msx`     | **blueMSX**     | CV           | L             | R             | 1             | 2             | 4             | 3             | Final Test Cartridge                                                             |
+| `msx`     | **blueMSX**     | SG           | L             | R             |               |               |               |               | SG-1000 M2 Check Program Proto                                                   |
+| `amstradb`| **Caprice32**   | CPC          | Joy1          | Joy2          |               |               |               |               | [Amstrad Diagnostics 1.3](https://github.com/llopis/amstrad-diagnostics)         |
+| `amstrad` | **CrocoDS**     | Joy          | Joy1          | Joy2          | Key2          | Key3          |               |               | [Amstrad Diagnostics 1.3](https://github.com/llopis/amstrad-diagnostics)         |
+| `amstrad` | **CrocoDS**     | Key          | Space         | Key1          | Key2          | Key3          |               |               | [Amstrad Diagnostics 1.3](https://github.com/llopis/amstrad-diagnostics)         |
+| `amstrad` | **CrocoDS**     | int.         | A             | B             | X             | Y             | L             | R             | none                                                                             |
+| `amstrad` | **CrocoDS**     | BAS          | X             | Z             | é             | "             |               |               | none                                                                             |
+| `col`     | **Gearcoleco**  | CV           | R             | L             | 2             | 1             | 3             | 4             | Final Test Cartridge                                                             |
+| `gg`      | **Gearsystem**  | SG           | R             | L             |               |               |               |               | SG-1000 M2 Check Program Proto                                                   |
+| `gg`      | **Gearsystem**  | GG           | 2             | 1             |               |               |               |               | [Gamegear button test](https://www.smspower.org/Homebrew/GamegearButtonTest-GG)  |
+| `gba`     | **gpSP**        | GBA          | A             | B             | TA            | TB            | L             | R             | [GBA D-Pad Test](https://www.romhacking.net/homebrew/142/)                       |
+| `sega`    | **gpSP**        | GBA          | C             | B             | Y             | A             | X             | Z             | Contra - Hard Corps                                                              |
+| `sega`    | **Picodrive**   | SG*          | R             | L             |               |               |               |               | SG-1000 M2 Check Program Proto                                                   |
+| `sega`    | **Picodrive**   | SMS          | 2             | 1             |               |               |               |               | [SMS Test Suite v0.35](https://github.com/sverx/SMSTestSuite/releases/tag/v0.35) |
+| `pokem`   | **PokeMini**    | PM           | A,            | B             | TA            |               |               | C             | Zany Cards (no test ROM available)                                               |
+| `snes`    | **Snes9x 2005** | SFC          | A             | B             | X             | Y             | L             | R             | NTF 2.5 Test Cartridge                                                           |
+| `snes02`  | **Snes9x 2002** | SFC          | A             | B             | X             | Y             | L             | R             | NTF 2.5 Test Cartridge                                                           |
 
 `T` indicates autofire. Homebrew test ROMs are linked, official and/or commercial ones are not. Platforms with an asterisk are not officially supported. Only if you are using the _default_ GBA key mapping, the hex numbers above correspond to the _physical_ buttons in brackets.
 
