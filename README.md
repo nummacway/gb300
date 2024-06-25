@@ -1,6 +1,6 @@
 # GB300
 
-The **Sup+ GB300** (short for Game Box) is a cheap handheld that emulates video game consoles. You can find it on AliExpress (usually the cheapest way to get it) and other sites. The cheapest way to get it is via [AliExpress's "Pick 3 and Save"](https://www.aliexpress.com/gcp/300000512/nnmixupdatev3?productIds=1005006436983834) if you can find two more items from that page, e.g. a TF card (we recommend ALUNX), or simply buy three GB300. In general, the GB300 is a few dollars more than the cheapest game consoles on AliExpress often dubbed the Famiclones, but the GB300 offers eight classic consoles (instead of just the Famicom), comes with _way_ more games (even on the Famicom), you can add your own games, and you can save (states and sometimes standard GBA battery saves).
+The **Sup+ GB300** (short for Game Box) is a cheap handheld that emulates video game consoles. You can find it on AliExpress and other sites. The cheapest way to get it is via AliExpress's "Pick 3 and Save" (aka "Bundle Deals") if it's available there (which isn't always the case) and you can find two more items from that page, e.g. a TF card (we recommend ALUNX), or simply buy three GB300. In general, the GB300 is a few dollars more than the cheapest game consoles on AliExpress often dubbed the Famiclones, but the GB300 offers eight classic consoles (instead of just the Famicom), comes with _way_ more games (even on the Famicom), you can add your own games, and you can save (states and sometimes standard GBA battery saves).
 
 Some see it as a clone of the (usually a bit more expensive) Data Frog SF2000, which however is a bit different. Because the [SF2000 has already been documented](https://vonmillhausen.github.io/sf2000/), this page focusses primarily on the differences.
 
@@ -211,7 +211,7 @@ _wiseemu_ is the name this emulator has on platforms where it is a seperate file
 
 ZIP and thumbnailed files are both allowed to be optionally obfuscated. And yes, even a `.zip` file is allowed to be obfuscated.
 
-The bitmask is located in the BIOS where it comes _after_ the extension. The block with this data is close to the end of the BIOS file. Open it a hex editor and search for `NFC` because that string does not occur anywhere else. `.nfc` is associated with a different NES emulator (wiseemu) than the `.fds`, `.nes` and `.unf` (FCEUmm). The `.nfc` extension is seen in 280 of the 868 stock ROMs. The most notable difference is that wiseemu's save states are uncompressed. Loading `.fds` fails for both, even with the correct BIOS in the correct folder (`ROMS`). osaka (`bnister`) is trying to figure out why.
+The bitmask is located in the BIOS where it comes _after_ the extension. The block with this data is close to the end of the BIOS file. Open it a hex editor and search for `NFC` because that string does not occur anywhere else. `.nfc` is associated with a different NES emulator (wiseemu) than the `.fds`, `.nes` and `.unf` (FCEUmm). The `.nfc` extension is seen in 280 of the 868 stock ROMs. The most notable difference is that wiseemu's save states are uncompressed. Loading `.fds` fails for both, but can be [enabled](#famicom-disk-system).
 
 The GB300 relies on the extension (or, more precisely, the extension's bitmask) to decide what to do with the file:
 * Display a thumbnail?
@@ -241,9 +241,9 @@ The GB300 comes with two NES emulators: _FCEUmm_ is associated with `.nes`, `.fd
 
 #### Famicom Disk System
 
-To enable FDS support in stock, open `bios\bisrv.asd`  in an hex editor and stuff `0xa7f00b` at offsets `0x34f170`, `0x34f194` and `0x34f1b0`. Remember that you need to [rehash the BIOS](https://vonmillhausen.github.io/sf2000/tools/biosCRC32Patcher.htm) after making changes to it. GB300 Tool can also fix BIOS CRC. FDS support will be included in rc2b of GB300 Tool. You need to put `disksys.rom` in `ROMS` (does not respect your Foldername.ini). Now you can simply start `.fds` images like any other ROM.
+To enable FDS support in stock, open `bios\bisrv.asd` in a hex editor and stuff `0xa7f00b` at offsets `0x34f170`, `0x34f194` and `0x34f1b0`. Remember that you need to [rehash the BIOS](https://vonmillhausen.github.io/sf2000/tools/biosCRC32Patcher.htm) after making changes to it. GB300 Tool can also fix BIOS CRC. FDS support will be included in rc2b of GB300 Tool. You need to put `disksys.rom` in `ROMS` (does not respect your Foldername.ini). Now you can simply start `.fds` images like any other ROM.
 
-To play double-sided disks, you need a way to eject them, turn them around and insert them. This is done by binding keys to `0x0A00` (FDS Turn Disk) and `0x0B00` (FDS Eject/Insert). This is not possible by the GB300's GUI but you can use a hex editor. More details are round [here](#keymapinfokmp). To be clear: You must press three buttons to turn the disk: Eject, Turn and Eject again.
+To play double-sided disks, you need a way to eject them, turn them around and insert them. This is done by binding keys to `0x0A00` (FDS Turn Disk) and `0x0B00` (FDS Eject/Insert). This is not possible by the GB300's GUI but you can use a hex editor. More details are found [here](#keymapinfokmp). To be clear: You must press three buttons to turn the disk: Eject, Turn and Eject again.
 
 Thanks to osaka (`bnister`) for finding all this out.
 
