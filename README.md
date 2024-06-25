@@ -1,10 +1,10 @@
 # GB300
 
-The **Sup+ GB300** (short for Game Box) is a cheap handheld that emulates video game consoles. You can find it on AliExpress (usually the cheapest way to get it) and other sites. <!-- The cheapest way to get it was (but probably isn't anymore) via [AliExpress's "Pick 3 and Save"](https://www.aliexpress.com/gcp/300000512/nnmixupdatev3?productIds=1005006436983834) for $9.99 (_not_ a referral link!) if you can find two more items from that page (or simply buy three GB300!). At the start of each month and some "shopping festivals", there is a 10% discount, so you can get it for $8.99. --> In general, the GB300 is a few dollars more than the cheapest game consoles on AliExpress often dubbed the Famiclones, but the GB300 offers eight classic consoles (instead of just the Famicom), comes with _way_ more games (even on the Famicom), you can add your own games, and you can save (states and sometimes standard GBA battery saves).
+The **Sup+ GB300** (short for Game Box) is a cheap handheld that emulates video game consoles. You can find it on AliExpress (usually the cheapest way to get it) and other sites. The cheapest way to get it is via [AliExpress's "Pick 3 and Save"](https://www.aliexpress.com/gcp/300000512/nnmixupdatev3?productIds=1005006436983834) if you can find two more items from that page, e.g. a TF card (we recommend ALUNX), or simply buy three GB300. In general, the GB300 is a few dollars more than the cheapest game consoles on AliExpress often dubbed the Famiclones, but the GB300 offers eight classic consoles (instead of just the Famicom), comes with _way_ more games (even on the Famicom), you can add your own games, and you can save (states and sometimes standard GBA battery saves).
 
 Some see it as a clone of the (usually a bit more expensive) Data Frog SF2000, which however is a bit different. Because the [SF2000 has already been documented](https://vonmillhausen.github.io/sf2000/), this page focusses primarily on the differences.
 
-This document is work in progress but mostly finished now. Large parts target developers and anyone willing to mod the device, but the page has an [FAQ for Players](#faq-for-players) as well. Feel free to contribute by contacting `numma_cway` on Discord, creating a fork and pull request, or by opening an issue on [Github](https://github.com/nummacway/gb300/). If you have any questions, join the `#data_frog_sf2000` channel on the [Retro Handhelds Discord](https://discord.gg/retrohandhelds) (choose SF2000 during onboarding). There is also a [`Gb300 dev` thread](https://discord.com/channels/741895796315914271/1195581037003165796) on that Discord.
+This document is work in progress but mostly finished now. Large parts target developers and anyone willing to mod the device, but the page has an [FAQ for Players](#faq-for-players) as well. Feel free to contact me, `numma_cway`, on Discord or Reddit. You can also create a fork and pull request, or open an issue on [Github](https://github.com/nummacway/gb300/). If you have any questions, join the `#data_frog_sf2000` channel on the [Retro Handhelds Discord](https://discord.gg/retrohandhelds) (choose SF2000 during onboarding). There is also a [`Gb300 dev` thread](https://discord.com/channels/741895796315914271/1195581037003165796) on that Discord, but that's for developers and not really for end users.
 
 
 ## Table of Contents
@@ -20,6 +20,7 @@ In-depth technical analysis:
     - [Saving](#saving)
 - [ROMs and Gameplay](#roms-and-gameplay)
     - [Nintendo Entertainment System](#nintendo-entertainment-system)
+        - [Famicom Disk System](#famicom-disk-system)
         - [V.R. Technology VT02/VT03](#vr-technology-vt02vt03)
     - [PC Engine](#pc-engine)
     - [Super Nintendo Entertainment System](#super-nintendo-entertainment-system)
@@ -74,7 +75,7 @@ Most tools designed for the SF2000 don't work. Tools are often incompatible beca
 
 The following tools were made specifically for the GB300:
 * [multicore for GB300](https://github.com/tzubertowski/gb300_multicore/releases) by osaka, Prosty and the creators of the original multicore for SF2000.
-* [GB300 Tool](https://github.com/nummacway/gb300tool/releases/) by me (numma_cway); now with multicore support! Includes tons of features, including the functionality of any non-sound-related tool below. **To download, expand "Assets" and download the ZIP file.**
+* [GB300 Tool](https://github.com/nummacway/gb300tool/releases/latest) by me (numma_cway); now with multicore support! Includes tons of features, including the functionality of any non-sound-related tool below.
 * [Customized _Frogtool_ (Beta)](https://discord.com/channels/741895796315914271/1195581037003165796/1211025634680119327) by tzlion (original version) and Dteyn (GB300 patch), used for rebuilding the console-dependent ROM lists.
 * [GB300 Boot Logo Changer](https://dteyn.github.io/sf2000/tools/bootLogoChangerGB300.htm) by Dteyn
 
@@ -99,7 +100,7 @@ Discord users osaka (`bnister`) and Prosty (`_prosty`) brought multicore to GB30
 
 #### Installing and using multicore with GB300 Tool
 
-The easiest way to use multicore is probably via [GB300 Tool](https://github.com/nummacway/gb300tool/releases/). Expand "Assets" on that page, download the ZIP file and start the tool. Enter your TF reader's drive letter and follow these steps:
+The easiest way to use multicore is probably via [GB300 Tool](https://github.com/nummacway/gb300tool/releases/latest). Download the ZIP file (the one with the cube icon) and start the tool. Enter your TF reader's drive letter and follow these steps:
 
 1. Check the first checkbox on the BIOS/Device page that comes up right after entering your drive letter.
 2. Put the TF card in your GB300 and boot. It will display some progress indicator during boot for a few seconds.
@@ -122,7 +123,7 @@ You only have to do steps 1 to 5 once.
 
 Note: Multicore saves in `ROMS\save`. The thumbnail (screenshot) is named and formatted like always, but with no payload other than the image, as the state is in another file that isn't compressed.
 
-Making thumbnailed multicore files is super weird: The _filename_ (without the extension) of the `.zfc`, `.zsf`, `.zpc`, `.zmd`, `.zgb` file must conform to the multicore pattern, however, the _extension_ is pulled from the contained file. So the file name inside the ZIP file does not matter, but must end on `.gba`, `.zgb` or `.agb`. So basically you could take any stock GBA file, and for example name it `sega;Zero Wing.md.zsf` to make it launch `ROMS\sega\Zero Wing.md` with the `sega` core.
+Making thumbnailed multicore files is super weird: The _filename_ (without the extension) of the `.zfc`, `.zsf`, `.zpc`, `.zmd` or `.zgb` file must conform to the multicore pattern, however, the _extension_ is pulled from the contained file. So the file name inside the ZIP file does not matter, but must end on `.gba`, `.zgb` or `.agb`. Basically you could take any stock GBA file, and for example name it `sega;Zero Wing.md.zsf` to make it launch `ROMS\sega\Zero Wing.md` with the `sega` core.
 
 
 ## Hardware
@@ -135,7 +136,7 @@ Because it lacks the arcade support accounting for 2.75 GB on the SF2000, the de
 
 The device comes with a 70&thinsp;cm (28") cable from a 2.5mm male audio plug to two male RCA (cinch) plug. The yellow RCA plug is for composite video and the red one for sound. You can plug them into older TVs either directly or via a SCART adapter. If you plug the cable in the GB300, its own screen will be turned off. The TV output has a better resolution (640x480) than the internal screen's 320x240. If your TV doesn't care, use NTSC 480i to avoid unnecessary vertical scaling to 576i. NTSC outputs a vertically pixel-perfect result of the user interface. Unlike the SF2000, the TV signal will be fine while charging the GB300. Do not plug in the AV cable until the device has completely booted (that includes not plugging in the cable before switching the device on, meaning that the full-size bootlogo is never used).
 
-The GB300 works with the _wired_ gamepads that sometimes ship with some other cheap(er) consoles. You cannot normally buy them individually and the GB300 isn't sold bundled with them either. These devices work for solely the second player in games that support that. _Wireless_ gamepads don't work on the GB300, e.g. the gamepad bundled with the SF900 TV stick that works with the SF2000. Note that neither of these complies with industry standards like USB or BT, so they don't have any use with computers, laptops or mainstream consoles. If your gamepad does, it's definitely not compatible with the GB300. There are two types of the wired gamepads for console like the GB300, the common 5-wire used by all the cheaper Famiclones and the super-rare 4-wire. The GB300 uses the latter. A [source for these](https://www.aliexpress.com/item/1005006900177735.html) has been discovered only recently. This comes despite the fact that "external gamepad double against" is even promoted on the front of the GB300's box...
+The GB300 works with the _wired_ gamepads that sometimes ship with some other cheap(er) consoles. You cannot normally buy them individually and the GB300 wasn't sold bundled with them either until [this listing](https://www.aliexpress.com/item/1005007161518444.html) appeared in mid/late June 2024. These devices work for solely the second player in games that support that. _Wireless_ gamepads don't work on the GB300, e.g. the gamepad bundled with the SF900 TV stick that works with the SF2000. Note that neither of these complies with industry standards like USB or BT, so they don't have any use with computers, laptops or mainstream consoles. If your gamepad connects to any of these, it's definitely not compatible with the GB300. There are two types of the wired gamepads for console like the GB300, the common 5-wire used by all the cheaper Famiclones and the super-rare 4-wire. The GB300 uses the latter. A [source for these](https://www.aliexpress.com/item/1005006900177735.html) has been discovered in early June 2024. This comes despite the fact that "external gamepad double against" is even promoted on the front of the GB300's box...
 
 The GB300 is powered by a standard 18650 battery that you can easily change. The default battery appears to have overcharge protection (the charging current will drop when the battery is full), yet the green charging light will not turn off. If the battery is very low (crashes and glitches), it will take a little under 4&thinsp;VAh until it stops charging. This suggests that the capacity is lower than the SF2000's 1750 mAh. This is supported by the manual and box listing 800 mAh, and people reporting that the (light pink and completely unlabeled) battery of the GB300 is lighter than the SF2000's. More recently, people have reported receiving labelled batteries, confirming the 800 mAh. Neither device has undercharge protection, so leaving the device on with a low battery can kill the battery. One person reported that their GB300 came with the power switch in the 'ON' position and therefore a dead battery. Buying a new battery worked. If you buy a new battery, consider one with both, over- and undercharge protection. Although the SF2000 takes flat batteries, the GB300 seems to require some manipulation to its contact springs due to the console's case design. It initially charges with around 2.5 to 2.9&thinsp;W, which decreases as it charges.
 
@@ -146,6 +147,7 @@ Another similar device is the 8-Bit King, but that's an HDMI stick with wireless
 
 The GB300's stock firmware emulates the following devices:
 * Nintendo Entertainment System (Famicom)
+* Famicom Disk System (disabled, but can be enabled)
 * V.R. Technology VT02/VT03 (disabled, but can be enabled)
 * PC Engine (Turbografx-16)
 * Super Nintendo Entertainment System (Super Famicom)
@@ -156,7 +158,7 @@ The GB300's stock firmware emulates the following devices:
 * Game Boy Color
 * Game Boy Advance
 
-Compared to the SF2000 stock firmware, the GB300 lacks the arcade section and adds the PCE (and VTxx). If you don't mind the weird colors, you could also play Game Gear games that do not make use of the Start button. Change the `.gg` extension to `.sms` to make them show up. smspower.org has color patches ("GG2SMS") for around 200 GG games (they list 185 different games, for which there are 225 versions on No-Intro, but not all versions are supported). There's a [list of GG2SMS patches that work on the GB300](#sega-game-gear) in this document.
+Compared to the SF2000 stock firmware, the GB300 lacks the arcade section and adds the PCE. There is no chance you could enable FDS or VTxx on the SF2000 (FDS can be enabled in multicore). If you don't mind the weird colors, you could also play Game Gear games that do not make use of the Start button. Change the `.gg` extension to `.sms` to make them show up. smspower.org has color patches ("GG2SMS") for around 200 GG games (they list 185 different games, for which there are 225 versions on No-Intro, but not all versions are supported). There's a [list of GG2SMS patches that work on the GB300](#sega-game-gear) in this document.
 
 There's actually two things called "firmware" on the GB300: There is a small bootloader (512KiB) that loads the firmware from the TF card. You should [patch that bootloader](https://vonmillhausen.github.io/sf2000/#bootloader-bug) to prevent issues when tampering with files in the `BIOS` folder on the TF card. Really. This patch works for the GB300 as well and takes only a few seconds. With the bootloader separated from the rest of the firmware and the firmware on a TF card, any modding attempts are relatively safe.
 
@@ -205,7 +207,7 @@ Changing the things above will give you a standard ZIP file. At least 7-Zip is a
 
 *&#32;= `.zfb` does have the bitmask `0x00000300` used for thumbnailed files, but the GB300 can only show thumbnails for the third to seventh file extension in its list (which is identical to the one above). `.zfb` is the eighth in that internal list so there is no thumbnail. The lack of a thumbnail for `.zfb` is funny because on the SF2000, the sole use of `.zfb` is to provide the thumbnail for a file in another directory. ZFB is short for ZIP Final Burn (an arcade emulator), despite not containing zipped content on the SF2000. See [above](#installing-and-using-multicore-manually) for more information on creating a multicore thumbnail.
 
-_wiseemu_ is the name this emulator has on platforms where it is a seperate file. It was created by Wise Wang. The the other emulators are from `libretro`. If they were used in that context, they'd report all the given extensions to `libretro`, but the the GB300 does not display the stroke-out ones. `.bin` files are associated with PicoDrive, not gpSP, so they are stroke-out for the latter.
+_wiseemu_ is the name this emulator has on platforms where it is a seperate file. It was created by Wise Wang. The the other emulators are from `libretro`. If they were used in that context, they'd report all the given extensions to `libretro`, but the GB300 does not display the stroke-out ones. `.bin` files are associated with PicoDrive, not gpSP, so they are stroke-out for the latter.
 
 ZIP and thumbnailed files are both allowed to be optionally obfuscated. And yes, even a `.zip` file is allowed to be obfuscated.
 
@@ -237,9 +239,18 @@ Games with an asterisk are duplicates of games that are still on the device.
 The GB300 comes with two NES emulators: _FCEUmm_ is associated with `.nes`, `.fds`, `.unf`, whereas a mysterious other emulator called _wiseemu_ is used for `.nfc`. To find out which one is used for which stock ROM, see [this list](https://vonmillhausen.github.io/sf2000/defaultRoms/defaultRomsNoIntroCheck.htm). FCEUmm seems to be the better one for NES. You can see the difference in Galaxian which clearly glitches/tears.
 
 
+#### Famicom Disk System
+
+To enable FDS support in stock, open `bios\bisrv.asd`  in an hex editor and stuff `0xa7f00b` at offsets `0x34f170`, `0x34f194` and `0x34f1b0`. Remember that you need to [rehash the BIOS](https://vonmillhausen.github.io/sf2000/tools/biosCRC32Patcher.htm) after making changes to it. GB300 Tool can also fix BIOS CRC. FDS support will be included in rc2b of GB300 Tool. You need to put `disksys.rom` in `ROMS` (does not respect your Foldername.ini). Now you can simply start `.fds` images like any other ROM.
+
+To play double-sided disks, you need a way to eject them, turn them around and insert them. This is done by binding keys to `0x0A00` (FDS Turn Disk) and `0x0B00` (FDS Eject/Insert). This is not possible by the GB300's GUI but you can use a hex editor. More details are round [here](#keymapinfokmp). To be clear: You must press three buttons to turn the disk: Eject, Turn and Eject again.
+
+Thanks to osaka (`bnister`) for finding all this out.
+
+
 #### V.R. Technology VT02/VT03
 
-Now we get to something the SF2000 cannot do, not even with multicore: V.R. Technology made some Famicom clones (Famiclones) that weren't just clones but technically more advanced than the Famicom, called the [VTxx](https://bootleggames.fandom.com/wiki/VTxx). As Sup+ was mostly known for making Famiclones (400-in-1, 500-in-1, a.s.o.) before making the GB300, the GB300 retains Wise Wang's strange Famiclone emulator. Discord user `bnister` (osaka) did some research on this. Here's what you can do to make it work:
+Now we get to something the SF2000 cannot do, not even with multicore: V.R. Technology made some Famicom clones (Famiclones) that weren't just clones but technically more advanced than the Famicom, called the [VTxx](https://bootleggames.fandom.com/wiki/VTxx). As Sup+ was mostly known for making Famiclones (400-in-1, 500-in-1, a.s.o.) before making the GB300, the GB300 retains Wise Wang's strange Famiclone emulator. Discord user `bnister` (osaka) did some research on this. Here's what you can do to make it work (you can do steps 1, 2 and 4 with GB300 Tool):
 
 1. **Enabling VTxx support:** In theory, this mysterious `.nfc` emulator is able to run VT02/VT03 ROMs, if it wasn't that this feature is disabled. However, you can enable it by just changing a single byte at `0x319ccc` in `bios\bisrv.asd` from `0x01` to `0x02`. Remember that you need to [rehash the BIOS](https://vonmillhausen.github.io/sf2000/tools/biosCRC32Patcher.htm) after making changes to it. The GB300 will now run `.nfc` VT02 ROMs that comply with the [(Archaic) iNES speficiation](https://www.nesdev.org/wiki/INES#Variant_comparison) and use strictly mapper 12.
 2. **Fixing VT03 colors:** VT03 will also work but colors will be glitched because the emulator's LUT (look-up table) for the colors uses RGB555 instead of the correct RGB565. You can fix this by stuffing [this thing](https://discord.com/channels/741895796315914271/1195581037003165796/1236804993475018872) at `0x62270` in your `bios\bisrv.asd`. Remember to rehash BIOS. Also note that "stuffing" means overwriting the 8&thinsp;KiB of data that are currently in that location. You can also calculate the LUT yourself by running the following code for all 4 Kibiwords `w` starting from that location: `(w and $1f) or ((w and $7fe0) shl 1)`. This assumes that you are on a little-endian system.
@@ -307,7 +318,7 @@ This is the full list of the 784 OneBus games from Project Plug-and-Play (2023-1
 | **Unknown Developer\Hacks**
 | Pinball | Radium Star | VT03 |
 
-The type given above is what I think is the cartridge type (VT02: requires mapper 12; VT03 also requites LUT patch to not look green-ish). NintendulatorNRS distributed by Project Plug-and-Play does not always agree with me. Games with an asterisk have some glitches that do not technically prevent you from playing them.
+The type given above is what I think is the cartridge type (VT02: requires mapper 12; VT03 also requires LUT patch to not look green-ish). NintendulatorNRS distributed by Project Plug-and-Play does not always agree with me. Games with an asterisk have some glitches that do not technically prevent you from playing them.
 
 UM6578, VT32, VT168 and VT369 never load.
 
@@ -515,7 +526,7 @@ Notes:
 - I applied 387 different patches to 225 games and then played the resulting 490 ROMs. Should there be new hacks released after April 25th, they might be better than the ones above.
 - The column "Pause" names the button to pause the game. "N/A" means that it is not necessary to pause the game according to SMS Power and probably not possible in the original game either. "?" means that you cannot pause with the GB300 alone. Usually, this means that a second gamepad's down button would work.
 - The column "Start Does" tells you what the Start button does with the ROM: "Start" means that it does what the Start button is supposed to do. Dash means that nothing happens at all when you press Start. "Restart", "Freeze" and "Crash" all mean that you cannot play anymore after pressing Start. "Crash" means that the game glitches and instantly freezes.
-- "Outside 160×144" explains what you can see outside the GG viewport: "blank" means nothing (solid color, usually black) and is preferable on games that do not scroll. "background" means that you can see the background but sprites still pop up only when entering the GG viewport. "glitched" describes that the non-GG part of the SMS viewport does not make sense and contains glibberish or parts of the map. "useful glitch" is used for games with a map that is only slightly bigger than the GG viewport. The map extends beyond the GG viewport, but can wrap to the other edge of the screen. "useful" means that the hacks use (almost) the entire SMS viewport and feel like a true SMS game.
+- "Outside 160×144" explains what you can see outside the GG viewport: "blank" means nothing (solid color, usually black) and is preferable on games that do not scroll. "background" means that you can see the background but sprites still pop up only when entering the GG viewport. "glitched" describes that the non-GG part of the SMS viewport does not make sense and contains glibberish or random map tiles. "useful glitch" is used for games with a map that is only slightly bigger than the GG viewport. The map extends beyond the GG viewport, but can wrap to the other edge of the screen. "useful" means that the hacks use (almost) the entire SMS viewport and feel like a true SMS game.
 - Notes on individual games:
   - _Aa Harimanada_: Version v0.5 fixed the colors after the end of a fight, but also introduced frequent health bar glitches. Since v0.6 makes use of the full screen, I consider v0.6 to be the best patch. If you're annoyed by the health bar glitch, use patch v0.4.
   - _Arcade Classics_: _Missile Command SEGA Version_ seems glitched.
@@ -798,7 +809,7 @@ Consoles are encoded in the following order:
 
 | Console/Order    | Physical Button Save Order   | Available Values per Physical Button                                         |
 | ---------------- | ---------------------------- | ---------------------------------------------------------------------------- |
-| 1. **FC**        | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B                                                     |
+| 1. **FC**        | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B, `0x0A00`: FDS Turn Disk, `0x0B00`: FDS Eject/Insert|
 | 2. **PCE**       | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: I, `0x0000`: II<!--, `0x0A00`: X, `0x0B00`: Y, `0x0100`: C, `0x0900`: Z--> |
 | 3. **SFC**       | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B, `0x0A00`: X, `0x0B00`: Y, `0x0900`: L, `0x0100`: R |
 | 4. **MD/SMS**    | `X`, `Y`, `L`, `A`, `B`, `R` | `0x0800`: A, `0x0000`: B, `0x0A00`: X, `0x0B00`: Y, `0x0100`: C, `0x0900`: Z<br>(SMS: `0x0000`: 1, `0x0100`: 2) |
@@ -857,6 +868,8 @@ Notes:
 * The default key order on SMS actually makes sense because that's how the buttons are aligned. Start is Pause.
 * `bluemsx`'s mapping seems to make less sense than the others emulators' for the same platform.
 * `col`: Select is #, Start is *. `bluemsx` is the other way around.
+* CrocoDS gives you the option to map buttons yourself (but it cannot save this, nor does it load `crocods.opt`). The table lists the defaults for joystick and keyboard mode (joystick is the default), the internal name of the keys when you remap them inside CrocoDS and keys it gives in BASIC or the default shell.
+* Pressing Start plus whatever button you assigned `0x0900` to (default: `Y`) shows the keyboard in CrocoDS.
 
 ### Sounds
 
