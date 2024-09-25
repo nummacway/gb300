@@ -60,6 +60,7 @@ Developer and modding topics:
 - **(probably GB300 v1 only)** Do **not** use Tadpole (a tool made solely for the SF2000). Otherwise, you **will** break your GB300 (except for GBA).
 - Do **not** use a quick charger (more than 5 volts). Otherwise, you **will** destroy your GB300.
 - Do **not** insert the battery with reversed polarity. Otherwise, you **will** destroy your GB300.
+- If you have the v2 firmware (the one with the arcade) do **not** install multicore newer than 0.10 v0.2.1. Otherwise, you **will** break your GB300.
 
 ***Do's:***
 - Patch the bootloader (either with GB300 Tool or [manually](https://vonmillhausen.github.io/sf2000/#bootloader-bug)) **before** making **any** other changes to the TF card, including getting a new one. Otherwise, you **will** break your GB300 (sooner or later). This has to be done once per device, not per TF card.
@@ -90,17 +91,24 @@ The GB300 v2 is basically the SF2000's firmware with two more emulators, <abbr t
 
 To be completely clear: The GB300 v2 is a firmware and therefore software. The hardware is the same. As of writing this, there is no multicore for it.
 
-To install it on your existing GB300, you can simply extract [this](https://www.reddit.com/r/GB300/comments/1ewkb0g/comment/lj5cvz6/) on your existing TF, but you won't have working arcade support as you lack ROMs.
+#### Upgrading to v2
 
-To get GB300 v2 with arcade ROMs, you can do the following steps. Note that the second step will format (wipe) the TF card. You might want to backup your `ROMS` folder and `save` subfolders.
-* Patch the bootloader with your existing TF (we are serious about this!)
-* [Upgrade SF2000 firmware](https://www.youtube.com/watch?v=j8dT2fdGfck)
-* Extract [this](https://www.reddit.com/r/GB300/comments/1ewkb0g/comment/lj5cvz6/) on your TF
-* If it doesn't work (black screen), put [this](https://discord.com/channels/741895796315914271/1195581037003165796/1278694577322070077) in `bios`
-* Optional: Copy your `save` and `ROMS` backup back on
-* Optional: Enter [GB300 Tool v2](https://discord.com/channels/741895796315914271/1195581037003165796/1278805287981023302) and click _Check All_ in the 2nd to 9th tab each to enable ROMs removed from the GB300 v2 but shipped with the SF2000
+To install it on your existing GB300, you can simply extract [this](https://www.reddit.com/r/GB300/comments/1ewkb0g/comment/lj5cvz6/) on your existing TF, but you won't have working arcade support as you lack ROMs. You can add FBAlpha sets ([support list](https://vonmillhausen.github.io/sf2000/arcade/DataFrog_SF2000_FBA.html)) and FBNeo sets ([support list](https://nummacway.github.io/gb300-sf2000-tool/DataFrog_SF2000_GB300v2_NeoGeoROMFaker_SupportList.html)) with [GB300 Tool v2](https://github.com/nummacway/gb300-sf2000-tool/releases/). You can only add arcade ROMs to the seventh static list.
 
-GB300 v2 already has support for the SF2000 screen swap. Unlike the GB300 v1, it does boot on the SF2000, but buttons do not work.
+To get GB300 v2 with arcade ROMs, you can do the following steps. Note that the second step will format (wipe) the TF card which has to be at least 16 GB in size. You might want to backup your `ROMS` folder and `save` subfolders. Also backup the _entire_ `PCE` folder!
+1. Patch the bootloader with your existing TF (we are serious about this!)
+2. [Upgrade SF2000 firmware](https://www.youtube.com/watch?v=j8dT2fdGfck)
+3. Extract [this](https://www.reddit.com/r/GB300/comments/1ewkb0g/comment/lj5cvz6/) on your TF
+4. If it doesn't work (black screen), put [this](https://discord.com/channels/741895796315914271/1195581037003165796/1278694577322070077) in `bios`
+5. Recommended: Copy your `PCE` folder back on
+6. Optional: Copy your `save` and `ROMS` backup back on
+7. Optional: Enter [GB300 Tool v2](https://github.com/nummacway/gb300-sf2000-tool/releases/) and click _Check All_ in the 2nd to 9th tab each to enable ROMs removed from the GB300 v2 but shipped with the SF2000
+
+#### Downgrading to v1
+
+1. Patch the bootloader (we are serious about this!)
+2. [Install multicore](#multicore) 0.10 v0.2.1 or older.
+3. Recommended: Enter [GB300 Tool v2](https://github.com/nummacway/gb300-sf2000-tool/releases/) and click _Check All_ in the 1st to 7th tab each to disable ROMs removed from the GB300 v2 but present in the GB300 v1's menu
 
 
 ## Tools
@@ -114,8 +122,8 @@ Most tools designed for the SF2000 don't work. Tools are often incompatible beca
 * [GB300 Boot Logo Changer](https://dteyn.github.io/sf2000/tools/bootLogoChangerGB300.htm) by Dteyn
 
 **(GB300 v2 only)** The following tools were made specifically for the GB300 v2:
-* [GB300 Tool v2-pre-alpha](https://discord.com/channels/741895796315914271/1195581037003165796/1278805287981023302) by me (numma_cway); has a time limit until September 30th to keep people from using a development version for too long
-* You can probably use tadpole.
+* [GB300 Tool v2](https://github.com/nummacway/gb300-sf2000-tool/releases/) by me (numma_cway)
+* You can probably use tadpole, but it won't be able to manage PCE ROMs.
 
 Tools for the SF2000 that should work for the GB300:
 * [BIOS CRC-32 Patcher](https://vonmillhausen.github.io/sf2000/tools/biosCRC32Patcher.htm) by Von Millhausen, required after manual changes to the `bisrv.asd` file
@@ -134,7 +142,9 @@ Other links:
 
 ### multicore
 
-**(GB300 v1 only – full section)**
+**(GB300 v1 only (read the following paragraph for details) – full section)**
+
+**Important: If you are currently running the v2 firmware (the one with the arcade), use multicore 0.10 v0.2.1 (or older) in the following walkthrough.** Multicore is based on the v1 firmware, but 0.10 v0.3.0 and newer lack the files required for the downgrade, so your device will get stuck on the boot logo. You can update multicore after installing v0.2.1. Because multicore is based on the v1 firmware, installing it will remove the arcade. You can use the `m2k` core for arcade, but the performance is far worse than GB300 v2's stock emulator and games released after 1998 are not supported.
 
 Discord users osaka (`bnister`) and Prosty (`_prosty`) brought multicore to GB300 on April 27th, 2024. This means that you can now access many more emulators and enjoy way better GBA performance.
 
