@@ -1,6 +1,6 @@
 # GB300
 
-The **Sup+ GB300** (short for Game Box) is a cheap handheld that emulates video game consoles. You can find it on AliExpress and other sites. The cheapest way to get it (around 9 dollars if you're in the EU) is via AliExpress's "Pick 3 and Save" (aka "Bundle Deals") if it's available there (which isn't always the case) and you can find two more items from that page, like a bigger TF card or a TF reader if you don't own one, or simply buy three GB300. In general, the GB300 is a few dollars more than the cheapest game consoles on AliExpress often dubbed the Famiclones, but the GB300 offers nine classic consoles (instead of just the Famicom), comes with _way_ more games (even on the Famicom), you can add your own games, and you can save (states and sometimes standard GBA battery saves).
+The **Sup+ GB300** (short for Game Box) is a cheap handheld that emulates video game consoles. You can find it on AliExpress and other sites. The cheapest way to get it (around 9 dollars if you're in the EU) is via AliExpress's "Pick 3 and Save" (aka "Bundle Deals") if it's available there (which isn't always the case) and you can find two more items from that page, like a bigger TF card or a TF reader if you don't own one, or simply buy three GB300. In general, the GB300 is a few dollars more than the cheapest game consoles on AliExpress often dubbed the Famiclones, but the GB300 offers nine classic consoles (instead of just the Famicom), comes with _way_ more games (even on the Famicom), you can add your own games, and you can save (states and sometimes standard GBA battery saves). It also has a modding community.
 
 Some see it as a clone of the (usually a bit more expensive) Data Frog SF2000, which however is a bit different. Because the [SF2000 has already been documented](https://vonmillhausen.github.io/sf2000/), this page focusses primarily on the differences.
 
@@ -74,9 +74,9 @@ Developer and modding topics:
 | **Screen** | 2.8" 320×240px LCD screen. Viewing angle from the sides is extremely bad, up/down is alright. Very bright black in dark environments. Cannot adjust brightness. | It is possible to take the screen from a SF2000 or [buy this spare screen](https://www.aliexpress.com/item/1005006458765669.html). Screen swaps on v1 require a different firmware. |
 | **Buttons** | D-pad isn't very accurate. | You might want to [add some tape](https://www.youtube.com/watch?v=sMuv5TzCedY#t=377) (requires opening the console). |
 | **TV Out** | Comes with a 70&thinsp;cm cable from 3-pin 2.5&thinsp;mm audio to two RCA (cinch) jacks. Can be used with most older TVs. If you are in Europe, your TV might instead have SCART, for which there are adapters. Some TVs don't like the signal in general. | If possible, use NTSC to prevent unnecessary vertical scaling. Do not plug in the cable before the device has fully booted. |
-| **Sound** | Mono speaker. No phone plug. | — |
+| **Sound** | Mono speaker (left channel). No phone plug. Audio quality is far superior to SF2000. | — |
 | **Battery** | Standard 800&thinsp;mAh 18650-type battery. Play and charge time both are around 2 hours (power consumption: 1 W). Device has overcharge protection but not undercharge. Do not use a quick charger. Cannot be charged with a USB-C-to-USB-C cable. Playing while charging is not recommended. | Do not leave the device turned on or undercharge will kill the battery. You can change the battery to a better one as 800&thinsp;mAh really small. By default only ones with "tips" connect, while flat ones do not. You can buy them online and in e-cigarettes stores. Mind the polarity when replacing the battery or you will destroy the device. |
-| **TF Card<br>(=microSD)** | 8 GB card, 1.75 GiB free. Device is picky about the cards it takes at all, and cheap ones are more likely to work. Included card works with any standard TF reader or SD reader via any TF-SD adapter. You could use a phone to access the TF card, but that's not convenient. SDXC is supported (SDHC and SDXC hardware are exactly the same), but you will have to use FAT32 which is non-standard for SDXC for unknown reasons (FAT32 supports 16&thinsp;TiB, but SDXC is limited to 2&thinsp;TB). Yet some AliExpress microSDXC cards come preformatted to FAT32 so you can use those right away. We don't know the maximum TF capacity, but 64&thinsp;GB works. | Get a larger TF card and make sure it's formatted in FAT32 (Rufus has been suggested for SDXC, as Windows won't let you format SDXC in FAT32). Then just copy the content from your old card (you might want to copy the `bios` folder first, just in case). Before you copy any stuff to the new TF Card, patch the bootloader with your current card. The latter and general device management are greatly simplified by using [GB300 Tool](https://github.com/nummacway/gb300tool/releases/). |
+| **TF Card<br>(=microSD)** | 8 GB card, 1.75 GiB (GB300 v2: 0.78 GiB) free. Device is picky about the cards it takes at all, and cheap ones are more likely to work. Included card works with any standard TF reader or SD reader via any TF-SD adapter. You could use a phone to access the TF card, but that's not convenient. SDXC is supported (SDHC and SDXC hardware are exactly the same), but you will have to use FAT32 which is non-standard for SDXC for unknown reasons (FAT32 supports 16&thinsp;TiB, but SDXC is limited to 2&thinsp;TB). Yet some AliExpress microSDXC cards come preformatted to FAT32 so you can use those right away. We don't know the maximum TF capacity, but 64&thinsp;GB works. | Get a larger TF card and make sure it's formatted in FAT32 (Rufus has been suggested for SDXC, as Windows won't let you format SDXC in FAT32). Then just copy the content from your old card (you might want to copy the `bios` folder first, just in case). Before you copy any stuff to the new TF Card, patch the bootloader with your current card. The latter and general device management are greatly simplified by using [GB300 Tool](https://github.com/nummacway/gb300tool/releases/). |
 | **Firmware<br>General** | Closed-source OS that uses `libretro` cores (see the [list of stock emulators](#roms-and-gameplay)). Also supports Sega Master System and Kids Computer Pico ROMs but doesn't come with ROMs for these. Could play FDS and VT02/03 ROMs, but these features are disabled. Some SNES and many GBA games are slow. Access pause menu by pressing Start+Select. | [Patch the bootloader](https://vonmillhausen.github.io/sf2000/#bootloader-bug) to spare yourself of a bug in its FAT32 implementation. Copy `gba_bios.bin` where the firmware expects it to slightly improve compatibility. ([GB300 Tool](https://github.com/nummacway/gb300tool/releases/) can do both for you. It can also enable FDS and VT02/03 support.) Install fan project [multicore](#multicore) on your TF card to add loads of new platforms and greatly improve GBA performance. It can be a bit tricky to add ROMs and configure it, but GB300 Tool can ease that once multicore is installed. |
 | **ROMs** | Comes with 6267 ROMs. Expecially the NES ROMs are often modified (hacks) according to No-Intro. There are seven hardcoded lists that you can edit with GB300 Tool and a modded version of Frogtool. | Create the folder `ROMS` and put your own ROMs there. Also create a subfolder `save` there so you can save. You can [patch Game Gear ROMs into SMS ROMs](#sega-game-gear). |
 | **Saving** | Stock GBA does not reliably battery-save (battery is the correct term for an in-game save), Pokémon mini (on multicore) can save as well, and all other emulators (including multicore) cannot battery-save _at all_. (Soft resets can load a battery if it was saved without leaving the emulator in the meantime, so you can complete Pokémon.) States work alright but you cannot (usually) use them in other emulators. `m2k` on multicore does not support states. | Use only save states. Import GBA battery saves (`.sav`) by placing them in both, `ROMS` and `GBA`, and Pokémon mini saves (`.eep`) in `ROMS\save`. |
@@ -196,7 +196,7 @@ The state thumbnail might glitch on your device, but that does not prevent the s
 
 **TF Card:** **(GB300 v1 only)** Because it lacks the arcade support accounting for 2.75 GB on the SF2000, the device ships with only a 8 GB TF/microSDHC card (42 MB of which aren't allocated to a partition), formatted FAT32. It includes the firmware and the default set of 6267 ROMs. This leaves around 1.75 GB for your own ROMs. Actually, there's more space if you follow the manual: All the ROMs are just for demonstration and you are supposed to delete them right when you receive the console, even though the menus are hardcoded to exactly these files. The GB300 is picky in terms of which TF cards it will accept. Rule of thumb: The cheaper, the more compatible. We suggest you do not exceed 64 GB for the same reason. If you are moving to a new card, make sure to [patch the bootloader](https://vonmillhausen.github.io/sf2000/#bootloader-bug) first (with your old card). Then make sure your new card is FAT32 and copy all files to it.
 
-**TV Out:** The device comes with a 70&thinsp;cm (28") cable from a 2.5mm male audio plug to two male RCA (cinch) plugs. The yellow RCA plug is for composite video and the red one for sound. You can plug them into older TVs either directly or via a SCART adapter. If you plug the cable in the GB300, its own screen will be turned off. The TV output has a better resolution (640x480) than the internal screen's 320x240. If your TV doesn't care, use NTSC 480i to avoid unnecessary vertical scaling to 576i. NTSC outputs a vertically pixel-perfect result of the user interface. Unlike the SF2000, the TV signal will be fine while charging the GB300. Do not plug in the AV cable until the device has completely booted (that includes not plugging in the cable before switching the device on, meaning that the full-size bootlogo is never used).
+**TV Out:** The device comes with a 70&thinsp;cm (28") cable from a 2.5mm male audio plug to two male RCA (cinch) plugs. The yellow RCA plug is for composite video and the red one for sound. You can plug them into older TVs either directly or via a SCART adapter. If you plug the cable in the GB300, its own screen and sound will be turned off. The TV output has a better resolution (640x480) than the internal screen's 320x240 (display the bottom-left pixel of each 2×2 pixel block). If your TV doesn't care, use NTSC 480i to avoid unnecessary vertical scaling to 576i. NTSC outputs a vertically pixel-perfect result of the user interface. Unlike the SF2000, the TV signal will be fine while charging the GB300. Do not plug in the AV cable until the device has completely booted (that includes not plugging in the cable before switching the device on, meaning that the full-size bootlogo is never used).
 
 **Peripherals:** The GB300 works with the _wired_ gamepads that sometimes ship with some other cheap(er) consoles. You cannot normally buy them individually and the GB300 wasn't sold bundled with them either until [this listing](https://www.aliexpress.com/item/1005007161518444.html) appeared in mid/late June 2024. These devices work for solely the second player in games that support that. _Wireless_ gamepads don't work on the GB300, e.g. the gamepad bundled with the SF900 TV stick that works with the SF2000. Note that neither of these complies with industry standards like USB or BT, so they don't have any use with computers, laptops or mainstream consoles. If your gamepad connects to any of these, it's definitely not compatible with the GB300. There are two types of the wired gamepads for consoles like the GB300, the common 5-wire used by all the cheaper Famiclones and the super-rare 4-wire. The GB300 only supports the latter. A [source for these](https://www.aliexpress.com/item/1005006900177735.html) has been discovered in early June 2024. This comes despite the fact that "external gamepad double against" is even promoted on the front of the GB300's box... To be completely clear: Wired gamepads, a TV and 5V of USB power are the only things you can connect to your GB300. There is no internet or any other type of linking available.
 
@@ -231,7 +231,7 @@ The SF2000 firmware does not work on the GB300. There is no known way to retriev
 
 **(GB300 v1 only)** The default BIOS dates to the 15th of December, 2023. There might be an older version dating back to the 26th of October, 2023, but the only evidence of that one was corrupted before we could examine it.
 
-**(GB300 v2 only)** There seem to be two v2 BIOS versions. One probably dates to 3rd of July, 2024. The other we don't know. The latter is a bit smaller but seems to be more compatible with different screen revisions. See _[What is the GB300 v2?](#what-is-the-gb300-v2)_ for more details.
+**(GB300 v2 only)** There seem to be two v2 BIOS versions. One dates to 3rd of July, 2024, the other to the 2nd of August, 2024. The latter is a bit smaller but seems to be more compatible with different screen revisions. Beside the different BIOS, the earlier of the two versions also comes with two savesgames, for `Pokemon - Emerald Version` and `Sonic Advance` (both are GBA games). See _[What is the GB300 v2?](#what-is-the-gb300-v2)_ for more details on the GB300 v2 and how to upgrade your GB300 v1.
 
 
 ### Saving
@@ -295,7 +295,7 @@ There are no signs of other supported emulators, but it looks like MPEG-2 suppor
 
 ### Nintendo Entertainment System
 
-On the SF2000, there were more files than were accessible by the default menu. These normally inaccessible files were removed from the GB300 completely:
+On the SF2000 and GB300 v2, there are more files than were accessible by the default menu. These normally inaccessible files were removed from the GB300 v1 completely:
 * `Island.zfc`
 * `Jump Jump.zfc`
 * `Little Witch.zfc`
@@ -309,6 +309,10 @@ On the SF2000, there were more files than were accessible by the default menu. T
 Games with an asterisk are duplicates of games that are still on the device.
 
 The GB300 comes with two NES emulators: _FCEUmm_ is associated with `.nes`, `.fds`, `.unf`, whereas a mysterious other emulator called _wiseemu_ is used for `.nfc`. To find out which one is used for which stock ROM, see [this list](https://vonmillhausen.github.io/sf2000/defaultRoms/defaultRomsNoIntroCheck.htm). FCEUmm seems to be the better one for NES. You can see the difference in Galaxian which clearly glitches/tears.
+
+**(GB300 v2 only)** There are two more NES games, but they's in the ROMs folder:
+* `ARES.nes`: Ares (Captain America and the Avengers hack)
+* `BARESARK.nes`: Baresark (SD Hero Soukessen - Taose! Aku no Gundan hack)
 
 
 #### Famicom Disk System
@@ -424,7 +428,7 @@ On the SF2000, there was one more file than was accessible by the default menu. 
 
 You can re-enable them in GB300 Tool.
 
-**(GB300 v2 only)** The GB300 v2 does have both WWF games mentioned above, but instead lacks `Al Unser Jr.'S Road To The Top.zsf`. I do not currently know if that file is still present like the WWF ones on GB300 v1.
+**(GB300 v2 only)** The GB300 v2 does have both WWF games mentioned above, but instead lacks `Al Unser Jr.'S Road To The Top.zsf`. This file and `手柄测试.zsf` are still present on the GB300 v2, but not in the menu.
 
 
 ### SEGA Mega Drive, SEGA Master System and SEGA Game Gear
@@ -434,12 +438,12 @@ You can re-enable them in GB300 Tool.
 Compared to the SF2000, the following game is missing:
 * `007 Shitou - The Duel.zmd`
 
-**(GB300 v2 only)** The GB300 v2 also lacks the following games, but I do not currently know if the files ars still present:
+**(GB300 v2 only)** On the GB300 v2, that game and the following three are present on the card, but incaccessible via the menu:
 * `Alien Soldier.zmd`
 * `AWS Pro Moves Soccer.zmd`
 * `Double Clutch.zmd`
 
-**(GB300 v2 applicablility unknown)** One thing got better on the GB300: Instead of the 225 broken thumbnails on the SF2000, there are only 45 on the GB300. These thumbnails were saved in BGRA8888 instead of RGB565. However, the dimension is correct. Despite the thumbnail taking up twice the space, the device is still able to find the archive and run the game. The following MD games have no working thumbnail on the GB300:
+**(GB300 v1 only)** One thing got better on the GB300: Instead of the 225 broken thumbnails on the SF2000, there are only 45 on the GB300. These thumbnails were saved in BGRA8888 instead of RGB565. However, the dimension is correct. Despite the thumbnail taking up twice the space, the device is still able to find the archive and run the game. The following MD games have no working thumbnail on the GB300:
 * `AWS Pro Moves Soccer.zmd`
 * `Coach K College Basketball.zmd`
 * `Davis Cup II.zmd`
@@ -487,6 +491,8 @@ Compared to the SF2000, the following game is missing:
 * `Wu Kong Wai Zhuan.zmd`
 
 GB300 Tool can fix them for you all at once.
+
+On the GB300 v2, `Double Clutch.zmd` (which is inaccessible by default) is the only one that's still bugged.
 
 
 #### SEGA PICO
@@ -673,7 +679,7 @@ Despite the undocumented support for PICO, SMS and options to make GG games work
 
 ### Game Boy
 
-On the SF2000, there were more files than were accessible by the default menu. These normally inaccessible files were removed from the GB300 completely:
+On the SF2000 and GB300 v1, there are more files than were accessible by the default menu. These normally inaccessible files were removed from the GB300 v1 completely:
 * `Aladdin [a].zgb`
 * `Dokuhon Yume Goyoshin - Tenjin Kaisen 2.zgb`
 * `Gakken Kanyouku Kotowaza 210.zgb`
@@ -696,7 +702,8 @@ On the SF2000, there were more files than were accessible by the default menu. T
 
 ### Game Boy Color
 
-On the SF2000, there were more files than were accessible by the default menu. These normally inaccessible files were removed from the GB300 completely:
+On the SF2000 and GB300 v2, there are more files than were accessible by the default menu. These normally inaccessible files were removed from the GB300 v1 completely:
+* `3-D Ultra Pinball Thrillride.zgb`
 * `Honkaku Taisen Shogi - Ayumu.zgb`
 * `Konami GB Collection Vol.1.zgb`
 * `Konami GB Collection Vol.2.zgb`
@@ -727,15 +734,15 @@ On the SF2000, there were more files than were accessible by the default menu. T
 
 **(GB300 v1 only)** Unlike all other consoles in the GB300, the GB300 has all the ROM files the SF2000 has.
 
-**(GB300 v2 applicablility likely)** Pokemon Glazed is the only non-MD file with an incorrect thumbnail, but not because of an incorrect format but because it's too big (346x500). It will still run.
+**(GB300 v1 only)** Pokemon Glazed is the only non-MD file with an incorrect thumbnail, but not because of an incorrect format but because it's too big (346x500). It will still run. Like all `(CN)` versions, this game has been removed from the GB300 v2.
 
 The GB300 ships with the official (pirated) `gba_bios.bin` in the `bios` folder. This is, however, not the folder where the emulator will look for it. To use the official BIOS, copy it to `\GBA\mnt\sda1\bios\gba_bios.bin` and `\Roms\mnt\sda1\bios\gba_bios.bin` (create all of these folders if they do not exist). Thanks to `bnister` (osaka) for finding this out. One game that requires this procedure is _The Legend of Zelda - The Minish Cap_ (for the main menu), which however does not ship with the device. There are still games that don't work even with that BIOS. The BIOS does not seem to affect the performance. States with and without the BIOS are mutually incompatible. Loading a non-BIOS state when BIOS is active displays the GBA's boot animation and then starts the game. The battery from the state will not be present either. Under unknown circumstances, GB300's stock emulator stops using the GBA BIOS even if placed in the correct directory.
 
 As in the SF2000, performance varies heavily between games. And even language versions: Probably the oddest example here are the two Advance Wars games, considered the best games for the GBA according to MobyGames. Graphically, they are very simple games. The American version of Advance Wars 2 (a hack of which with Chinese menus ships with the console) is somewhat playable. The American version of Advance Wars 1 works a tiny bit worse but is still playable. The European version of Advance Wars 1 (included with the console) performs too bad to be fun to play. The European Advance Wars 2 is basically unplayable because it's too slow. There is no PAL or NTSC version of the GBA or its games. They're always supposed to run at 60 fps. Using TV output doesn't improve the performance either, no matter if PAL or NTSC. Performance on all Advance Wars games gets even worse when there is any dialogue on screen.
-
+f
 3D games on the GBA don't work well either. Of the five Need for Speed games for example (none of which are included), only Porsche (both regions) and Underground 2 will get past the language selection and the EA logo.
 
-**(GB300 v2 only)** The GB300 v2 also lacks the following 141 games, but I do not currently know if the files ars still present:
+**(GB300 v2 only)** The GB300 v2 also lacks the following 141 games completely:
 * All 119 chinese bootlegs tagged with `(CN)` (nothing of value lost here)
 * `FIFA 2004.zgb`
 * `FIFA.zgb`
@@ -766,7 +773,7 @@ They were likely removed to make room for Arcade ROMs.
 
 **(GB300 v2 only – full section)**
 
-GB300 v2 can (theoretically) run [1431 Arcade games](https://vonmillhausen.github.io/sf2000/arcade/DataFrog_SF2000_FBA.html) via Final Burn Alpha. Games shipping with the SF2000 are tagged with `inrom` there.
+GB300 v2's FinalBurn Alpha knowns how to load [1431 Arcade games](https://vonmillhausen.github.io/sf2000/arcade/DataFrog_SF2000_FBA.html). However, it cannot run all of them. See the linked list. Games shipping with the SF2000 are tagged with `inrom` there.
 
 Presumably to make it fit on a 8GB TF card, the GB300 lacks the following ROMs from the SF2000:
 * `2020 Super Baseball.zfb`
@@ -870,6 +877,8 @@ The following weren't accessible on SF2000 either. They were probably removed co
 * `Windjammers.zfb`
 * `Zintrick.zfb.bak`
 
+The GB300 v2 includes an extra `.zip` (with no matching `.zfb`): `mslug3.zip` (the Metal Slug 3 in the menu is using `mslug3h`). `mslug3` does not work with the stock FBA.
+
 
 ## Resources (v1)
 
@@ -878,7 +887,7 @@ Note: There are no language strings on the GB300 v1, just a few images. Everythi
 
 ### Fonts (v1)
 
-There is only one file, `yahei_Arial.ttf`, identical to the SF2000's font file of the same file name. _Microsoft YaHei_ is a Chinese typeface that you can probably find on your computer. Despite also showing up as _Microsoft YaHei_ when you open it, `yahai_Arial.ttf` is different as it uses Arial for non-Chinese script, but with some differences to the usual Arial typeface. For example, it does not feature so-called tabular figures (so names are not aligned in the game lists) and the baseline varies significantly between Latin letters, making the font look "wavy".
+There is only one file, `yahei_Arial.ttf`, identical to the SF2000's (unused) font file of the same file name. _Microsoft YaHei_ is a Chinese typeface that you can probably find on your computer. Despite also showing up as _Microsoft YaHei_ when you open it, `yahai_Arial.ttf` is different as it uses Arial for non-Chinese script, but with some differences to the usual Arial typeface. For example, it does not feature so-called tabular figures (so names are not aligned in the game lists) and the baseline varies significantly between Latin letters, making the font look "wavy". Both of these concerns have been fixed on GB300 v2 which uses a different font.
 
 
 ### Images (v1)
@@ -1168,7 +1177,7 @@ For the FC, MD, GB, GBC, GBA and SFC see [vonmillhausen's list](https://vonmillh
 
 **(GB300 v2 only)** For Arcade, see games tagged as `inrom` in [madcock's list](https://vonmillhausen.github.io/sf2000/arcade/DataFrog_SF2000_FBA.html). Again, games missing from the GB300 are listed above.
 
-**(GB300 v2 applicablility unknown)** [Final Knockout](https://datomatic.no-intro.org/index.php?page=show_record&s=49&n=0816) does work on the GB300.
+[Final Knockout](https://datomatic.no-intro.org/index.php?page=show_record&s=49&n=0816) does work on the GB300 v1 and v2.
 
 There are no new games on the GB300 for consoles that the SF2000 has. GB300 v1 and v2 have the same selection of GB300 games (see below).
 
@@ -1177,7 +1186,7 @@ To play your own games, create the folder `ROMS` on the TF card. You can also us
 
 ### List of PCE Games
 
-The following is a list of all PCE games that ship with the GB300. The names listed here are the names on No-Intro. Their catalog knows _all_ of the hashes, meaning that the PCE games no strange hacks like many of the other ROMs, especially FC. Thumbnails use only covers here, whereas other consoles use at least some screenshots instead. If you remove everything in brackets (and trailing spaces resulting hereof) from the No-Intro name, you get the name on the GB300, with four exceptions given in non-bold brackets after the No-Intro name.
+The following is a list of all PCE games that ship with the GB300 v1 and v2. The names listed here are the names on No-Intro. Their catalog knows _all_ of the hashes, meaning that the PCE games no strange hacks like many of the other ROMs, especially FC. Thumbnails use only covers here, whereas other consoles use at least some screenshots instead. If you remove everything in brackets (and trailing spaces resulting hereof) from the No-Intro name, you get the name on the GB300, with four exceptions given in non-bold brackets after the No-Intro name.
 
 | No-Intro Name | CRC32 | No-Intro # | No-Intro Status |
 | ------------- | ----- | ---------- | --------------- |
