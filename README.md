@@ -34,6 +34,7 @@ In-depth technical analysis:
     - [Game Boy](#game-boy)
     - [Game Boy Color](#game-boy-color)
     - [Game Boy Advance](#game-boy-advance)
+    - [Arcade](#arcade)
 
 Developer and modding topics:
 - [Resources (v1)](#resources-v1)
@@ -771,11 +772,24 @@ They were likely removed to make room for Arcade ROMs.
 
 #### Arcade
 
-**(GB300 v2 only – full section)**
+**Introduction: How does arcade emulation work?**
+* There a thousands to arcade machines. An emulator is programmed to emulate their hardware, resulting in what is called a _driver_ per emulated hardware platform. Some machines are based on the same hardware, so these can be handled by the same driver. The largest drivers are Neo Geo, CPS1 and CPS2. Hundreds of high-quality games have been released for these three.
+* Unlike all other emulators, arcade emulators are not made to support "all" games even on a supported driver. Arcade games usually have more than one ROM, so all ROMs come in a ZIP file, called a _set_. Drivers are programmed to load the ROMs in only a limited number of set, for which they require that the ZIP file and all files inside have exactly the names they expect (they sometimes can work with CRC as well). File names vary heavily between sets. For Neo Geo, a few common naming patterns have been established, but there may be single ROM files inside a set that may be named differently.
 
-GB300 v2's FinalBurn Alpha knowns how to load [1431 Arcade games](https://vonmillhausen.github.io/sf2000/arcade/DataFrog_SF2000_FBA.html). However, it cannot run all of them. See the linked list. Games shipping with the SF2000 are tagged with `inrom` there.
+In my opinion, this is extremely dumb. _Sets_ should have information on how to load them. E.g. for Neo Geo sets, it's usually just about placing the ROMs in RAM, which you can often derive from the XML file ("DAT"), so there is a way how to ship this information in a text file. This is somewhat done with NES games.
 
-Presumably to make it fit on a 8GB TF card, the GB300 lacks the following ROMs from the SF2000:
+Because many people seem confused what arcade games you can play on the GB300 and SF2000, here's the full list:
+* **(GB300 v1 only)** Multicore's MAME 2000 (`m2k`) can run 2241 sets (no newer than 1998). I don't think there's a list for humans to read, but you can search in [this XML](https://raw.githubusercontent.com/madcock/libretro-mame2000/refs/heads/master/metadata/MAME%200.37b5%20XML.dat). Of these, six don't work because they need more ROM memory than the 63.1 MiB `m2k` can offer: `kof97`, `kof98`, `lastblad`, `lastbld2`, `rbff2`, `shocktr2`. Performance is way worse than FBA on GB300 v2 and SF2000.
+* **(GB300 v1 only)** [My own version of MAME 2000](https://github.com/nummacway/libretro-mamenummacwaytausend/releases) adds [62 Neo Geo sets](https://github.com/nummacway/libretro-mamenummacwaytausend/wiki). It reduces memory usage for `kof97`, `lastblad` so these work now. The most important sets supported by my version are `mslug4fd` and `sengk3fd`, for which it is the only emulator running these on GB300 and SF2000. It also supports the most recent homebrew like `gladmort`. These three games will run with around 45 FPS, as my version's performance did not improve over the standard `m2k`.
+* **(GB300 v1 only)** Geolith is another arcade emulator for Neo Geo only. Performance is absolutely horrible and sets in its ROM format are hard to find.
+* **(GB300 v2 only)** GB300 v2's FinalBurn Alpha (FBA), which incorrectly dubbed MAME in the menu, knowns how to load [1431 sets](https://vonmillhausen.github.io/sf2000/arcade/DataFrog_SF2000_FBA.html) (no newer than 2006). However, it cannot run all of them. See the linked list. Games shipping with the SF2000 are tagged with `inrom` there.
+* **(GB300 v2 only)** [GB300+SF2000 Tool v2.0-beta and up](https://github.com/nummacway/gb300-sf2000-tool/releases) can make the stock FBA run around [300 more playable Neo Geo sets](https://nummacway.github.io/gb300-sf2000-tool/DataFrog_SF2000_GB300v2_NeoGeoROMFaker_SupportList.html) (including the most recent homebrew like `gladmort`) from FinalBurn Neo (FBN). I chose Neo Geo for my project because CPS2 support in FBA is basically complete and for CPS1, there are only few games that could be looked into, but I found them boring. If you want me to look into a certain unsupported game whose driver is supported contact (not add!) me on Discord (`numma_cway`).
+
+The SF2000 has access to all five variants.
+
+**(GB300 v2 only – remaining section)**
+
+Presumably to save space on the 8GB TF card, the GB300 lacks the following ROMs from the SF2000:
 * `2020 Super Baseball.zfb`
 * `B.C. Kid.zfb`
 * `Bakatonosama Mahjong Manyuuki.zfb`
@@ -844,7 +858,7 @@ Presumably to make it fit on a 8GB TF card, the GB300 lacks the following ROMs f
 * `Varth- Operation Thunderstorm.zfb`
 * `Zintrick.zfb`
 
-The following weren't accessible on SF2000 either. They were probably removed completely:
+The following weren't accessible on SF2000 either. They were removed completely:
 * `Aero Fighters 2.zfb`
 * `Aero Fighters 3.zfb`
 * `Area 88.zfb`
