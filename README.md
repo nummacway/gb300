@@ -71,7 +71,6 @@ Developer and modding topics:
 - **(probably GB300 v1 only)** Do **not** use Tadpole (a tool made solely for the SF2000). Otherwise, you **will** break your GB300 (except for GBA).
 - Do **not** use a quick charger (more than 5 volts). Otherwise, you **will** destroy your GB300.
 - Do **not** insert the battery with reversed polarity. Otherwise, you **will** destroy your GB300.
-- If you have the v2 firmware (the one with the arcade) do **not** install multicore newer than 0.10 v0.2.1. Otherwise, you **will** break your GB300.
 
 ***Do's:***
 - Patch the bootloader (either with GB300 Tool or [manually](https://vonmillhausen.github.io/sf2000/#bootloader-bug)) **before** making **any** other changes to the TF card, including getting a new one. Otherwise, you **will** break your GB300 (sooner or later). This has to be done once per device, not per TF card.
