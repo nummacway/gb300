@@ -102,6 +102,7 @@ The GB300 v2 is basically the SF2000's firmware with two more emulators, <abbr t
 
 To be completely clear: The GB300 v2 is a firmware and therefore software. The hardware is the same.
 
+
 #### Upgrading to v2
 
 **If you have a compatible 16 GB or larger TF card at hand:**
@@ -123,10 +124,10 @@ To be completely clear: The GB300 v2 is a firmware and therefore software. The h
 3. If it doesn't work (black screen), put [this](https://discord.com/channels/741895796315914271/1195581037003165796/1278694577322070077) in `bios` (you can skip this step if you want to install multicore (step 5))
 4. Optional: Copy your `save` and `ROMS` backup back on
 5. Optional: Get Multicore 0.10 v0.3.1 (you _cannot_ use multicore released after 0.10 v0.2.1 to directly up- or downgrade!)
-6. Enter [GB300 Tool v2](https://github.com/nummacway/gb300-sf2000-tool/releases/) and click _Uncheck All_
+6. Enter [GB300 Tool v2](https://github.com/nummacway/gb300-sf2000-tool/releases/) and click _Uncheck All_ in the `ARCADE` tab to remove the games you do not have
 
+After upgrading to v2, you can add FBAlpha sets ([support list](https://vonmillhausen.github.io/sf2000/arcade/DataFrog_SF2000_FBA.html)) and FBNeo sets ([support list](https://nummacway.github.io/gb300-sf2000-tool/DataFrog_SF2000_GB300v2_NeoGeoROMFaker_SupportList.html)) with [GB300 Tool v2](https://github.com/nummacway/gb300-sf2000-tool/releases/). You can only add FBA Arcade ROMs to the seventh static list, called `ARCADE` by default.
 
-To install it on your existing GB300, you can simply extract [this](https://www.reddit.com/r/GB300/comments/1ewkb0g/comment/lj5cvz6/) on your existing TF, but you won't have working arcade support as you lack ROMs. You can add FBAlpha sets ([support list](https://vonmillhausen.github.io/sf2000/arcade/DataFrog_SF2000_FBA.html)) and FBNeo sets ([support list](https://nummacway.github.io/gb300-sf2000-tool/DataFrog_SF2000_GB300v2_NeoGeoROMFaker_SupportList.html)) with [GB300 Tool v2](https://github.com/nummacway/gb300-sf2000-tool/releases/). You can only add FBA Arcade ROMs to the seventh static list.
 
 #### Downgrading to v1
 
@@ -137,7 +138,7 @@ To install it on your existing GB300, you can simply extract [this](https://www.
 
 ## Tools
 
-Most tools designed for the SF2000 don't work. Tools are often incompatible because not only is the BIOS different, but also the `Resources` have different names. **(GB300 v1 only)** This is especially true for Tadpole. Just starting it already patches your ROM lists and will break all default ROMs. It will only leave the GBA (because the files used for the GBA on the GB300 are used for the arcade on the SF2000, but there is no `ARCADE` folder for Tadpole to scan). If you did use Tadpole, look for the files in the Resources folder with the current date and restore the backups Tadpole put there.
+Most tools designed for the SF2000 don't work, especially for the GB300 v1. Tools are often incompatible because not only is the BIOS different, but also the `Resources` have different names. **(GB300 v1 only)** This is especially true for Tadpole. Just starting it already patches your ROM lists and will break all default ROMs. It will only leave the GBA (because the files used for the GBA on the GB300 are used for the arcade on the SF2000, but there is no `ARCADE` folder for Tadpole to scan). If you did use Tadpole, look for the files in the Resources folder with the current date and restore the backups Tadpole put there.
 
 **(GB300 v1 only)** The following tools were made specifically for the GB300 v1:
 * [multicore for GB300](https://github.com/tzubertowski/gb300_multicore/releases) by osaka, Prosty and the creators of the original multicore for SF2000 (mostly kobil).
@@ -147,7 +148,7 @@ Most tools designed for the SF2000 don't work. Tools are often incompatible beca
 * [GB300 Boot Logo Changer](https://dteyn.github.io/sf2000/tools/bootLogoChangerGB300.htm) by Dteyn
 
 **(GB300 v2 only)** The following tools were made specifically for the GB300 v2:
-* [multicore for GB300](https://github.com/tzubertowski/gb300_multicore/releases) by osaka, Prosty, Karl Ellis, Mutandone and the creators of the original multicore for SF2000 (mostly kobil).
+* [multicore for GB300](https://github.com/tzubertowski/gb300_multicore/releases) by osaka, Prosty, Karl Ellis, Mutandone and the creators of the original multicore for SF2000 (mostly kobil). Use v0.3.1 or newer.
 * [GB300+SF2000 Tool v2](https://github.com/nummacway/gb300-sf2000-tool/releases/) by me (numma_cway), also increases number of supported Neo Geo games on stock
 * You can probably use tadpole, but it won't be able to manage PCE ROMs and does not support multicore. madpole does support multicore, but doesn't not support PCE either.
 
@@ -181,10 +182,9 @@ The easiest way to use multicore is probably via [GB300 Tool](https://github.com
 1. Check the first checkbox on the BIOS/Device page that comes up right after entering your drive letter and hitting 'Start'.
 2. Put the TF card in your GB300 and boot. It will display some progress indicator during boot for a few seconds.
 3. Turn off the GB300 and put the card in your TF reader again.
-4. Put `bios` and `cores` folders from the [7-Zip file](https://github.com/tzubertowski/gb300_multicore/releases/) on your existing TF card (so the `bios` folder overwrites (merges with) the existing folder).
-5. (GB300 v2 only:) Put `bios` folder from the [7-Zip file](https://discord.com/channels/741895796315914271/1195581037003165796/1292171811856842906) on your existing TF card (so the `bios` folder overwrites (merges with) the existing folder).
-6. Restart GB300 Tool to make it notice that you now have multicore.
-7. Select one of the first nine (eight in v1) tabs in GB300 Tool and either click "Add..." or drop your ROMs on the tool. It will ask you for the multicore core, but will have recommendations for you. If GB300 Tool tells you that you need a BIOS, you need to put it the `bios` folder on your TF card. Here's a [list of cores](https://docs.google.com/spreadsheets/d/1BDPqLwRcY2cN7tObuyW7RzLw8oGyY9XGLS1D4jLgz2Q/edit#gid=1430267016). Most cores link to libretro's docs with more information on BIOS.
+4. Put `bios` and `cores` folders from the [7-Zip file](https://github.com/tzubertowski/gb300_multicore/releases/) on your existing TF card (so the `bios` folder overwrites (merges with) the existing folder). If you are on the GB300 v2, make sure to not use 0.10 v0.3.0, because it is incomplete.
+5. Restart GB300 Tool to make it notice that you now have multicore.
+6. Select one of the first nine (eight in v1) tabs in GB300 Tool and either click "Add..." or drop your ROMs on the tool. It will ask you for the multicore core, but will have recommendations for you. If GB300 Tool tells you that you need a BIOS, you will normally need to put it the `bios` folder on your TF card. Here's a [list of cores](https://docs.google.com/spreadsheets/d/1BDPqLwRcY2cN7tObuyW7RzLw8oGyY9XGLS1D4jLgz2Q/edit#gid=1430267016). Most cores link to libretro's docs with more information on BIOS.
 
 You only have to do steps 1 to 5 once.
 
@@ -208,9 +208,9 @@ The second way to add thumbnails (and the only one that works on GB300 v1) is su
 
 #### Converting ROMs to multicore
 
-**(GB300 v2 only)** GB300+SF2000 Tool v2.0-beta3 and up can directly convert stock ROMs to multicore. Just right-click any stock list. If you are moving to TGB Dual, DoublecherryGB, Picodrive or Mednafen PCE Fast, you can even keep your save states.
+**(GB300 v2 only)** GB300+SF2000 Tool v2.0-beta3 and up can directly convert stock ROMs to multicore. Just right-click any stock list. If you are moving to TGB Dual, DoublecherryGB, Picodrive or Mednafen PCE Fast, you can even keep your save states. Note that multicore needs uncompressed ROMs, so this process will use a lot of space on your TF card.
 
-**(GB300 v1 only)** If you're on the GB300 v1, you will have to do this manually:
+If you're on the GB300 v1, you will have to do this manually:
 
 1. Start GB300 Tool and navigate to the ROM in question.
 2. _Export ROM_.
