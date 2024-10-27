@@ -1,8 +1,18 @@
 # GB300
 
-The **Sup+ GB300** (short for Game Box) is a cheap handheld that emulates video game consoles. You can find it on AliExpress and other sites. The cheapest way to get it (around 9 dollars if you're in the EU) is via AliExpress's "Pick 3 and Save" (aka "Bundle Deals") if it's available there (which isn't always the case) and you can find two more items from that page, like a bigger TF card or a TF reader if you don't own one, or simply buy three GB300. In general, the GB300 is a few dollars more than the cheapest game consoles on AliExpress often dubbed the Famiclones, but the GB300 offers nine classic consoles (instead of just the Famicom), comes with _way_ more games (even on the Famicom), you can add your own games, and you can save (states and sometimes standard GBA battery saves). It also has a modding community.
+The **Sup+ GB300** (short for Game Box) is a cheap handheld that emulates video game consoles. You can find it on AliExpress and other sites. In general, the GB300 is a few dollars more than the cheapest game consoles on AliExpress often dubbed the Famiclones, but the GB300 offers more than ten classic consoles (instead of just the Famicom), comes with _way_ more games (even on the Famicom), does not have repeats, does not consist of mostly Chinese homebrew and hacks, you can add your own games, and you can save (states and sometimes standard GBA battery saves). It also has a modding community. So do yourself the favor and don't buy anything cheaper than the GB300.
 
-Some see it as a clone of the (usually a bit more expensive) Data Frog SF2000, which however is a bit different. Because the [SF2000 has already been documented](https://vonmillhausen.github.io/sf2000/), this page focusses primarily on the differences.
+There are two quite different firmwares, called the GB300 v1 and GB300 v2. You can simply [upgrade and downgrade by copying a few files](#what-is-the-gb300-v2) to your TF card.
+
+**Where to get:** The cheapest way to get it (around 9 dollars with taxes if you're in the EU) is via AliExpress's "Pick 3 and Save" (aka "Bundle Deals") if it's available there. This isn't always the case. As you need at least 3 items there, we suggest you buy a case (or a TF reader if you don't own one) and a bigger TF card (e.g. ALUNX 64 GB), as the stock card is known and prone to fail. (You could also buy three GB300...)
+
+**Is this a vertical SF2000?** Somewhat. Compared to the [Data Frog SF2000](https://vonmillhausen.github.io/sf2000/), the GB300 not only has a different form factor, but some other differences:
+
+| Things the GB300 does better than the SF2000 | Things the GB300 does worse than the SF2000 |
+| ---------------------- | --------------------- |
+| <ul><li>Price (especially in Europe)<li>Audio quality<li>Support for PC-Engine (Turbografx-16)<li>Support for Famicom Disk System, V.R. Technology VT02 and VT03 (all three are disabled by default and not currently accessible on GB300 v2)<li>Slightly improved firmware<li>Lighter (133 vs. 165 grams, partially attributed to the smaller battery)</ul> | <ul><li>Screen (especially viewing angle from left/right)<li>No wireless gamepad connectivity<li>Smaller stock battery<li>Smaller stock TF card (you therefore have some GBA and arcade games less on the GB300 v2)</ul> |
+
+GB300 v1 does not have the arcade.
 
 This document is work in progress but mostly finished now for the v1 version of the firmware. Large parts target developers and anyone willing to mod the device, but the page has an [FAQ for Players](#faq-for-players) as well. Feel free to contact me, `numma_cway`, on Discord or Reddit. You can also create a fork and pull request, or open an issue on [Github](https://github.com/nummacway/gb300/). If you have any questions, join the `#data_frog_sf2000` channel on the [Retro Handhelds Discord](https://discord.gg/retrohandhelds) (choose SF2000 during onboarding). There is also a [`Gb300 dev` thread](https://discord.com/channels/741895796315914271/1195581037003165796) on that Discord, but that's for developers and not really for end users. You can also visit [r/GB300 on reddit](https://www.reddit.com/r/GB300/).
 
@@ -94,21 +104,33 @@ To be completely clear: The GB300 v2 is a firmware and therefore software. The h
 
 #### Upgrading to v2
 
-To install it on your existing GB300, you can simply extract [this](https://www.reddit.com/r/GB300/comments/1ewkb0g/comment/lj5cvz6/) on your existing TF, but you won't have working arcade support as you lack ROMs. You can add FBAlpha sets ([support list](https://vonmillhausen.github.io/sf2000/arcade/DataFrog_SF2000_FBA.html)) and FBNeo sets ([support list](https://nummacway.github.io/gb300-sf2000-tool/DataFrog_SF2000_GB300v2_NeoGeoROMFaker_SupportList.html)) with [GB300 Tool v2](https://github.com/nummacway/gb300-sf2000-tool/releases/). You can only add FBA Arcade ROMs to the seventh static list.
+**If you have a compatible 16 GB or larger TF card at hand:**
 
-To get GB300 v2 with arcade ROMs, you can do the following steps. Note that the second step will format (wipe) the TF card which has to be at least 16 GB in size. You might want to backup your `ROMS` folder and `save` subfolders. Also backup the _entire_ `PCE` folder!
-1. Patch the bootloader with your existing TF (we are serious about this!)
-2. [Upgrade SF2000 firmware](https://www.youtube.com/watch?v=j8dT2fdGfck)
-3. Extract [this](https://www.reddit.com/r/GB300/comments/1ewkb0g/comment/lj5cvz6/) on your TF
-4. If it doesn't work (black screen), put [this](https://discord.com/channels/741895796315914271/1195581037003165796/1278694577322070077) in `bios` (you can skip this step if you want to install multicore (step 7))
-5. Recommended: Copy your `PCE` folder back on
-6. Optional: Copy your `save` and `ROMS` backup back on
-7. Optional: Get Multicore (you _cannot_ use multicore released after 0.10 v0.2.1 to directly up- or downgrade!)
-8. Optional: Enter [GB300 Tool v2](https://github.com/nummacway/gb300-sf2000-tool/releases/) and click _Check All_ in the 2nd to 9th tab each to enable ROMs removed from the GB300 v2 but shipped with the SF2000
+1. Patch the bootloader with your existing TF (we are serious about this!) - you can use GB300 Tool v1.0b for that
+2. Backup your `ROMS` folder and `save` subfolders. Also backup the _entire_ `PCE` folder!
+3. [Upgrade SF2000 firmware](https://www.youtube.com/watch?v=j8dT2fdGfck) - this will format (wipe) the TF card
+4. Extract [this](https://www.reddit.com/r/GB300/comments/1ewkb0g/comment/lj5cvz6/) on your TF
+5. If it doesn't work (black screen), put [this](https://discord.com/channels/741895796315914271/1195581037003165796/1278694577322070077) in `bios` (you can skip this step if you want to install multicore (step 8))
+6. Recommended: Copy your `PCE` folder back on
+7. Optional: Copy your `save` and `ROMS` backup back on
+8. Optional: Get Multicore 0.10 v0.3.1 (you _cannot_ use multicore released after 0.10 v0.2.1 to directly up- or downgrade!)
+9. Optional: Enter [GB300 Tool v2](https://github.com/nummacway/gb300-sf2000-tool/releases/) and click _Check All_ in the 2nd to 9th tab each to enable ROMs removed from the GB300 v2 but shipped with the SF2000
+
+**If you do not have a compatible 16 GB TF card at hand:**
+
+1. Patch the bootloader with your existing TF (we are serious about this!) - you can use GB300 Tool v1.0b for that
+2. Extract [this](https://www.reddit.com/r/GB300/comments/1ewkb0g/comment/lj5cvz6/) on your TF
+3. If it doesn't work (black screen), put [this](https://discord.com/channels/741895796315914271/1195581037003165796/1278694577322070077) in `bios` (you can skip this step if you want to install multicore (step 5))
+4. Optional: Copy your `save` and `ROMS` backup back on
+5. Optional: Get Multicore 0.10 v0.3.1 (you _cannot_ use multicore released after 0.10 v0.2.1 to directly up- or downgrade!)
+6. Enter [GB300 Tool v2](https://github.com/nummacway/gb300-sf2000-tool/releases/) and click _Uncheck All_
+
+
+To install it on your existing GB300, you can simply extract [this](https://www.reddit.com/r/GB300/comments/1ewkb0g/comment/lj5cvz6/) on your existing TF, but you won't have working arcade support as you lack ROMs. You can add FBAlpha sets ([support list](https://vonmillhausen.github.io/sf2000/arcade/DataFrog_SF2000_FBA.html)) and FBNeo sets ([support list](https://nummacway.github.io/gb300-sf2000-tool/DataFrog_SF2000_GB300v2_NeoGeoROMFaker_SupportList.html)) with [GB300 Tool v2](https://github.com/nummacway/gb300-sf2000-tool/releases/). You can only add FBA Arcade ROMs to the seventh static list.
 
 #### Downgrading to v1
 
-1. Patch the bootloader (we are serious about this!)
+1. Patch the bootloader (we are serious about this!) - you can use GB300+SF2000 Tool v2.0 series for that
 2. [Install multicore](#multicore) 0.10 v0.2.1 or older.
 3. Recommended: Enter [GB300 Tool v1](https://github.com/nummacway/gb300-sf2000-tool/releases/) and click _Check All_ in the 1st to 7th tab each to disable ROMs (primarily GBA) removed from the GB300 v2 but present in the GB300 v1's menu
 
@@ -127,13 +149,13 @@ Most tools designed for the SF2000 don't work. Tools are often incompatible beca
 **(GB300 v2 only)** The following tools were made specifically for the GB300 v2:
 * [multicore for GB300](https://github.com/tzubertowski/gb300_multicore/releases) by osaka, Prosty, Karl Ellis, Mutandone and the creators of the original multicore for SF2000 (mostly kobil).
 * [GB300+SF2000 Tool v2](https://github.com/nummacway/gb300-sf2000-tool/releases/) by me (numma_cway), also increases number of supported Neo Geo games on stock
-* You can probably use tadpole, but it won't be able to manage PCE ROMs and does not support multicore.
+* You can probably use tadpole, but it won't be able to manage PCE ROMs and does not support multicore. madpole does support multicore, but doesn't not support PCE either.
 
-Tools for the SF2000 that should work for the GB300:
+Tools for the SF2000 that work for the GB300:
 * [BIOS CRC-32 Patcher](https://vonmillhausen.github.io/sf2000/tools/biosCRC32Patcher.htm) by Von Millhausen, required after manual changes to the `bisrv.asd` file
 * [Generic Image Tool](https://vonmillhausen.github.io/sf2000/tools/genericImageTool.htm) by Von Millhausen, converts to and from RGB565 and BGRA8888 images
 * [Kerokero - SF2000 BGM Tool](https://github.com/Dteyn/SF2000_BGM_Tool) by Dteyn
-* [Save State Tool](https://vonmillhausen.github.io/sf2000/tools/saveStateTool.htm) by Von Millhausen – Due to the strange CPU architecture, people don't think that converting save states makes any sense. But you can use it to extract screenshots. This tool relies on the first four bytes storing the compressed size. However, NES ROMs with an `.nfc` extension (that includes file names inside ZIP, obfuscated ZIP and thumbnailed files) and multicore don't have that (they don't need to, because compressed size is also in the last four bytes), meaning these don't work.
+* [Save State Tool](https://vonmillhausen.github.io/sf2000/tools/saveStateTool.htm) by Von Millhausen – Due to the strange CPU architecture, people don't think that converting save states makes any sense. But you can use it to extract screenshots. This tool is incompatible with multicore and NES ROMs with an `.nfc` extension (that includes file names inside ZIP, obfuscated ZIP and thumbnailed files).
 * [Silent menu music](https://vonmillhausen.github.io/sf2000/sounds/silentMusic/pagefile.sys) by Von Millhausen
 * [Silent Sounds Pack](https://github.com/Dteyn/sf2000/raw/main/sounds/silentSounds/SF2000_Silent_Sounds_Pack.zip) by Dteyn
 
@@ -156,7 +178,7 @@ Discord users osaka (`bnister`) and Prosty (`_prosty`) brought multicore to GB30
 
 The easiest way to use multicore is probably via [GB300 Tool](https://github.com/nummacway/gb300tool/releases/). Download the ZIP file (the one with the cube icon) and start the tool. Enter your TF reader's drive letter and follow these steps:
 
-1. Check the first checkbox on the BIOS/Device page that comes up right after entering your drive letter.
+1. Check the first checkbox on the BIOS/Device page that comes up right after entering your drive letter and hitting 'Start'.
 2. Put the TF card in your GB300 and boot. It will display some progress indicator during boot for a few seconds.
 3. Turn off the GB300 and put the card in your TF reader again.
 4. Put `bios` and `cores` folders from the [7-Zip file](https://github.com/tzubertowski/gb300_multicore/releases/) on your existing TF card (so the `bios` folder overwrites (merges with) the existing folder).
@@ -179,16 +201,21 @@ You only have to do steps 1 to 5 once.
 
 Note: Multicore saves in `ROMS\save`. The thumbnail (screenshot) is named and formatted like always, but with no payload other than the image, as the state is in another file that isn't compressed.
 
-Making thumbnailed multicore stubs is super weird: The _filename_ (without the extension) of the `.zfc`, `.zsf`, `.zpc`, `.zmd` or `.zgb` file must conform to the multicore pattern, however, the _extension_ is pulled from the contained file. So the file name inside the ZIP file does not matter, but must end on `.gba`, `.zgb` or `.agb`. Basically you could take any stock GBA file, and for example name it `sega;Zero Wing.md.zsf` to make it launch `ROMS\sega\Zero Wing.md` with the `sega` core.
+**(GB300 v2 only)** On the GB300 v2, you can use the ZFB method: Just have your ZFB point to a file name conforming to the above pattern. That file does not have to exist. This means that your stub can have any name. This method does not work in user ROMs.
 
-#### Moving States to Multicore
+The second way to add thumbnails (and the only one that works on GB300 v1) is super weird: The _filename_ (without the extension) of the `.zfc`, `.zsf`, `.zpc`, `.zmd` or `.zgb` file must conform to the multicore pattern, however, the _extension_ is pulled from the contained file. So the file name inside the ZIP file does not matter, but must end on `.gba`, `.zgb` or `.agb`. Basically you could take any stock GBA file, and for example name it `sega;Zero Wing.md.zsf` to make it launch `ROMS\sega\Zero Wing.md` with the `sega` core.
 
-Did you start a game and would like to migrate to multicore? If that game was a GB/GBC, MD/SMS or PCE game - you can! (GBA, NES and SNES do not work.)
+
+#### Converting ROMs to multicore
+
+**(GB300 v2 only)** GB300+SF2000 Tool v2.0-beta3 and up can directly convert stock ROMs to multicore. Just right-click any stock list. If you are moving to TGB Dual, DoublecherryGB, Picodrive or Mednafen PCE Fast, you can even keep your save states.
+
+**(GB300 v1 only)** If you're on the GB300 v1, you will have to do this manually:
 
 1. Start GB300 Tool and navigate to the ROM in question.
 2. _Export ROM_.
 3. Rightclick the state to _Export State Data_.
-4. _Add_ the exported ROM again and pick the core that matches stock: TGB Dual for GB/GBC, Picodrive for MD/SMS, or Mednafen PCE Fast for PCE.
+4. _Add_ the exported ROM again and pick the core that matches stock: TGB Dual or DoublecherryGB for GB/GBC, Picodrive for MD/SMS, or Mednafen PCE Fast for PCE.
 5. Rightclick the empty area where the states would be and select _Create State with Data_. Now choose your experted state data.
 
 The state thumbnail might glitch on your device, but that does not prevent the state from loading properly.
@@ -196,28 +223,32 @@ The state thumbnail might glitch on your device, but that does not prevent the s
 
 ## Hardware
 
-**General:** The hardware is very similar to the SF2000. The processor is the same 918 MHz MIPS processor (HiChip/HCSEMI B210, overclocked from 810 MHz) with 128 MB of high-latency DDR2 RAM, originally designed to be used in DVD players and DTV set-top boxes. The most important difference is the vertical form factor which makes the GB300 look a bit like the (much heavier) Game Boy Color. The GB300 lacks the SF2000's "digital analog stick" and the buttons feel somewhat cheap.
+**General:** The hardware is very similar to the SF2000. The processor is the same 918 MHz MIPS processor (HiChip/HCSEMI B210, overclocked from 810 MHz) with 128 MB of high-latency DDR2 RAM, originally designed to be used in DVD players and DTV set-top boxes. The most important difference is the vertical form factor which makes the GB300 look a bit like the much heavier Game Boy Color (209 vs. 133 grams). The GB300 lacks the SF2000's "digital analog stick" and the buttons feel somewhat cheap.
 
-**Screen:** The screen is a cheap LCD screen compared to the SF2000’s IPS screen. The horizontal viewing angle (sideways) is extremely small, but vertical is alright. Especially when playing dark games in a dark room, the very bright black is an issue, as neither device has a brightness control. People who love the GB300 for its form factor, working sound volume control and straight-forward interface have bought an SF2000 just to [swap its screen into the GB300](https://discord.com/channels/741895796315914271/1197607372277940314), so the rest of the device can't be that bad, hmm? You can [buy a spare screen](https://www.aliexpress.com/item/1005006458765669.html), too. The GB300's default screen has diagonal(!) screen tearing. It isn't really noticeable unless there's flashing or fading.
+**Screen:** The screen is a cheap LCD screen compared to the SF2000’s IPS screen. The horizontal viewing angle (left/right) is extremely small, but vertical is alright. Especially when playing dark games in a dark room, the very bright black is an issue, as neither device has a brightness control. People who love the GB300 for its form factor, audio and straight-forward interface have bought an SF2000 just to [swap its screen into the GB300](https://discord.com/channels/741895796315914271/1197607372277940314), so the rest of the device can't be that bad, hmm? You can [buy a spare screen](https://www.aliexpress.com/item/1005006458765669.html), too. The GB300's default screen has diagonal(!) screen tearing. It isn't really noticeable unless there's flashing or fading. Scrolling is alright.
 
-**TF Card:**  The device ships with only a 8 GB TF/microSDHC card (42 MB of which aren't allocated to a partition), formatted FAT32. It includes the firmware and the default set of 6267 ROMs (less but slightly better ones on the GB300 v2). This leaves around 1.75 GB (0.78 GiB on the GB300 v2) for your own ROMs. Actually, there's more space if you follow the manual: All the ROMs are just for demonstration and you are supposed to delete them right when you receive the console, even though the menus are hardcoded to exactly these files. The GB300 is picky in terms of which TF cards it will accept. Rule of thumb: The cheaper, the more compatible. We suggest you do not exceed 64 GB for the same reason. If you are moving to a new card, make sure to [patch the bootloader](https://vonmillhausen.github.io/sf2000/#bootloader-bug) first (with your old card). Then make sure your new card is FAT32 and copy all files to it.
+**TF Card:** The device ships with only a 8 GB TF/microSDHC card (42 MB of which aren't allocated to a partition), formatted FAT32. It includes the firmware and the default set of 6267 ROMs (less but slightly better ones on the GB300 v2). This leaves around 1.75 GB (0.78 GiB on the GB300 v2) for your own ROMs. Actually, there's more space if you follow the manual: All the ROMs are just for demonstration and you are supposed to delete them right when you receive the console, even though the menus are hardcoded to exactly these files. The GB300 is picky in terms of which TF cards it will accept. Rule of thumb: The cheaper, the more compatible. We suggest you do not exceed 64 GB for the same reason. If you are moving to a new card, make sure to [patch the bootloader](https://vonmillhausen.github.io/sf2000/#bootloader-bug) first (with your old card). Then make sure your new card is FAT32 and copy all files to it.
 
-**TV Out:** The device comes with a 70&thinsp;cm (28") cable from a 2.5mm male audio plug to two male RCA (cinch) plugs. The yellow RCA plug is for composite video and the red one for sound. You can plug them into older TVs either directly or via a SCART adapter. If you plug the cable in the GB300, its own screen and sound will be turned off. The TV output has a better resolution (640x480) than the internal screen's 320x240 (display the bottom-left pixel of each 2×2 pixel block). If your TV doesn't care, use NTSC 480i to avoid unnecessary vertical scaling to 576i. NTSC outputs a vertically pixel-perfect result of the user interface. Unlike the SF2000, the TV signal will be fine while charging the GB300. Do not plug in the AV cable until the device has completely booted (that includes not plugging in the cable before switching the device on, meaning that the full-size bootlogo is never used).
+**TV Out:** The device comes with a 70&thinsp;cm (28") cable from a 2.5mm male audio plug to two male RCA (cinch) plugs. The yellow RCA plug is for composite video and the red one for sound. You can plug them into older TVs either directly or via a SCART adapter. If you plug the cable in the GB300, its own screen and sound will be turned off. The TV output has a better resolution (640x480) than the internal screen's 320x240 (display the bottom-left pixel of each 2×2 pixel block). If your TV doesn't care, use NTSC 480i to avoid unnecessary vertical scaling to 576i. NTSC outputs a vertically pixel-perfect result of the user interface. Unlike the SF2000, the TV signal will be fine while charging the GB300. **(GB300 v1 only)** Do not plug in the AV cable until the device has completely booted (that includes not plugging in the cable before switching the device on, meaning that the full-size bootlogo is never used).
 
 **Peripherals:** The GB300 works with the _wired_ gamepads that sometimes ship with some other cheap(er) consoles. You cannot normally buy them individually and the GB300 wasn't sold bundled with them either until [this listing](https://www.aliexpress.com/item/1005007161518444.html) appeared in mid/late June 2024. These devices work for solely the second player in games that support that. _Wireless_ gamepads don't work on the GB300, e.g. the gamepad bundled with the SF900 TV stick that works with the SF2000. Note that neither of these complies with industry standards like USB or BT, so they don't have any use with computers, laptops or mainstream consoles. If your gamepad connects to any of these, it's definitely not compatible with the GB300. There are two types of the wired gamepads for consoles like the GB300, the common 5-wire used by all the cheaper Famiclones and the super-rare 4-wire. The GB300 only supports the latter. A [source for these](https://www.aliexpress.com/item/1005006900177735.html) has been discovered in early June 2024. This comes despite the fact that "external gamepad double against" is even promoted on the front of the GB300's box... To be completely clear: Wired gamepads, a TV and 5V of USB power are the only things you can connect to your GB300. There is no internet or any other type of linking available.
 
 **Battery:** The GB300 is powered by a standard 18650 battery that you can easily change. The device has overcharge protection (the charging current will drop when the battery is full), yet the green charging light will not turn off. If the battery is very low (crashes and glitches), it will take a little under 4&thinsp;VAh until it stops charging. This suggests that the capacity is lower than the SF2000's 1750 mAh. This is supported by the manual and box listing 800 mAh, and people reporting that the (light pink and completely unlabeled) battery of the GB300 is lighter than the SF2000's. More recently, people have reported receiving labelled batteries, confirming the 800 mAh. Neither device has undercharge protection, so leaving the device on with a low battery can kill the battery. One person reported that their GB300 came with the power switch in the 'ON' position and therefore a dead battery. Buying a new battery worked. If you buy a new battery, buy one with tips (not flat) and consider both, over- and undercharge protection. Although the SF2000 takes flat batteries, the GB300 requires some manipulation to its contact springs due to the console's case design. Mind the polarity when replacing the battery, or you will destroy the console. The GB300 initially charges with around 2.5 to 2.9&thinsp;W, which decreases as it charges.
 
-**Related Devices:** Another similar device (other than the SF2000) is the 8-Bit King, but that's an HDMI stick with wireless gamepads. It's usually around one dollar cheaper than the GB300 and lacks support for SNES, GBA and MD/SMS because it has less/worse RAM. There is a [hack](https://discord.com/channels/741895796315914271/1165850204713537637/1208756612051771413) for limited MD/SMS support though. The 8-Bit King too plays your own ROMs and can save.
+**Related Devices:** Another similar device (other than the SF2000) is the 8 Bit King, but that's an HDMI stick with wireless gamepads. It's usually around one dollar cheaper than the GB300 and lacks support for SNES, GBA and MD/SMS because it has less/worse RAM. There is a [hack](https://discord.com/channels/741895796315914271/1165850204713537637/1208756612051771413) for limited MD/SMS support though. The 8 Bit King too plays your own ROMs and can save.
+
+**Better Devices:** If you want to spend a bit more, you can buy the SF2000 for primarily a better screen but much worse audio. If you're in Europe, the SF2000 is usually completely overpriced and you should buy the R36s when it's on sale, but that's a way different device.
+
+**Worse Devices:** Do yourself the favor and don't buy anything cheaper than the GB300. Read the first paragraph on this page. If you need more reasons, search 400-in-1 game console (or 500, 600, or 800-in-1) on YouTube.
 
 
 ## General Firmware Features
 
 The GB300's stock firmware emulates the following devices:
 * Nintendo Entertainment System (Famicom)
-* Famicom Disk System (disabled, but can be enabled)
-* V.R. Technology VT02/VT03 (disabled, but can be enabled)
-* PC Engine (Turbografx-16)
+* Famicom Disk System (disabled, but can be enabled on GB300 v1)
+* V.R. Technology VT02/VT03 (disabled, but can be enabled on GB300 v1)
+* NEC PC Engine (Turbografx-16)
 * Super Nintendo Entertainment System (Super Famicom)
 * SEGA Master System (SEGA Mark III)
 * SEGA Mega Drive (SEGA Genesis)
@@ -228,7 +259,28 @@ The GB300's stock firmware emulates the following devices:
 * **(GB300 v2 only)** [1431 Arcade games](https://vonmillhausen.github.io/sf2000/arcade/DataFrog_SF2000_FBA.html), 949 of which could be considered working according to `madcock`
   * GB300 Tool v2 increases this number by another ca. 300 working ones by doing some sort of "conversion"
 
-Compared to the SF2000 stock firmware, the GB300 lacks the arcade section and adds the PCE. Both platforms can be added using multicore. While multicore's Mednafen PCE Fast works well, multicore has MAME 2000 instead of Final Burn Alpha (a MAME fork), because multicore team couldn't get FBA or newer versions of MAME to run properly. Performance and compatibility with larger-filesize games are both worse on multicore MAME 2000 than on SF2000's FBA, e.g. `m2k` can only load 34 of the 228 ROMs that ship with the SF2000, and Wildfang is the only one of these that runs at full speed. The ROMs that ship with the SF2000 are generally more graphically challenging. Two rules of thumb: You can espect multicore's MAME 2000 to have performance issues with ROMs that are bigger than around 1 MB (compressed) or look better than your usual Mega Drive games. MAME fails to load ROMs larger than around 60 MB uncompressed due to a lack of available memory. This affects six games, for two of them I managed to [make a patch](https://github.com/nummacway/libretro-mamenummacwaytausend/releases/tag/v2024-08-15).
+Fan project multicore adds dozens of new platforms, for example:
+- Atari 2600, 5200, 7800
+- Atari Lynx
+- Bandai Wonderswan, Wonderswan Color and Benesse Pocket Challenge v2
+- Connecticut Leather Company Colecovision
+- Commodore 64
+- Mattel Intellivision
+- NEC PCE-CD
+- Nintendo Pokémon mini
+- SEGA SG-1000
+- SEGA Game Gear
+- SEGA Mega-CD
+- SEGA 32x (performance isn't good, but playable)
+- SNK Neo Geo Pocket and Neo Geo Pocket Color
+- Watara SuperVision
+- 2241 Arcade games, all but 6 could be considered working
+  - My mod adds 62 new ones
+- A few fantasy consoles, e.g. CHIP-8, Pico-8
+- A few game engines, e.g. DOOM
+- A few other home computers
+
+Compared to the SF2000's stock firmware, the GB300 adds the PCE and (theoretically) the VTxx. However, GB300 v1 does not have the arcade. PCE and arcade can be added using multicore. While multicore's Mednafen PCE Fast works well, multicore has MAME 2000 instead of Final Burn Alpha (a MAME fork), because multicore team couldn't get FBA or newer versions of MAME to run properly. Performance and compatibility with larger-filesize games are both worse on multicore MAME 2000 than on SF2000's FBA, e.g. `m2k` can only load 34 of the 228 ROMs that ship with the SF2000, and Wildfang is the only one of these that runs at full speed. The ROMs that ship with the SF2000 are generally more graphically challenging. Two rules of thumb: You can espect multicore's MAME 2000 to have performance issues with ROMs that are bigger than around 1 MB (compressed) or look better than your usual Mega Drive games. MAME fails to load ROMs larger than around 60 MB uncompressed due to a lack of available memory. This affects six games, for two of them I managed to [make a patch](https://github.com/nummacway/libretro-mamenummacwaytausend/releases/tag/v2024-08-15).
 
 There is no chance you could enable VTxx on the SF2000. If you don't mind the weird colors, you could also play Game Gear games that do not make use of the Start button. Change the `.gg` extension to `.sms` to make them show up. smspower.org has color patches ("GG2SMS") for around 200 GG games (they list 185 different games, for which there are 225 versions on No-Intro, but not all versions are supported). There's a [list of GG2SMS patches that work on the GB300](#sega-game-gear) in this document.
 
@@ -238,7 +290,7 @@ The SF2000 firmware does not work on the GB300. There is no known way to retriev
 
 **(GB300 v1 only)** The default BIOS dates to the 15th of December, 2023. There might be an older version dating back to the 26th of October, 2023, but the only evidence of that one was corrupted before we could examine it.
 
-**(GB300 v2 only)** There seem to be two v2 BIOS versions. One dates to 3rd of July, 2024, the other to the 2nd of August, 2024. The latter is a bit smaller but seems to be more compatible with different screen revisions. Beside the different BIOS, the earlier of the two versions also comes with two savesgames, for `Pokemon - Emerald Version` and `Sonic Advance` (both are GBA games). See _[What is the GB300 v2?](#what-is-the-gb300-v2)_ for more details on the GB300 v2 and how to upgrade your GB300 v1. As the developers, we usually call the two versions by the name of the first user who posted them: The smaller one is called `Vinícius`, the bigger one `wearenumber421`.
+**(GB300 v2 only)** There seem to be two v2 BIOS versions. One dates to 3rd of July, 2024, the other to the 2nd of August, 2024. The latter is a bit smaller but seems to be more compatible with different screen revisions. Beside the different BIOS, the earlier of the two versions also comes with two savesgames, for `Pokemon - Emerald Version` and `Sonic Advance` (both are GBA games). See _[What is the GB300 v2?](#what-is-the-gb300-v2)_ for more details on the GB300 v2 and how to upgrade your GB300 v1. Fans usually call the two v2 variants by the name of the first user who posted them: The smaller one is called `Vinícius`, the bigger one `wearenumber421`.
 
 
 ### Saving
@@ -779,19 +831,19 @@ They were likely removed to make room for Arcade ROMs.
 #### Arcade
 
 **Introduction: How does arcade emulation work?**
-* There a thousands to arcade machines. An emulator is programmed to emulate their hardware, resulting in what is called a _driver_ per emulated hardware platform. Some machines are based on the same hardware, so these can be handled by the same driver. The largest drivers are Neo Geo, CPS1 and CPS2. Hundreds of high-quality games have been released for these three.
-* Unlike all other emulators, arcade emulators are not made to support "all" games even on a supported driver. Arcade games usually have more than one ROM, so all ROMs come in a ZIP file, called a _set_. Drivers are programmed to load the ROMs in only a limited number of set, for which they require that the ZIP file and all files inside have exactly the names they expect (they sometimes can work with CRC as well). File names vary heavily between sets. For Neo Geo, a few common naming patterns have been established, but there may be single ROM files inside a set that may be named differently.
+* There a thousands to arcade machines. An emulator is programmed to replicate their hardware, resulting in what is called a _driver_ per emulated hardware platform. Some machines are based on the same hardware, so their ROMs can be handled by the same driver. The largest drivers are Neo Geo, CPS1 and CPS2. Hundreds of high-quality games have been released for these three.
+* Unlike all other emulators, arcade emulators are not made to support "all" games, even on a supported driver. Arcade games usually have more than one ROM, so all ROMs come in a ZIP file, called a _set_. Drivers are programmed to load only a limited number of sets, for which they require that the ZIP file and all files inside have exactly the names the driver expects (they sometimes can work with CRC as well). File names inside the ZIPs vary heavily between sets. For Neo Geo, a few common naming patterns have been established, but even then there might be single ROM files inside a set that may be named differently.
 
-In my opinion, this is extremely dumb. _Sets_ should have information on how to load them. E.g. for Neo Geo sets, it's usually just about placing the ROMs in RAM, which you can often derive from the XML file ("DAT"), so there is a way how to ship this information in a text file. This is somewhat done with NES games.
+In my opinion, this is extremely dumb. _Sets_ should have information on how to load them. E.g. for Neo Geo sets, it's usually just about placing the ROMs in RAM, which you can often derive from the XML file ("DAT"), so there is a way how to ship this information in a text file. iNES and UNIF do something similar with NES games.
 
-Because many people seem confused what arcade games you can play on the GB300 and SF2000, here's the full list:
-* Multicore's MAME 2000 (`m2k`) can run 2241 sets (no newer than 1998). I don't think there's a list for humans to read, but you can search in [this XML](https://raw.githubusercontent.com/madcock/libretro-mame2000/refs/heads/master/metadata/MAME%200.37b5%20XML.dat). Of these, six don't work because they need more ROM memory than the 63.1 MiB `m2k` can offer: `kof97`, `kof98`, `lastblad`, `lastbld2`, `rbff2`, `shocktr2`. Performance is way worse than FBA on GB300 v2 and SF2000.
-* **(GB300 v1 only)** [My own version of MAME 2000](https://github.com/nummacway/libretro-mamenummacwaytausend/releases) adds [62 Neo Geo sets](https://github.com/nummacway/libretro-mamenummacwaytausend/wiki). It reduces memory usage for `kof97`, `lastblad` so these work now. The most important sets supported by my version are `mslug4fd` and `sengk3fd`, for which it is the only emulator running these on GB300 and SF2000. It also supports the most recent homebrew like `gladmort`. These three games will run with around 45 FPS, as my version's performance did not improve over the standard `m2k`.
-* Geolith is another arcade emulator for Neo Geo only. Performance is absolutely horrible and sets in its ROM format are hard to find.
-* **(GB300 v2 only)** GB300 v2's FinalBurn Alpha (FBA), which incorrectly dubbed MAME in the menu, knowns how to load [1431 sets](https://vonmillhausen.github.io/sf2000/arcade/DataFrog_SF2000_FBA.html) (no newer than 2006). However, it cannot run all of them. See the linked list. Games shipping with the SF2000 are tagged with `inrom` there.
+Because many people seem confused about the arcade games they can play on the GB300, here's the full list:
+* **(GB300 v2 only)** GB300 v2's FinalBurn Alpha (FBA), which is incorrectly dubbed MAME in the menu, knowns how to load [1431 sets](https://vonmillhausen.github.io/sf2000/arcade/DataFrog_SF2000_FBA.html) (released no later than 2006). However, not all of them work. See the linked list. Games shipping with the SF2000 are tagged with `inrom` there.
 * **(GB300 v2 only)** [GB300+SF2000 Tool v2.0-beta and up](https://github.com/nummacway/gb300-sf2000-tool/releases) can make the stock FBA run around [300 more playable Neo Geo sets](https://nummacway.github.io/gb300-sf2000-tool/DataFrog_SF2000_GB300v2_NeoGeoROMFaker_SupportList.html) (including the most recent homebrew like `gladmort`) from FinalBurn Neo (FBN). I chose Neo Geo for my project because CPS2 support in FBA is basically complete and for CPS1, there are only few games that could be looked into, but I found them boring. If you want me to look into a certain unsupported game whose driver is supported contact (not add!) me on Discord (`numma_cway`).
+* Multicore's MAME 2000 (`m2k`) can run 2241 sets (no newer than 1998). I don't think there's a list for humans to read, but you can search in [this XML](https://raw.githubusercontent.com/madcock/libretro-mame2000/refs/heads/master/metadata/MAME%200.37b5%20XML.dat). Of these, six don't work because they need more ROM memory than the 63.1 MiB `m2k` can offer: `kof97`, `kof98`, `lastblad`, `lastbld2`, `rbff2`, `shocktr2`. Performance is way worse than FBA on GB300 v2 and SF2000.
+* [My own version of MAME 2000](https://github.com/nummacway/libretro-mamenummacwaytausend/releases), humorously called MAME nummacwaytausend (a pun in German), adds [62 Neo Geo sets](https://github.com/nummacway/libretro-mamenummacwaytausend/wiki). It reduces memory usage for `kof97`, `lastblad` so these work now. The most important sets supported by my version are `mslug4fd` and `sengk3fd`, for which it is the only emulator running these on GB300 and SF2000. It also supports the most recent homebrew like `gladmort`. These three games will run with around 45 FPS, as my version's performance did not improve over the standard `m2k`. You should be using FBA over MAME whenever possible.
+* Geolith is another arcade emulator for Neo Geo only. Performance is absolutely horrible and sets in its ROM format are hard to find.
 
-The SF2000 has access to all five variants.
+The SF2000 has access to all five variants. Leonardo's SF2000 multicore even ships with MAME nummacwaytausend which it calls `m2kn`.
 
 **(GB300 v2 only – remaining section)**
 
