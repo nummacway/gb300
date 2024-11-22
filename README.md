@@ -174,7 +174,7 @@ Other links:
 
 Fan project multicore gives you access many more emulators and enjoy way better GBA performance. It is hard to manage without tools, but one tool exists for this.
 
-**Important: Starting with multicore 0.10 v.0.3.0, multicore releases _must_ match the firmware version what is currently installed on your TF card. You cannot directly upgrade or downgrade your firmware. [Read more.](#what-is-the-gb300-v2)**
+**Important: Starting with multicore 0.10 v.0.3.0, multicore releases _must_ match the firmware version that is currently installed on your TF card. You cannot directly upgrade or downgrade your firmware. [Read more.](#what-is-the-gb300-v2)**
 
 Discord users osaka (`bnister`) and Prosty (`_prosty`) brought multicore to GB300 v1 on April 27th, 2024. These two also ported it to GB300 v2 on October 5th, 2024, with contributions from Karl Ellis and Mutandone.
 
@@ -195,21 +195,25 @@ You only have to do steps 1 to 5 once.
 #### Installing and Using multicore Manually
 
 1. Before you do anything else: [Patch the bootloader](https://vonmillhausen.github.io/sf2000/#bootloader-bug). Really! Spare yourself the possible trouble with the device not booting because of a buggy FAT-32 implementation.
-2. Put `bios` and `cores` folders from the [7-Zip file](https://github.com/tzubertowski/gb300_multicore/releases/) on your existing TF card (so the `bios` folder overwrites (merges with) the existing folder).
-3. (GB300 v2 only:) Put `bios` folder from the [7-Zip file](https://discord.com/channels/741895796315914271/1195581037003165796/1292171811856842906) on your existing TF card (so the `bios` folder overwrites (merges with) the existing folder).
-4. For each "core" (the term means emulator – the GB300 CPU is single-core) you want, create a subfolder with its name in `ROMS` and put your ROMs for that core in its subfolder. Here's a [list of cores](https://docs.google.com/spreadsheets/d/1BDPqLwRcY2cN7tObuyW7RzLw8oGyY9XGLS1D4jLgz2Q/edit#gid=1430267016).
-5. Run `make-romlist` found in the root directory of your TF card now. It does not actually make a ROM _list_ but creates so-called stubs. These are zero-byte (empty) `.gba` files passed to the GBA emulator. However, the GBA emulator was given a hook that will run multicore if the file name conforms to a certain file name pattern.
+2. Put `bios` and `cores` folders from the [7-Zip file](https://github.com/tzubertowski/gb300_multicore/releases/) on your existing TF card (so the `bios` folder overwrites (merges with) the existing folder). If you are on the GB300 v2, make sure to not use 0.10 v0.3.0, because it is incomplete.
+3. For each "core" (the term means emulator – the GB300 CPU is single-core) you want, create a subfolder with its name in `ROMS` and put your ROMs for that core in its subfolder. Here's a [list of cores](https://docs.google.com/spreadsheets/d/1BDPqLwRcY2cN7tObuyW7RzLw8oGyY9XGLS1D4jLgz2Q/edit#gid=1430267016).
+4. Run `make-romlist` found in the root directory of your TF card now. It does not actually make a ROM _list_ but creates so-called stubs. These are zero-byte (empty) `.gba` files passed to the GBA emulator. However, the GBA emulator was given a hook that will run multicore if the file name conforms to a certain file name pattern.
    * If you don't want to run the script, you can create the stubs yourself. The pattern is `CORENAME;FILENAME.gba`. Example: `Zero Wing.MD` is placed in `ROMS\sega` to be launched with the `sega` core. Then you need to create `ROMS\sega;Zero Wing.MD.gba`, `ROMS\sega;Zero Wing.MD.agb` or `ROMS\sega;Zero Wing.MD.gbz`.
-6. Many of the emulators added by _multicore_ require one or more BIOS files. In the Google Spreadsheet linked above, there is one link to libretro docs per core. That linked page will explain what BIOS files you need (the section is missing if an emulator does not use BIOS files). BIOS files must be placed in the `bios` folder of your TF card.
+5. Many of the emulators added by _multicore_ require one or more BIOS files. In the Google Spreadsheet linked above, there is one link to libretro docs per core. That linked page will explain what BIOS files you need (the section is missing if an emulator does not use BIOS files). BIOS files must be placed in the `bios` folder of your TF card.
 
-Note: Multicore saves in `ROMS\save`. The thumbnail (screenshot) is named and formatted like always, but with no payload other than the image, as the state is in another file that isn't compressed.
 
-**(GB300 v2 only)** On the GB300 v2, you can use the ZFB method: Just have your ZFB point to a file name conforming to the above pattern. That file does not have to exist. This means that your stub can have any name. This method does not work in user ROMs.
+#### Thumbnailed Stubs
+
+Users are adviced to use GB300 Tool for this. Below is the technical documentation on how the tool does this.
+
+**(GB300 v2 only)** On the GB300 v2, you can use the ZFB method: Just have your ZFB point to a file name conforming to the above pattern. That file does not have to exist. Your `.zfb` stub can have any name. This method does not work in user ROMs, so multicore stubs in user ROMs cannot have an arbitrary name either.
 
 The second way to add thumbnails (and the only one that works on GB300 v1) is super weird: The _filename_ (without the extension) of the `.zfc`, `.zsf`, `.zpc`, `.zmd` or `.zgb` file must conform to the multicore pattern, however, the _extension_ is pulled from the contained file. So the file name inside the ZIP file does not matter, but must end on `.gba`, `.zgb` or `.agb`. Basically you could take any stock GBA file, and for example name it `sega;Zero Wing.md.zsf` to make it launch `ROMS\sega\Zero Wing.md` with the `sega` core.
 
 
-#### Converting ROMs to multicore
+#### Converting ROMs and Save States to multicore
+
+Multicore saves in `ROMS\save`. The thumbnail (screenshot) is named and formatted like always, but with no payload other than the image, as the state is in another file. This file isn't compressed.
 
 **(GB300 v2 only)** GB300+SF2000 Tool v2.0-beta3 and up can directly convert stock ROMs to multicore. Just right-click any stock list. If you are moving to TGB Dual, DoublecherryGB, Picodrive or Mednafen PCE Fast, you can even keep your save states. Note that multicore needs uncompressed ROMs, so this process will use a lot of space on your TF card.
 
